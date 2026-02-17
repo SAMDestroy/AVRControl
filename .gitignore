@@ -1,0 +1,13 @@
+# --- Visual Studio Standard ---
+bin/
+obj/
+packages/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# --- Temporäre Dateien ---
+*.log
+*.tmp
