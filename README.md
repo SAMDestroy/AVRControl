@@ -29,7 +29,7 @@ No installation required.
 5.  The tool connects automatically and saves your IP in AVRControl.cfg.
 
 ## License
-This project is licensed under the *MIT License*. See the LICENSE file for details.
+This project is licensed under the GPU V3 License. See the LICENSE file for details.
 This means you are free to use, modify, and distribute the software, provided that the original copyright notice is included.
 
 ---

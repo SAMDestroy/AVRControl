@@ -136,6 +136,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
     <Content Include="AVRControl.ico" />
     <Content Include="res\apple_klein.png" />
     <Content Include="res\BackIcon.png" />
