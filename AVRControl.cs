@@ -72,6 +72,12 @@ namespace AVRControl
         ////////////////////////////////////////////////////////////////////////////////////////////////////////   
         private void timerProgress_Tick(object sender, EventArgs e)
         {
+            if (!IsAVROn)
+            {
+                timerProgress.Stop();
+                return;
+            }
+
             if (_maxDuration > 0)
             {
                 _localCurPos += timerProgress.Interval; // 100ms oder 1000ms
@@ -395,7 +401,7 @@ namespace AVRControl
                 }
             }*/
 
-if (data.Contains("shuffle"))
+            if (data.Contains("shuffle"))
             {
                 string shuffleVal = ExtractJsonValue(data, "shuffle");
 
@@ -499,7 +505,11 @@ if (data.Contains("shuffle"))
                 AVRControlsToggle(false);
                 HeosControlsToggle(false);
 
+                StopHeosTimeline();
+
                 _telnet.DoStatusUpdates = false;
+
+                return;
             }
 
             if (IsAVROn == true)
@@ -510,6 +520,8 @@ if (data.Contains("shuffle"))
                     
                     if (xmlSource == "HEOS")
                     {
+                        HeosControlsToggle(true);
+
                         if (this.AVRSource.Text == "NET" || this.AVRSource.Text == "No Info" || string.IsNullOrEmpty(this.AVRSource.Text))
                         {
                             this.AVRSource.Text = "HEOS";
@@ -520,8 +532,7 @@ if (data.Contains("shuffle"))
                             if (_heosTelnet.IsPortOpen(tbIP.Text, 1255))
                             {
                                 _ = _heosTelnet.StartAsync(tbIP.Text, 1255);
-                                this.lbConnectStatus.Text = "Connected! (HEOS Mode)";
-                                HeosControlsToggle(true);
+                                this.lbConnectStatus.Text = "Connected! (HEOS Mode)";                                
                             }
                             else
                             {
@@ -541,6 +552,8 @@ if (data.Contains("shuffle"))
                         this.lbConnectStatus.Text = "Connected!";
 
                         HeosControlsToggle(false);
+
+                        timerProgress.Stop();
 
                         StopHeosTimeline();
                     }
@@ -639,7 +652,7 @@ if (data.Contains("shuffle"))
         }
         // Form Init Part END ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                
+
         // Form Controls Toggle
         ////////////////////////////////////////////////////////////////////////////////////////////////////////   
         private void AVRControlsToggle(bool enabled)
@@ -648,25 +661,23 @@ if (data.Contains("shuffle"))
             this.btnVolDown.Enabled = enabled;
             this.btnToggleMute.Enabled = enabled;
             this.SliderVolume.Enabled = enabled;
+
             
-
-            if (!enabled)
-            {
-                this.SliderVolume.Value = 10;
-                this.ShowVolume.Text = "OFF";
-                this.PowerToggle.BackColor = Color.Gray;
-                this.PowerToggle.Text = "OFF";
-                this.AVRSource.Text = "";
-                this.AVRSourceAudio.Text = "";
-                this.AVRSoundMode.Text = "";
-            }
-            else
-            {
-                this.PowerToggle.BackColor = Color.Green;
-                this.PowerToggle.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green;
-
-                this.PowerToggle.Text = "ON";
-            }
+            this.PowerToggle.BeginInvoke((MethodInvoker)delegate {
+                if (!enabled)
+                {
+                    this.PowerToggle.BackColor = Color.FromArgb(64, 64, 64);
+                    this.PowerToggle.Text = "OFF";
+                    this.AVRSource.Text = "STANDBY";
+                    
+                    timerProgress.Stop();
+                }
+                else
+                {
+                    this.PowerToggle.BackColor = Color.LimeGreen;
+                    this.PowerToggle.Text = "ON";
+                }
+            });
         }
         private void HeosControlsToggle(bool enabled)
         {

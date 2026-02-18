@@ -445,7 +445,7 @@ namespace AVRControl
             this.PowerToggle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
             this.PowerToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PowerToggle.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PowerToggle.ForeColor = System.Drawing.Color.Black;
+            this.PowerToggle.ForeColor = System.Drawing.Color.White;
             this.PowerToggle.Location = new System.Drawing.Point(565, 41);
             this.PowerToggle.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.PowerToggle.Name = "PowerToggle";
