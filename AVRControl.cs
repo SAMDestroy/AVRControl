@@ -681,6 +681,11 @@ namespace AVRControl
         }
         private void HeosControlsToggle(bool enabled)
         {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action<bool>(HeosControlsToggle), enabled);
+                return;
+            }
 
             this.btnHeosPlayPause.Enabled = enabled;
             this.btnHeosPlayBack.Enabled = enabled;
