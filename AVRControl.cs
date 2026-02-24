@@ -545,17 +545,15 @@ namespace AVRControl
                     else
                     {
                         this.AVRSource.Text = xmlSource;
-
-                        if (_heosTelnet.IsConnected())
-                            _heosTelnet.Stop();
-
                         this.lbConnectStatus.Text = "Connected!";
-
+                        
                         HeosControlsToggle(false);
-
-                        timerProgress.Stop();
-
                         StopHeosTimeline();
+
+                        if (_heosTelnet != null && _heosTelnet.IsConnected())
+                        {
+                            _heosTelnet.Stop();
+                        }
                     }
                 }
                 else if (data.StartsWith("SYSDA"))
@@ -669,7 +667,9 @@ namespace AVRControl
                     this.PowerToggle.BackColor = Color.FromArgb(64, 64, 64);
                     this.PowerToggle.Text = "OFF";
                     this.AVRSource.Text = "STANDBY";
-                    
+
+                    this.ActiveControl = null;
+
                     timerProgress.Stop();
                 }
                 else
@@ -804,8 +804,6 @@ namespace AVRControl
         }       
         private async void PowerToggle_Click(object sender, EventArgs e)
         {
-            IsAVROn = !IsAVROn;
-
             if (IsAVROn)
             {
                 await _telnet.SendAsync("ZMON");
