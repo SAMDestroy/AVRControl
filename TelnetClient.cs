@@ -17,10 +17,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
-
+using System.Net.Http;
 using System.Net.NetworkInformation;
-
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,55 +46,53 @@ public class AsyncTelnetClient
 
     // XML Reader Part
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public string ReadXMLDeviceInfo()
+    public async Task<string> ReadXMLDeviceInfoAsync()
     {
-        string dienstresult = "No Info";
-        var xmlDoc = new XmlDocument();
-        xmlDoc.Load($"http://{_IP}:8080/goform/formMainZone_MainZoneXmlStatusLite.xml");
+        string urlLite = $"http://{_IP}:8080/goform/formMainZone_MainZoneXmlStatusLite.xml";
+        string urlCommand = $"http://{_IP}:8080/goform/AppCommand.xml";
 
-        var rawvalue = xmlDoc.DocumentElement.SelectSingleNode("//InputFuncSelect").InnerText;
-        
-        if (rawvalue == "TV")
-            return "TV Audio";
-
-        if (rawvalue == "NET")
+        try
         {
-            dienstresult = "HEOS";
-        }
-        else
-        {
-            string targetSource = rawvalue; // Die Hardware-ID
-            string url = $"http://{_IP}:8080/goform/AppCommand.xml";
-
-            string xmlPayload = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<tx>\n<cmd id=\"1\">GetRenameSource</cmd>\n</tx>";
-
-            using (WebClient client = new WebClient())
+            using (HttpClient client = new HttpClient())
             {
-                try
-                {
-                    client.Headers[HttpRequestHeader.ContentType] = "text/xml";
+                client.Timeout = TimeSpan.FromSeconds(2);
 
-                    byte[] responseBytes = client.UploadData(url, "POST", Encoding.UTF8.GetBytes(xmlPayload));
-                    string xmlString = Encoding.UTF8.GetString(responseBytes);
+                var responseLite = await client.GetAsync(urlLite);
+                if (!responseLite.IsSuccessStatusCode) return "Booting...";
 
-                    XDocument doc = XDocument.Parse(xmlString);
+                string liteXmlString = await responseLite.Content.ReadAsStringAsync();
+                var xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(liteXmlString);
 
-                    var friendlyName = doc.Descendants("list")
-                        .Where(x => x.Element("name")?.Value == targetSource)
-                        .Select(x => x.Element("rename")?.Value)
-                        .FirstOrDefault();
+                var rawvalue = xmlDoc.DocumentElement.SelectSingleNode("//InputFuncSelect")?.InnerText;
+                if (string.IsNullOrEmpty(rawvalue)) return "No Info";
 
-                    dienstresult = friendlyName;
-                    // Console.WriteLine($"Friendly Name für {targetSource}: {friendlyName ?? "Nicht gefunden"}");
-                }
-                catch
-                {
-                    return "ERROR";
-                    //Console.WriteLine("Fehler beim Abruf: " + ex.Message);
-                }
+                if (rawvalue == "TV") return "TV Audio";
+                if (rawvalue == "NET") return "HEOS";
+
+                // 2. Friendly Name via AppCommand
+                string xmlPayload = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<tx>\n<cmd id=\"1\">GetRenameSource</cmd>\n</tx>";
+                var content = new StringContent(xmlPayload, Encoding.UTF8, "text/xml");
+
+                var responseCommand = await client.PostAsync(urlCommand, content);
+                if (!responseCommand.IsSuccessStatusCode) return rawvalue;
+
+                string commandResponse = await responseCommand.Content.ReadAsStringAsync();
+                XDocument doc = XDocument.Parse(commandResponse);
+
+                var friendlyName = doc.Descendants("list")
+                    .Where(x => x.Element("name")?.Value == rawvalue)
+                    .Select(x => x.Element("rename")?.Value)
+                    .FirstOrDefault();
+
+                return friendlyName ?? rawvalue;
             }
         }
-        return dienstresult;
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"XML-Abruf verweigert (AVR bootet noch?): {ex.Message}");
+            return "Connecting...";
+        }
     }
     // XML Reader END ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
