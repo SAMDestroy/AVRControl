@@ -12,19 +12,22 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
+using Microsoft.Win32;
 using System;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace AVRControl
 {
     public partial class AVRControl : Form
     {
+        private string roamingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AVRControl", "AVRControl.exe");
+        private bool isRunningFromRoaming = false;
+        private string currentConfigPath;
+
         private readonly string config = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\AVRControl.cfg";
         private bool _muted = false;
         private int CurVol = 10;
@@ -34,12 +37,10 @@ namespace AVRControl
         private int _localCurPos = 0;
         private int _maxDuration = 0;
         private DateTime _lastUserInteraction = DateTime.MinValue;
-       // private bool _isMusicPlaying = false;
         private DateTime _lastVolumeSend = DateTime.MinValue;
         private bool IsHeosPlayPause = false;
         private bool _isShuffleOn = false;
 
-       // private AVRDevices.IAVRDevice _AVR;
         private AsyncTelnetClient _telnet;
 
         private AsyncTelnetClient _heosTelnet;
@@ -49,10 +50,11 @@ namespace AVRControl
         {
             InitializeComponent();
             Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-            //notifyIcon.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
-           // string version = Assembly.GetExecutingAssembly().GetName().Version.ToString(3).Replace(".0", "");
-            Text = "AVRControl v1.0";
+            Text = $"AVRControl v{Application.ProductVersion}";
+
+            this.notifyIcon1.Icon = Icon;
+            this.notifyIcon1.Text = Text;
 
             _telnet = new AsyncTelnetClient();
             _telnet.DataReceived += OnDataReceived;
@@ -65,540 +67,25 @@ namespace AVRControl
             timerProgress = new System.Windows.Forms.Timer();
             timerProgress.Interval = 100;
             timerProgress.Tick += timerProgress_Tick;
-
         }
-
-        // Timer Functions for Progressbar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////   
-        private void timerProgress_Tick(object sender, EventArgs e)
-        {
-            if (!IsAVROn)
-            {
-                timerProgress.Stop();
-                return;
-            }
-
-            if (_maxDuration > 0)
-            {
-                _localCurPos += timerProgress.Interval; // 100ms oder 1000ms
-
-                if (_localCurPos <= _maxDuration)
-                {
-                    pbProgress.Value = Math.Min(_localCurPos, _maxDuration);
-                    lblTime.Text = $"{FormatTime(_localCurPos)} / {FormatTime(_maxDuration)}";
-                }
-            }
-        }
-
-        private void StopHeosTimeline()
-        {
-           // _isMusicPlaying = false;
-            _maxDuration = 0;
-            _localCurPos = 0;
-
-            this.Invoke((MethodInvoker)delegate {
-                timerProgress.Stop();
-                pbProgress.Value = 0;
-                lblTime.Text = "00:00 / 00:00";
-            });
-        }
-
-        private void ResetTimelineImmediate()
-        {
-            _localCurPos = 0;
-            _lastUserInteraction = DateTime.Now;
-
-            this.Invoke((MethodInvoker)delegate {
-                pbProgress.Value = 0;
-                lblTime.Text = "00:00 / 00:00";
-            });
-        }
-        // Timer Functions for Progressbar END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // Helper Functions
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////   
-        private string ExtractJsonValue(string data, string key)
-        {
-            if (string.IsNullOrEmpty(data) || string.IsNullOrEmpty(key)) return "";
-
-            int start = -1;
-            int end = -1;
-
-            string patternJson = "\"" + key + "\"";
-            int keyIdx = data.IndexOf(patternJson);
-            if (keyIdx != -1)
-            {
-                int colonIdx = data.IndexOf(":", keyIdx + patternJson.Length);
-                if (colonIdx != -1)
-                {
-                    start = colonIdx + 1;
-                    while (start < data.Length && (data[start] == ' ' || data[start] == '\"')) start++;
-
-                    end = data.IndexOfAny(new char[] { '\"', ',', '}', '&' }, start);
-                }
-            }
-
-            if (start == -1)
-            {
-                string patternMsg = key + "=";
-                int msgIdx = data.IndexOf(patternMsg);
-                if (msgIdx != -1)
-                {
-                    start = msgIdx + patternMsg.Length;
-                    end = data.IndexOfAny(new char[] { '&', '\"', '}', ' ' }, start);
-                }
-            }
-
-            if (start != -1)
-            {
-                if (end == -1) end = data.Length;
-                string result = data.Substring(start, end - start).Trim();
-                return result.Replace("\"", "");
-            }
-
-            return "";
-        }
-
-        private string FormatTime(int ms)
-        {
-            TimeSpan t = TimeSpan.FromMilliseconds(ms);
-            return string.Format("{0:D2}:{1:D2}", t.Minutes + (t.Hours * 60), t.Seconds);
-        }
-        // Helper Functions END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-        // HEOS Part
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////   
-
-        // HEOS Helper
-        /////////////////////
-        private async Task LoadAlbumArtAsync(string url)
-        {
-            if (string.IsNullOrEmpty(url))
-            {
-                pbAlbumArt.Image = null; // or default image
-                return;
-            }
-
-            try
-            {
-                using (var client = new System.Net.WebClient())
-                {
-                    byte[] imageBytes = await client.DownloadDataTaskAsync(url);
-                    using (var ms = new System.IO.MemoryStream(imageBytes))
-                    {
-                        this.Invoke((MethodInvoker)delegate {
-                            pbAlbumArt.Image = Image.FromStream(ms);
-                            pbAlbumArt.SizeMode = PictureBoxSizeMode.Zoom; // Bild proportional anpassen
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Fehler beim Laden des Covers: " + ex.Message);
-            }
-        }
-        private void ParseAndDisplayTrackInfo(string json)
-        {
-            try
-            {
-                string song = ExtractJsonValue(json, "song");
-                string artist = ExtractJsonValue(json, "artist");
-                string album = ExtractJsonValue(json, "album");
-                string sidStr = ExtractJsonValue(json, "sid");
-                string state = ExtractJsonValue(json, "state").Trim().ToLower(); // Wichtig für Initial-Start
-
-                string curPosStr = ExtractJsonValue(json, "cur_pos");
-                string durationStr = ExtractJsonValue(json, "duration");
-
-                int sid = 0;
-                int.TryParse(sidStr, out sid);
-
-                if (!timerProgress.Enabled && state != "pause")
-                {
-                   // _isMusicPlaying = true;
-                    timerProgress.Start();
-                }
-
-                string imageUrl = ExtractJsonValue(json, "image_url");
-
-                _ = LoadAlbumArtAsync(imageUrl);
-
-                // Spotify Fix
-                string serviceName = "HEOS";
-                if (sid == 4 && (json.ToLower().Contains("spotify") || album.ToLower().Contains("spotify")))
-                {
-                    serviceName = "Spotify Connect";
-                }
-                else
-                {
-                    serviceName = sid switch
-                    {
-                        1 => "Pandora",
-                        3 => "TuneIn Radio",
-                        4 => "Napster / Media Server",
-                        5 => "Deezer",
-                        9 => "SoundCloud",
-                        10 => "Spotify (App)",
-                        13 => "Amazon Music",
-                        18 => "TIDAL",
-                        1024 => "Musikserver / DLNA",
-                        1027 => "AUX Eingang",
-                        _ => $"Dienst {sid}"
-                    };
-                }
-
-                this.Invoke((MethodInvoker)delegate {
-
-                    this.AVRSource.Text = serviceName;
-                    this.HeosTrackInfoArtist.Text = artist;
-                    this.HeosTrackInfoAlbum.Text = album;
-                    this.HeosTrackInfoSong.Text = song;
-                    this.lbConnectStatus.Text = "Connected! (HEOS Mode)";
-
-                    int.TryParse(curPosStr, out int curPos);
-                    int.TryParse(durationStr, out int duration);
-
-                    if (duration > 0)
-                    {
-                        if (_maxDuration != duration)
-                        {
-                            _maxDuration = duration;
-                            pbProgress.Maximum = _maxDuration;
-                            _localCurPos = curPos; // Erster Sync
-                        }
-
-                        if (Math.Abs(_localCurPos - curPos) > 2000)
-                        {
-                            _localCurPos = curPos;
-                        }
-
-                        if (state == "play")
-                        {
-                            if (!timerProgress.Enabled) timerProgress.Start();
-                        }
-                        else
-                        {
-                            timerProgress.Stop();
-                        }
-                    }
-                    //Console.WriteLine($"Anzeige aktualisiert: [{serviceName}] {state} - {artist} - {song}");
-                });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Fehler beim Parsen der Metadaten: " + ex.Message);
-            }
-        }
-        
-        private async Task UpdateHeosDetails()
-        {
-            if (string.IsNullOrEmpty(_activePid))
-            {
-               // Console.WriteLine("PID ist LEER!");
-                await _heosTelnet.SendAsync("heos://player/get_players");
-                return;
-            }
-
-            string command = $"heos://player/get_now_playing_media?pid={_activePid}";
-            await _heosTelnet.SendAsync(command);
-        }
-        // HEOS Helper END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // HEOS LOOP
-        private void OnHeosDataReceived(string data)
-        {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new Action<string>(OnHeosDataReceived), data);
-                return;
-            }
-
-            // Getting Initial Infos
-            if (data.Contains("player/get_players"))
-            {
-                string neuePid = ExtractJsonValue(data, "pid");
-                string AVRName = ExtractJsonValue(data, "name");
-                string AVRVersion = ExtractJsonValue(data, "version");
-                string AVRNetwork = ExtractJsonValue(data, "network");
-
-                if (!string.IsNullOrEmpty(neuePid))
-                {
-                    this.lbHeosAVRID_Data.Text = neuePid;
-                    this.lbHeosAVRName_Data.Text = AVRName;
-                    this.lbHeosAVRVersion_Data.Text = AVRVersion;
-                    this.lbHeosAVRNetType_Data.Text = char.ToUpper(AVRNetwork[0]) + AVRNetwork.Substring(1);
-
-                    _activePid = neuePid;
-                    //Console.WriteLine("PID dauerhaft gespeichert: " + _activePid);
-
-                    _ = _heosTelnet.SendAsync($"heos://player/set_progress_events?pid={_activePid}&enable=on");
-
-                    _ = UpdateHeosDetails(); // Initial Info
-                }
-            }
-                        
-            // Console.WriteLine($"HEOSDATA:{data}"); // Log für alle HEOS-Daten, um die Entwicklung zu erleichtern
-
-            if (data.Contains("event/player_now_playing_progress"))
-            {
-                if (int.TryParse(ExtractJsonValue(data, "cur_pos"), out int curPos) &&
-                    int.TryParse(ExtractJsonValue(data, "duration"), out int duration))
-                {
-                    _maxDuration = duration;
-
-                    // Sync nur, wenn wir nicht im 3-Sekunden-Skip-Schutz sind
-                    if ((DateTime.Now - _lastUserInteraction).TotalSeconds >= 3.0)
-                    {
-                        if (Math.Abs(_localCurPos - curPos) > 2000) _localCurPos = curPos;
-                    }
-
-                   // this.BeginInvoke((MethodInvoker)delegate {
-                        if (pbProgress.Maximum != _maxDuration)
-                            pbProgress.Maximum = _maxDuration;
-                   // });
-                }
-                return;
-            }
-            
-            if (data.Contains("event/player_now_playing_changed"))
-            {
-                _localCurPos = 0;
-                pbProgress.Value = 0;
-               // Console.WriteLine("Event erkannt: Songwechsel!");
-                _ = UpdateHeosDetails();
-            }
-
-            if (data.Contains("player/get_now_playing_media"))
-            {
-                if (data.Contains("success"))
-                {
-                    ParseAndDisplayTrackInfo(data);
-                }
-                else
-                {
-                    Console.WriteLine("HEOS meldete Fail - ignoriere Anzeige-Update.");
-                }
-            }
-
-           /* if (data.Contains("now_playing") || data.Contains("cur_pos"))
-            {
-                if (!this.IsDisposed && this.IsHandleCreated)
-                {
-                   // this.BeginInvoke((MethodInvoker)delegate {
-                        if (!timerProgress.Enabled)
-                        {
-                            //_isMusicPlaying = true;
-                            timerProgress.Start();
-                           // Console.WriteLine(">>> TIMER PHYSISCH GESTARTET <<<");
-                        }
-                   // });
-                }
-            }*/
-
-            if (data.Contains("shuffle"))
-            {
-                string shuffleVal = ExtractJsonValue(data, "shuffle");
-
-               // this.Invoke((MethodInvoker)delegate {
-                    if (shuffleVal == "on")
-                    {
-                        _isShuffleOn = true;
-                        btnHeosPlayShuffle.BackColor = Color.DeepSkyBlue; // Aktive Farbe
-                        btnHeosPlayShuffle.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-                    }
-                    else
-                    {
-                        _isShuffleOn = false;
-                        btnHeosPlayShuffle.BackColor = Color.Transparent; // Inaktive Farbe
-                        btnHeosPlayShuffle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                    }
-                //});
-            }
-
-            if (data.Contains("event/player_state_changed") || data.Contains("player/get_play_state"))
-            {
-                string state = ExtractJsonValue(data, "state").Trim().ToLower();
-               // this.Invoke((MethodInvoker)delegate {
-                    if (state == "play")
-                    {
-                    //_isMusicPlaying = true;
-                    timerProgress.Start();
-                        this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PauseIcon;
-                    }
-                    else
-                    {
-                       // _isMusicPlaying = false;
-                        timerProgress.Stop();
-                        this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PlayIcon;
-                    }
-               // });
-            }
-
-        }
-        // HEOS END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        // AVR Telnet Part
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        // AVR Telnet Status Loop
-        private void OnStatusReceived(string data)
-        {
-            if (this.IsDisposed || lbConnectStatus == null || lbConnectStatus.IsDisposed)
-                return;
-
-            if (this.InvokeRequired)
-            {
-                if (this.IsHandleCreated)
-                {
-                    this.BeginInvoke(new Action<string>(OnStatusReceived), data);
-                }
-                return;
-            }
-
-            // Showing on Status Label
-            this.lbConnectStatus.Text = data;
-        }
-
-        // AVR Telnet Data Loop
-        private async void OnDataReceived(string data)
-        {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new Action<string>(OnDataReceived), data);
-                return;
-            }
-
-           // Console.WriteLine($"NORMALDATA: {data}");
-
-            if (data.StartsWith("MVMAX")) // We dont need it
-            {                
-                return;
-            }
-
-            if (data.StartsWith("ZMON"))
-            {                
-                IsAVROn = true;
-                _telnet.DoStatusUpdates = true;
-                await _telnet.SendAsync("MV?");
-                await _telnet.SendAsync("SYSDA?");
-                await _telnet.SendAsync("MS?");
-
-                this.AVRSource.Text = _telnet.ReadXMLDeviceInfo();
-
-                this.SliderVolume.Value = CurVol;
-                this.ShowVolume.Text = "Vol: " + CurVol.ToString();                
-
-                AVRControlsToggle(true);
-            }
-            else if (data.StartsWith("ZMOFF"))
-            {
-                IsAVROn = false;
-
-                AVRControlsToggle(false);
-                HeosControlsToggle(false);
-
-                StopHeosTimeline();
-
-                _telnet.DoStatusUpdates = false;
-
-                return;
-            }
-
-            if (IsAVROn == true)
-            {
-                if (data.StartsWith("SI"))
-                {
-                    string xmlSource = _telnet.ReadXMLDeviceInfo();
-                    
-                    if (xmlSource == "HEOS")
-                    {
-                        HeosControlsToggle(true);
-
-                        if (this.AVRSource.Text == "NET" || this.AVRSource.Text == "No Info" || string.IsNullOrEmpty(this.AVRSource.Text))
-                        {
-                            this.AVRSource.Text = "HEOS";
-                        }
-
-                        if (!_heosTelnet.IsConnected())
-                        {
-                            if (_heosTelnet.IsPortOpen(tbIP.Text, 1255))
-                            {
-                                _ = _heosTelnet.StartAsync(tbIP.Text, 1255);
-                                this.lbConnectStatus.Text = "Connected! (HEOS Mode)";                                
-                            }
-                            else
-                            {
-                                this.lbConnectStatus.Text = "HEOS Port closed...";
-                                return;
-                            }
-                        }                 
-                        
-                    }
-                    else
-                    {
-                        this.AVRSource.Text = xmlSource;
-                        this.lbConnectStatus.Text = "Connected!";
-                        
-                        HeosControlsToggle(false);
-                        StopHeosTimeline();
-
-                        if (_heosTelnet != null && _heosTelnet.IsConnected())
-                        {
-                            _heosTelnet.Stop();
-                        }
-                    }
-                }
-                else if (data.StartsWith("SYSDA"))
-                {
-                    this.AVRSourceAudio.Text = data.Substring(6, data.Length - 6);
-                }
-                else if (data.StartsWith("MS"))
-                {
-                    this.AVRSoundMode.Text = data.Substring(2, data.Length - 2);
-                }
-                else if (data.Contains("MUON"))
-                {
-                    _muted = true;
-                    this.ShowVolume.Text = "Muted";
-                    this.btnToggleMute.BackColor = System.Drawing.Color.DarkRed;
-                    this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-                }
-                else if (data.StartsWith("MUOFF"))
-                {
-                    _muted = false;
-                    this.ShowVolume.Text = "Vol: " + CurVol.ToString();
-                    this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
-                    this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                }
-                else if (data.StartsWith("MV") && isScrolling == false)
-                {
-                    _muted = false;
-                    CurVol = Int32.Parse(data.Substring(2, 2));
-
-                    this.ShowVolume.Text = "Vol: " + CurVol.ToString();
-                    this.SliderVolume.Value = CurVol;
-                    this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
-                    this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                }
-            } 
-        }
-        // AVR Telnet END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         // Form Init Part
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AVRControl_Load(object sender, EventArgs e)
         {
+            RefreshInstallState();
             LoadDevice();
+
+            if (cbSysTray.Checked)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
+            }
+            else
+            {
+                this.Opacity = 100;
+                this.ShowInTaskbar = true;
+            }
         }
         private void LoadDevice()
         {
@@ -606,149 +93,83 @@ namespace AVRControl
 
             try
             {
-                tbIP.Text = File.ReadAllText(config);
+                string savedIP = ConfigManager.GetValue(currentConfigPath, "IP");
+                string savedTray = ConfigManager.GetValue(currentConfigPath, "Systray");
+
+                if (savedIP != null)
+                {
+                    tbIP.Text = savedIP;
+                }
+
+                if (savedTray != null && bool.TryParse(savedTray, out bool useTray))
+                {
+                    cbSysTray.Checked = useTray;
+                    this.notifyIcon1.Visible = useTray;
+                }
+
+                if (string.IsNullOrWhiteSpace(tbIP.Text))
+                {
+                    this.lbConnectStatus.Text = "Please set IP below !";
+
+                    return;
+                }
+
+                this.lbConnectStatus.Text = "Connecting ...";
 
                 if (_telnet.IsHostOnline(tbIP.Text))
                 {
-                    this.lbConnectStatus.Text = "IP online...";
                     if (_telnet.IsPortOpen(tbIP.Text, 23))
                     {
                         this.lbConnectStatus.Text = "Port 23 open..";
 
                         _ = _telnet.StartAsync(tbIP.Text, 23);
+
                         this.lbConnectStatus.Text = "Connected!";
-                        this.PowerToggle.Enabled = true;
-                        AVRControlsToggle(true);
+
                     }
                     else
                     {
                         this.lbConnectStatus.Text = "IP online but Port 23 closed...";
-                        return;
+
                     }
                 }
                 else
                 {
                     this.lbConnectStatus.Text = "IP offline or wrong...";
-                    return;
+
                 }
             }
-            catch { }
-
-            if (tbIP.Text != "")
+            catch (Exception ex)
             {
-                
-
-                this.lbConnectStatus.Text = "Connecting ...";
+                System.Diagnostics.Debug.WriteLine("Fehler in LoadDevice: " + ex.Message);
             }
-            else
-            {
-                this.lbConnectStatus.Text = "Please set IP below !";
-                this.PowerToggle.Enabled = false;
-
-                AVRControlsToggle(false);
-            }            
         }
         // Form Init Part END ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Form Controls Toggle
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////   
-        private void AVRControlsToggle(bool enabled)
-        {
-            this.btnVolUp.Enabled = enabled;
-            this.btnVolDown.Enabled = enabled;
-            this.btnToggleMute.Enabled = enabled;
-            this.SliderVolume.Enabled = enabled;
-
-            
-            this.PowerToggle.BeginInvoke((MethodInvoker)delegate {
-                if (!enabled)
-                {
-                    this.PowerToggle.BackColor = Color.FromArgb(64, 64, 64);
-                    this.PowerToggle.Text = "OFF";
-                    this.AVRSource.Text = "STANDBY";
-
-                    this.ActiveControl = null;
-
-                    timerProgress.Stop();
-                }
-                else
-                {
-                    this.PowerToggle.BackColor = Color.LimeGreen;
-                    this.PowerToggle.Text = "ON";
-                }
-            });
-        }
-        private void HeosControlsToggle(bool enabled)
-        {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new Action<bool>(HeosControlsToggle), enabled);
-                return;
-            }
-
-            this.btnHeosPlayPause.Enabled = enabled;
-            this.btnHeosPlayBack.Enabled = enabled;
-            this.btnHeosPlaySkip.Enabled = enabled;
-            this.btnHeosPlayShuffle.Enabled = enabled;
-            this.btnHeosPlayRepeatAll.Enabled = enabled;
-            this.btnHeosPlayRepeatOne.Enabled = enabled;
-
-            if (!enabled)
-            {
-                this.pbAlbumArt.Hide();
-
-                this.HeosTrackInfoArtist.Text = "";
-                this.HeosTrackInfoAlbum.Text = "";
-                this.HeosTrackInfoSong.Text = "";
-
-                this.lbAlbumCover.Text = "";
-
-                this.lbHeosAlbum.Text = "";
-                this.lbHeosArtist.Text = "";
-                this.lbHeosSong.Text = "";
-
-                this.lbHeosAVRName.Text = "";
-                this.lbHeosAVRVersion.Text = "";
-                this.lbHeosAVRID.Text = "";
-                this.lbHeosAVRNetType.Text = "";
-
-                this.lbHeosAVRName_Data.Text = "";
-                this.lbHeosAVRVersion_Data.Text = "";
-                this.lbHeosAVRID_Data.Text = "";
-                this.lbHeosAVRNetType_Data.Text = "";
-            }
-            else
-            {
-                this.pbAlbumArt.Show();
-
-                this.lbAlbumCover.Text = "Album Cover";
-
-                this.lbHeosAlbum.Text = "Album";
-                this.lbHeosArtist.Text = "Artist";
-                this.lbHeosSong.Text = "Song";
-
-                this.lbHeosAVRName.Text = "Client:";
-                this.lbHeosAVRVersion.Text = "Version:";
-                this.lbHeosAVRID.Text = "Player ID:";
-                this.lbHeosAVRNetType.Text = "NetType:";
-            }
-        }
-        // Form Controls Toggle END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+      
         // Control Events Part
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(tbIP.Text))
+            {
+                MessageBox.Show("Please enter a valid IP address before saving.",
+                                "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbIP.Focus();
+                return;
+            }
+
             try
             {
-                File.WriteAllText(config, tbIP.Text);
+                ConfigManager.SaveValue(currentConfigPath, "IP", tbIP.Text);
+                ConfigManager.SaveValue(currentConfigPath, "Systray", cbSysTray.Checked.ToString());
+
                 LoadDevice();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Try running as Administrator and saving your config again.", "Error saving config");
+                MessageBox.Show("Error while writing IP to config file: " + ex.Message, "Error");
             }
         }
         private async void BtnVolUp_Click(object sender, EventArgs e)
@@ -770,7 +191,6 @@ namespace AVRControl
         {            
             this.btnVolUp.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private async void BtnVolDown_Click(object sender, EventArgs e)
         {
             await _telnet.SendAsync("MV"+(CurVol-1));
@@ -809,13 +229,13 @@ namespace AVRControl
         }       
         private async void PowerToggle_Click(object sender, EventArgs e)
         {
-            if (IsAVROn)
+            if (!IsAVROn)
             {
                 await _telnet.SendAsync("ZMON");
             }
             else
                 await _telnet.SendAsync("ZMOFF");
-        }
+        }       
         private async void BtnToggleMute_Click(object sender, EventArgs e)
         {
             this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -871,7 +291,7 @@ namespace AVRControl
             }
             else
             {
-                MessageBox.Show("HEOS-Verbindung nicht aktiv oder Player-ID fehlt.");
+                MessageBox.Show("HEOS-Connection not active or missing Player-ID.");
             }
         }
         private void btnHeosPlayPause_MouseDown(object sender, EventArgs e)
@@ -899,7 +319,7 @@ namespace AVRControl
             }
             else
             {
-                MessageBox.Show("HEOS-Verbindung nicht aktiv oder Player-ID fehlt.");
+                MessageBox.Show("HEOS-Connection not active or missing Player-ID.");
             }
         }
         private void btnHeosPlaySkip_MouseDown(object sender, EventArgs e)
@@ -927,7 +347,7 @@ namespace AVRControl
             }
             else
             {
-                MessageBox.Show("HEOS-Verbindung nicht aktiv oder Player-ID fehlt.");
+                MessageBox.Show("HEOS-Connection not active or missing Player-ID.");
             }
         }
         private void btnHeosPlayBack_MouseDown(object sender, EventArgs e)
@@ -975,7 +395,7 @@ namespace AVRControl
             }
             else
             {
-                MessageBox.Show("HEOS-Verbindung nicht aktiv oder Player-ID fehlt.");
+                MessageBox.Show("HEOS-Connection not active or missing Player-ID.");
             }
         }
         private void btnHeosPlayRepeatAll_MouseDown(object sender, EventArgs e)
@@ -1018,20 +438,187 @@ namespace AVRControl
         {
             this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.DarkGray;
         }
+        private void btnInstall_Click(object sender, EventArgs e)
+        {
+            string targetDir = Path.GetDirectoryName(roamingPath);
+            string registryPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+
+            try
+            {
+                if (btnInstall.Text == "GitUpdate")
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "https://github.com/SAMDestroy/AVRControl/releases/latest",
+                        UseShellExecute = true
+                    });
+                    return;
+                }
+
+                if (btnInstall.Text == "Install" || btnInstall.Text == "Update")
+                {
+                    if (btnInstall.Text == "Install" && string.IsNullOrWhiteSpace(tbIP.Text))
+                    {
+                        MessageBox.Show("Please enter IP before installing.",
+                                        "Missing Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        tbIP.Focus();
+                        return;
+                    }
+
+                    if (!Directory.Exists(targetDir))
+                        Directory.CreateDirectory(targetDir);
+
+                    System.IO.File.Copy(Application.ExecutablePath, roamingPath, true);
+
+                    string targetCfg = Path.Combine(targetDir, "AVRControl.cfg");
+                    if (!System.IO.File.Exists(targetCfg))
+                    {
+                        currentConfigPath = targetCfg;
+
+                        ConfigManager.SaveValue(currentConfigPath, "IP", tbIP.Text);
+                        ConfigManager.SaveValue(currentConfigPath, "Systray", cbSysTray.Checked.ToString());
+                    }
+
+                    using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, true))
+                    {
+                        if (key != null) key.SetValue("AVRControl", $"\"{roamingPath}\"");
+                    }
+
+                    string msg = (btnInstall.Text == "Update") ? "Update successfully!" : "Installation successfully!";
+                    MessageBox.Show(msg + "\nAVRControl is now restarting from the roaming folder.", "AVRControl");
+
+                    System.Diagnostics.Process.Start(roamingPath);
+                    Environment.Exit(0);
+                }
+                else if (btnInstall.Text == "Uninstall")
+                {
+                    using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, true))
+                    {
+                        if (key != null) key.DeleteValue("AVRControl", false);
+                    }
+
+                    if (!isRunningFromRoaming && System.IO.File.Exists(roamingPath))
+                    {
+                        try { System.IO.File.Delete(roamingPath); } catch { }
+                    }
+
+                    MessageBox.Show("Autostart removed. Closing AVRControl...", "Deinstallation");
+                    Application.Exit();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while installing: " + ex.Message, "Error");
+            }
+        }
         // Control Events END ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Form Events Part
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void AVRControl_Shown(object sender, EventArgs e)
+        private void AVRControl_Resize(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Normal;
+            if (cbSysTray.Checked && this.WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+                this.ShowInTaskbar = false;
+            }
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (cbSysTray.Checked && e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.Hide();
+                return;
+            }
+
             _telnet.Stop();
             _heosTelnet.Stop();
-            this.Dispose(true);
+
+            if (notifyIcon1 != null) notifyIcon1.Dispose();
+        }
+        private void quitToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            cbSysTray.Checked = false;
+            Application.Exit();
+        }
+        private void notifyIcon1_MouseClick_1(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (this.Visible && this.WindowState != FormWindowState.Minimized)
+                {
+                    this.Hide();
+                    this.ShowInTaskbar = false;
+                }
+                else
+                {
+                    this.SuspendLayout();
+
+                    this.Show();
+                    this.ShowInTaskbar = true;
+                    this.WindowState = FormWindowState.Normal;
+
+                    this.Activate();
+                    this.ResumeLayout(false);
+                }
+            }
+        }
+        private void cbSysTray_CheckedChanged(object sender, EventArgs e)
+        {
+            if (notifyIcon1 != null)
+            {
+                notifyIcon1.Visible = cbSysTray.Checked;
+            }
+
+            if (!cbSysTray.Focused)
+                return;
+
+            try
+            {
+                ConfigManager.SaveValue(currentConfigPath, "Systray", cbSysTray.Checked.ToString());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Fehler beim Speichern des Systray-Status: " + ex.Message);
+            }
+        }
+
+        private void gitHubPageToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://github.com/SAMDestroy/AVRControl",
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not open browser: " + ex.Message);
+            }
+        }
+        private void toolStripMenuItemShowHide_Click(object sender, EventArgs e)
+        {
+            if (this.Visible && this.WindowState != FormWindowState.Minimized)
+            {
+                this.Hide();
+                this.ShowInTaskbar = false;
+            }
+            else
+            {
+                this.SuspendLayout();
+
+                this.Show();
+                this.ShowInTaskbar = true;
+                this.WindowState = FormWindowState.Normal;
+
+                this.Activate();
+                this.ResumeLayout(false);
+            }
+
         }
         // Form Events END ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////

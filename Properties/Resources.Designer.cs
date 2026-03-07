@@ -83,6 +83,16 @@ namespace AVRControl.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap github {
+            get {
+                object obj = ResourceManager.GetObject("github", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap PauseIcon {
             get {
                 object obj = ResourceManager.GetObject("PauseIcon", resourceCulture);
@@ -103,6 +113,16 @@ namespace AVRControl.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap quit {
+            get {
+                object obj = ResourceManager.GetObject("quit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap RepeatAllIcon {
             get {
                 object obj = ResourceManager.GetObject("RepeatAllIcon", resourceCulture);
@@ -116,6 +136,16 @@ namespace AVRControl.Properties {
         public static System.Drawing.Bitmap RepeatOneIcon {
             get {
                 object obj = ResourceManager.GetObject("RepeatOneIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap showhide {
+            get {
+                object obj = ResourceManager.GetObject("showhide", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
