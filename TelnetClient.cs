@@ -172,18 +172,20 @@ public class AsyncTelnetClient
                 _stream.ReadTimeout = 10000; // 10 Sec
 
                 var heartbeatTask = SendHeartbeatAsync(_cts.Token);
+                var readLoopTask = ReadLoopAsync(_cts.Token);
                 var initialCmdTask = InitialCmd(_cts.Token);
 
                 await initialCmdTask;
 
-                await ReadLoopAsync(_cts.Token);
 
-                await heartbeatTask;
+                await Task.WhenAny(readLoopTask, heartbeatTask);
+                
+                throw new Exception("Heartbeat timeout");
             }
             catch (Exception ex)
             {
                 ErrorOccurred?.Invoke($"Disconnected: {ex.Message}");
-                StatusChanged?.Invoke("Waiting for Reconnect (5sec)...");
+                StatusChanged?.Invoke($"{ex.Message} - Waiting for Reconnect (5sec)...");
                 Initialized = false;
                 if (_shouldReconnect && _cts != null && !_cts.Token.IsCancellationRequested)
                 {
