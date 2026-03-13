@@ -113,8 +113,11 @@ namespace AVRControl
                         if (_maxDuration != duration)
                         {
                             _maxDuration = duration;
+
+                            pbProgress.Value = 0;
                             pbProgress.Maximum = _maxDuration;
-                            _localCurPos = curPos; // Erster Sync
+
+                            _localCurPos = curPos;
                         }
 
                         if (Math.Abs(_localCurPos - curPos) > 2000)
@@ -122,7 +125,9 @@ namespace AVRControl
                             _localCurPos = curPos;
                         }
 
-                        if (state == "play")
+                        pbProgress.Value = Math.Min(_localCurPos, pbProgress.Maximum);
+
+                        if (state == "play" && IsAVROn)
                         {
                             if (!timerProgress.Enabled) timerProgress.Start();
                         }
@@ -131,6 +136,7 @@ namespace AVRControl
                             timerProgress.Stop();
                         }
                     }
+
                     //Console.WriteLine($"Anzeige aktualisiert: [{serviceName}] {state} - {artist} - {song}");
                 });
             }

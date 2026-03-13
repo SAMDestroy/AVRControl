@@ -55,22 +55,7 @@ namespace AVRControl
                 return;
             }
 
-            if (data.StartsWith("ZMON"))
-            {
-                IsAVROn = true;
-                _telnet.DoStatusUpdates = true;
-                await _telnet.SendAsync("MV?");
-                await _telnet.SendAsync("SYSDA?");
-                await _telnet.SendAsync("MS?");
-
-                this.AVRSource.Text = await _telnet.ReadXMLDeviceInfoAsync();
-
-                this.SliderVolume.Value = CurVol;
-                this.ShowVolume.Text = "Vol: " + CurVol.ToString();
-
-                AVRControlsToggle(true);
-            }
-            else if (data.StartsWith("ZMOFF"))
+            if (data.StartsWith("ZMOFF"))
             {
                 IsAVROn = false;
 
@@ -86,82 +71,101 @@ namespace AVRControl
                 return;
             }
 
-            if (IsAVROn == true)
+            if (data.StartsWith("ZMON"))
             {
-                if (data.StartsWith("SI"))
+                IsAVROn = true;
+                _telnet.DoStatusUpdates = true;
+                await _telnet.SendAsync("MV?");
+                await _telnet.SendAsync("SYSDA?");
+                await _telnet.SendAsync("MS?");
+
+                //this.AVRSource.Text = await _telnet.ReadXMLDeviceInfoAsync();
+
+                this.SliderVolume.Value = CurVol;
+                this.ShowVolume.Text = "Vol: " + CurVol.ToString();
+
+                AVRControlsToggle(true);
+            }
+
+            if (IsAVROn == false)
+            {
+                return;
+            }
+
+            if (data.StartsWith("SI"))
+            {
+                string xmlSource = await _telnet.ReadXMLDeviceInfoAsync();
+
+                if (xmlSource == "HEOS")
                 {
-                    string xmlSource = await _telnet.ReadXMLDeviceInfoAsync();
+                    HeosControlsToggle(true);
 
-                    if (xmlSource == "HEOS")
+                    if (this.AVRSource.Text == "NET" || this.AVRSource.Text == "No Info" || string.IsNullOrEmpty(this.AVRSource.Text))
                     {
-                        HeosControlsToggle(true);
+                        this.AVRSource.Text = "HEOS";
+                    }
 
-                        if (this.AVRSource.Text == "NET" || this.AVRSource.Text == "No Info" || string.IsNullOrEmpty(this.AVRSource.Text))
+                    if (!_heosTelnet.IsConnected())
+                    {
+                        if (_heosTelnet.IsPortOpen(tbIP.Text, 1255))
                         {
-                            this.AVRSource.Text = "HEOS";
+                            _ = _heosTelnet.StartAsync(tbIP.Text, 1255);
+                            this.lbConnectStatus.Text = "Connected! (HEOS Mode)";
                         }
-
-                        if (!_heosTelnet.IsConnected())
+                        else
                         {
-                            if (_heosTelnet.IsPortOpen(tbIP.Text, 1255))
-                            {
-                                _ = _heosTelnet.StartAsync(tbIP.Text, 1255);
-                                this.lbConnectStatus.Text = "Connected! (HEOS Mode)";
-                            }
-                            else
-                            {
-                                this.lbConnectStatus.Text = "HEOS Port closed...";
-                                return;
-                            }
+                            this.lbConnectStatus.Text = "HEOS Port closed...";
+                            return;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    this.AVRSource.Text = xmlSource;
+                    this.lbConnectStatus.Text = "Connected!";
+
+                    HeosControlsToggle(false);
+                    StopHeosTimeline();
+
+                    if (_heosTelnet != null && _heosTelnet.IsConnected())
                     {
-                        this.AVRSource.Text = xmlSource;
-                        this.lbConnectStatus.Text = "Connected!";
-
-                        HeosControlsToggle(false);
-                        StopHeosTimeline();
-
-                        if (_heosTelnet != null && _heosTelnet.IsConnected())
-                        {
-                            _heosTelnet.Stop();
-                        }
+                        _heosTelnet.Stop();
                     }
-                }
-                else if (data.StartsWith("SYSDA"))
-                {
-                    this.AVRSourceAudio.Text = data.Substring(6, data.Length - 6);
-                }
-                else if (data.StartsWith("MS"))
-                {
-                    this.AVRSoundMode.Text = data.Substring(2, data.Length - 2);
-                }
-                else if (data.Contains("MUON"))
-                {
-                    _muted = true;
-                    this.ShowVolume.Text = "Muted";
-                    this.btnToggleMute.BackColor = System.Drawing.Color.DarkRed;
-                    this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-                }
-                else if (data.StartsWith("MUOFF"))
-                {
-                    _muted = false;
-                    this.ShowVolume.Text = "Vol: " + CurVol.ToString();
-                    this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
-                    this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                }
-                else if (data.StartsWith("MV") && isScrolling == false)
-                {
-                    _muted = false;
-                    CurVol = Int32.Parse(data.Substring(2, 2));
-
-                    this.ShowVolume.Text = "Vol: " + CurVol.ToString();
-                    this.SliderVolume.Value = CurVol;
-                    this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
-                    this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                 }
             }
+            else if (data.StartsWith("SYSDA"))
+            {
+                this.AVRSourceAudio.Text = data.Substring(6, data.Length - 6);
+            }
+            else if (data.StartsWith("MS"))
+            {
+                this.AVRSoundMode.Text = data.Substring(2, data.Length - 2);
+            }
+            else if (data.Contains("MUON"))
+            {
+                _muted = true;
+                this.ShowVolume.Text = "Muted";
+                this.btnToggleMute.BackColor = System.Drawing.Color.DarkRed;
+                this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            }
+            else if (data.StartsWith("MUOFF"))
+            {
+                _muted = false;
+                this.ShowVolume.Text = "Vol: " + CurVol.ToString();
+                this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
+                this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            }
+            else if (data.StartsWith("MV") && isScrolling == false)
+            {
+                _muted = false;
+                CurVol = Int32.Parse(data.Substring(2, 2));
+
+                this.ShowVolume.Text = "Vol: " + CurVol.ToString();
+                this.SliderVolume.Value = CurVol;
+                this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
+                this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            }
+            
         }
 
         // HEOS LOOP
