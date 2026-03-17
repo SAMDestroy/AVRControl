@@ -22,6 +22,10 @@ namespace AVRControl
     {
         private void AVRControlsToggle(bool enabled)
         {
+            if (enabled == _lastAvrToggleState) return;
+
+            _lastAvrToggleState = enabled;
+
             if (this.InvokeRequired)
             {
                 this.BeginInvoke(new Action<bool>(AVRControlsToggle), enabled);
@@ -34,9 +38,19 @@ namespace AVRControl
             this.SliderVolume.Enabled = enabled;
             this.PowerToggle.Checked = enabled;
             this.PowerToggle.Enabled = true;
+            this.lblTabMain.Enabled = enabled;
+            this.lblTabSpeaker.Enabled = enabled;
 
             if (!enabled)
             {
+                if (tabControl1.SelectedIndex != 0)
+                {
+                    tabControl1.SelectedIndex = 0;
+
+                    lblTabMain.BackColor = Color.SteelBlue; // Aktiv
+                    lblTabSpeaker.BackColor = Color.Gray;   // Inaktiv
+                }
+
                 this.AVRSource.Text = "STANDBY";
                 this.AVRSourceAudio.Text = "";
                 this.AVRSoundMode.Text = "";
@@ -47,6 +61,10 @@ namespace AVRControl
                 this.PowerToggle.FlatAppearance.CheckedBackColor = Color.Gray;
                 this.PowerToggle.Text = "OFF";
 
+                this.btnVolDown.BackColor = System.Drawing.Color.Transparent;
+                this.btnVolUp.BackColor = System.Drawing.Color.Transparent;
+                this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
+
                 this.ActiveControl = null;
 
                 timerProgress.Stop();
@@ -56,10 +74,19 @@ namespace AVRControl
                 this.PowerToggle.BackColor = Color.Green;
                 this.PowerToggle.FlatAppearance.CheckedBackColor = Color.Green;
                 this.PowerToggle.Text = "ON";
+                this.AVRSource.Text = "ON";
+
+                this.btnVolDown.BackColor = System.Drawing.Color.DarkGray;
+                this.btnVolUp.BackColor = System.Drawing.Color.DarkGray;
+                this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
             }
         }
         private void HeosControlsToggle(bool enabled)
         {
+            if (enabled == _lastHeosToggleState) return;
+
+            _lastHeosToggleState = enabled;
+
             if (this.InvokeRequired)
             {
                 this.BeginInvoke(new Action<bool>(HeosControlsToggle), enabled);
@@ -73,7 +100,7 @@ namespace AVRControl
             this.btnHeosPlayRepeatAll.Enabled = enabled;
             this.btnHeosPlayRepeatOne.Enabled = enabled;
 
-            if (!enabled)
+            if (!enabled || !IsAVROn)
             {
                 this.pbAlbumArt.Hide();
 
@@ -96,6 +123,13 @@ namespace AVRControl
                 this.lbHeosAVRVersion_Data.Text = "";
                 this.lbHeosAVRID_Data.Text = "";
                 this.lbHeosAVRNetType_Data.Text = "";
+
+                this.btnHeosPlayPause.BackColor = System.Drawing.Color.Transparent;
+                this.btnHeosPlayBack.BackColor = System.Drawing.Color.Transparent;
+                this.btnHeosPlaySkip.BackColor = System.Drawing.Color.Transparent;
+                this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.Transparent;
+                this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.Transparent;
+                this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.Transparent;
             }
             else
             {
@@ -111,6 +145,13 @@ namespace AVRControl
                 this.lbHeosAVRVersion.Text = "Version:";
                 this.lbHeosAVRID.Text = "Player ID:";
                 this.lbHeosAVRNetType.Text = "NetType:";
+
+                this.btnHeosPlayPause.BackColor = System.Drawing.Color.DarkGray;
+                this.btnHeosPlayBack.BackColor = System.Drawing.Color.DarkGray;
+                this.btnHeosPlaySkip.BackColor = System.Drawing.Color.DarkGray;
+                this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.DarkGray;
+                this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.DarkGray;
+                this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.DarkGray;
             }
         }
 

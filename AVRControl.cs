@@ -17,6 +17,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -38,8 +39,17 @@ namespace AVRControl
         private int _maxDuration = 0;
         private DateTime _lastUserInteraction = DateTime.MinValue;
         private DateTime _lastVolumeSend = DateTime.MinValue;
+        private DateTime _lastSpeakerSend = DateTime.MinValue;
         private bool IsHeosPlayPause = false;
         private bool _isShuffleOn = false;
+
+        private bool _lastAvrToggleState = true;
+        private bool _lastHeosToggleState = true;
+
+        private int _deltaSub1 = 0;
+        private int _deltaSub2 = 0;
+        private bool _masterMoving = false;
+
 
         private AsyncTelnetClient _telnet;
 
@@ -49,12 +59,12 @@ namespace AVRControl
         public AVRControl()
         {
             InitializeComponent();
-            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
-            Text = $"AVRControl v{Application.ProductVersion}";
+            this.Icon = Properties.Resources.AVRControl;
+            this.Text = $"AVRControl v{Application.ProductVersion}";
 
-            this.notifyIcon1.Icon = Icon;
-            this.notifyIcon1.Text = Text;
+            this.notifyIcon1.Icon = this.Icon;
+            this.notifyIcon1.Text = this.Text;
 
             _telnet = new AsyncTelnetClient();
             _telnet.DataReceived += OnDataReceived;
@@ -90,6 +100,7 @@ namespace AVRControl
         private void LoadDevice()
         {
             HeosControlsToggle(false);
+            AVRControlsToggle(false);
 
             try
             {
@@ -187,9 +198,9 @@ namespace AVRControl
             this.btnVolUp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnVolUp.BackColor = System.Drawing.Color.Transparent;
         }
-        private void BtnVolUp_MouseHover(object sender, EventArgs e)
+        private void BtnVolUp_MouseEnter(object sender, EventArgs e)
         {            
-            this.btnVolUp.BackColor = System.Drawing.Color.DarkGray;
+            this.btnVolUp.BackColor = System.Drawing.Color.Gray;
         }
         private async void BtnVolDown_Click(object sender, EventArgs e)
         {
@@ -206,9 +217,9 @@ namespace AVRControl
             this.btnVolDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnVolDown.BackColor = System.Drawing.Color.Transparent;
         }
-        private void BtnVolDown_MouseHover(object sender, EventArgs e)
+        private void BtnVolDown_MouseEnter(object sender, EventArgs e)
         {
-            this.btnVolDown.BackColor = System.Drawing.Color.DarkGray;
+            this.btnVolDown.BackColor = System.Drawing.Color.Gray;
         }
         private async void SliderVolume_Scroll(object sender, EventArgs e)
         {
@@ -249,13 +260,13 @@ namespace AVRControl
             else
                 await _telnet.SendAsync("MUOFF");
         }
-        private void BtnToggleMute_MouseHover(object sender, EventArgs e)
+        private void BtnToggleMute_MouseEnter(object sender, EventArgs e)
         {
             this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
             if (!_muted)
             {
-                this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
+                this.btnToggleMute.BackColor = System.Drawing.Color.Gray;
             }
         }
         private void BtnToggleMute_MouseLeave(object sender, EventArgs e)
@@ -264,7 +275,7 @@ namespace AVRControl
 
             if (!_muted)
             {
-                this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
+                this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
             }
         }
         private void BtnToggleMute_MouseDown(object sender, EventArgs e)
@@ -304,9 +315,9 @@ namespace AVRControl
             this.btnHeosPlayPause.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnHeosPlayPause.BackColor = System.Drawing.Color.Transparent;
         }
-        private void btnHeosPlayPause_MouseHover(object sender, EventArgs e)
+        private void btnHeosPlayPause_MouseEnter(object sender, EventArgs e)
         {
-            this.btnHeosPlayPause.BackColor = System.Drawing.Color.DarkGray;
+            this.btnHeosPlayPause.BackColor = System.Drawing.Color.Gray;
         }
         private async void btnHeosPlaySkip_Click(object sender, EventArgs e)
         {
@@ -332,9 +343,9 @@ namespace AVRControl
             this.btnHeosPlaySkip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnHeosPlaySkip.BackColor = System.Drawing.Color.Transparent;
         }
-        private void btnHeosPlaySkip_MouseHover(object sender, EventArgs e)
+        private void btnHeosPlaySkip_MouseEnter(object sender, EventArgs e)
         {
-            this.btnHeosPlaySkip.BackColor = System.Drawing.Color.DarkGray;
+            this.btnHeosPlaySkip.BackColor = System.Drawing.Color.Gray;
         }
         private async void btnHeosPlayBack_Click(object sender, EventArgs e)
         {
@@ -360,9 +371,9 @@ namespace AVRControl
             this.btnHeosPlayBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnHeosPlayBack.BackColor = System.Drawing.Color.Transparent;
         }
-        private void btnHeosPlayBack_MouseHover(object sender, EventArgs e)
+        private void btnHeosPlayBack_MouseEnter(object sender, EventArgs e)
         {
-            this.btnHeosPlayBack.BackColor = System.Drawing.Color.DarkGray;
+            this.btnHeosPlayBack.BackColor = System.Drawing.Color.Gray;
         }
         private async void btnHeosPlayShuffle_Click(object sender, EventArgs e)
         {
@@ -382,9 +393,9 @@ namespace AVRControl
             this.btnHeosPlayShuffle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.Transparent;
         }
-        private void btnHeosPlayShuffle_MouseHover(object sender, EventArgs e)
+        private void btnHeosPlayShuffle_MouseEnter(object sender, EventArgs e)
         {
-            this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.DarkGray;
+            this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.Gray;
         }
         private async void btnHeosPlayRepeatAll_Click(object sender, EventArgs e)
         {
@@ -408,9 +419,9 @@ namespace AVRControl
             this.btnHeosPlayRepeatAll.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.Transparent;
         }
-        private void btnHeosPlayRepeatAll_MouseHover(object sender, EventArgs e)
+        private void btnHeosPlayRepeatAll_MouseEnter(object sender, EventArgs e)
         {
-            this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.DarkGray;
+            this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.Gray;
         }
         private async void btnHeosPlayRepeatOne_Click(object sender, EventArgs e)
         {
@@ -434,9 +445,9 @@ namespace AVRControl
             this.btnHeosPlayRepeatOne.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.Transparent;
         }
-        private void btnHeosPlayRepeatOne_MouseHover(object sender, EventArgs e)
+        private void btnHeosPlayRepeatOne_MouseEnter(object sender, EventArgs e)
         {
-            this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.DarkGray;
+            this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.Gray;
         }
         private void btnInstall_Click(object sender, EventArgs e)
         {
@@ -538,12 +549,12 @@ namespace AVRControl
 
             if (notifyIcon1 != null) notifyIcon1.Dispose();
         }
-        private void quitToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cbSysTray.Checked = false;
             Application.Exit();
         }
-        private void notifyIcon1_MouseClick_1(object sender, MouseEventArgs e)
+        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -620,6 +631,345 @@ namespace AVRControl
             }
 
         }
+
+        private async void lblTabSpeaker_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 1;
+
+            lblTabMain.BackColor = Color.Gray;    // Inaktiv
+            lblTabSpeaker.BackColor = Color.SteelBlue; // Aktiv
+
+            if (_telnet.Initialized)
+            {
+                await _telnet.SendAsync("CV?\r");
+            }
+           
+            this.ActiveControl = null;
+        }
+
+        private void lblTabMain_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+
+            lblTabMain.BackColor = Color.SteelBlue;    // Aktiv
+            lblTabSpeaker.BackColor = Color.Gray; // Inaktiv
+
+            this.ActiveControl = null;
+        }
+
+        private void BtnVolDown_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnVolDown.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void BtnVolUp_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnVolUp.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void btnHeosPlayPause_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnHeosPlayPause.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void btnHeaosPlayBack_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnHeosPlayBack.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void btnHeosPlaySkip_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnHeosPlaySkip.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void btnHeosPlayShuffle_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void btnHeosPlayRepeatAll_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private void btnHeosPlayRepeatOne_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.DarkGray;
+        }
+
+        private async void tbSpeakerFrontL_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.lbSpeakerFrontLShowValue.Text = GetDBString(tbSpeakerFrontL.Value);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
+            {
+                _lastSpeakerSend = DateTime.Now;
+
+                await _telnet.SendAsync($"CVFL {tbSpeakerFrontL.Value}\r");
+            }
+        }
+
+        private async void tbSpeakerFrontL_MouseUp(object sender, MouseEventArgs e)
+        {
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+
+            isScrolling = false;           
+        }
+
+        private async void tbSpeakerCenter_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.lbSpeakerCenterShowValue.Text = GetDBString(tbSpeakerCenter.Value);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
+            {
+                _lastSpeakerSend = DateTime.Now;
+
+                await _telnet.SendAsync($"CVC {tbSpeakerCenter.Value}\r");
+            }
+
+        }
+
+        private async void tbSpeakerCenter_MouseUp(object sender, MouseEventArgs e)
+        {
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+
+            isScrolling = false;
+        }
+
+        private async void tbSpeakerFrontR_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.lbSpeakerFrontRShowValue.Text = GetDBString(tbSpeakerFrontR.Value);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
+            {
+                _lastSpeakerSend = DateTime.Now;
+
+                await _telnet.SendAsync($"CVFR {tbSpeakerFrontR.Value}\r");
+            }
+        }
+
+        private async void tbSpeakerFrontR_MouseUp(object sender, MouseEventArgs e)
+        {
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+
+            isScrolling = false;
+        }
+
+        private async void tbSpeakerSurroundL_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.lbSpeakerSurroundLShowValue.Text = GetDBString(tbSpeakerSurroundL.Value);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
+            {
+                _lastSpeakerSend = DateTime.Now;
+
+                await _telnet.SendAsync($"CVSL {tbSpeakerSurroundL.Value}\r");
+            }
+        }
+
+        private async void tbSpeakerSurroundL_MouseUp(object sender, MouseEventArgs e)
+        {
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+
+            isScrolling = false;
+        }
+
+        private async void tbSpeakerSurroundR_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.lbSpeakerSurroundRShowValue.Text = GetDBString(tbSpeakerSurroundR.Value);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
+            {
+                _lastSpeakerSend = DateTime.Now;
+
+                await _telnet.SendAsync($"CVSR {tbSpeakerSurroundR.Value}\r");
+            }
+        }
+
+        private async void tbSpeakerSurroundR_MouseUp(object sender, MouseEventArgs e)
+        {
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+
+            isScrolling = false;
+        }
+
+        private async void tbSpeakerSubwoofer1_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.lbSpeakerSubwoofer1ShowValue.Text = GetDBString(tbSpeakerSubwoofer1.Value);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
+            {
+                _lastSpeakerSend = DateTime.Now;
+                
+                await _telnet.SendAsync($"CVSW {tbSpeakerSubwoofer1.Value}\r");
+            }
+        }
+
+        private async void tbSpeakerSubwoofer1_MouseUp(object sender, MouseEventArgs e)
+        {
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+
+            isScrolling = false;
+        }
+
+        private async void tbSpeakerSubwoofer2_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.lbSpeakerSubwoofer2ShowValue.Text = GetDBString(tbSpeakerSubwoofer2.Value);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
+            {
+                _lastSpeakerSend = DateTime.Now;
+
+                await _telnet.SendAsync($"CVSW2 {tbSpeakerSubwoofer2.Value}\r");
+            }
+        }
+
+        private async void tbSpeakerSubwoofer2_MouseUp(object sender, MouseEventArgs e)
+        {
+            isScrolling = false;
+
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+        }
+
+        private void tbSpeakerSubMaster_MouseDown(object sender, MouseEventArgs e)
+        {
+            _deltaSub1 = tbSpeakerSubwoofer1.Value - tbSpeakerSubMaster.Value;
+            _deltaSub2 = tbSpeakerSubwoofer2.Value - tbSpeakerSubMaster.Value;
+            _masterMoving = true;
+            isScrolling = true;
+        }
+
+        private async void tbSpeakerSubMaster_Scroll(object sender, EventArgs e)
+        {
+            isScrolling = true;
+            int masterVal = tbSpeakerSubMaster.Value;
+
+            int targetSub1 = masterVal + _deltaSub1;
+            int targetSub2 = masterVal + _deltaSub2;
+
+            if (targetSub1 > 62 || targetSub2 > 62 || targetSub1 < 38 || targetSub2 < 38)
+            {
+                if (targetSub1 > 62) tbSpeakerSubMaster.Value = 62 - _deltaSub1;
+                else if (targetSub2 > 62) tbSpeakerSubMaster.Value = 62 - _deltaSub2;
+                else if (targetSub1 < 38) tbSpeakerSubMaster.Value = 38 - _deltaSub1;
+                else if (targetSub2 < 38) tbSpeakerSubMaster.Value = 38 - _deltaSub2;
+
+                masterVal = tbSpeakerSubMaster.Value;
+                targetSub1 = masterVal + _deltaSub1;
+                targetSub2 = masterVal + _deltaSub2;
+            }
+
+            this.lbSpeakerSubMasterShowValue.Text = GetDBString(masterVal);
+            tbSpeakerSubwoofer1.Value = targetSub1;
+            tbSpeakerSubwoofer2.Value = targetSub2;
+            lbSpeakerSubwoofer1ShowValue.Text = GetDBString(targetSub1);
+            lbSpeakerSubwoofer2ShowValue.Text = GetDBString(targetSub2);
+
+            if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 100)
+            {
+                _lastSpeakerSend = DateTime.Now;
+                await _telnet.SendAsync($"CVSW {targetSub1}\r");
+                await _telnet.SendAsync($"CVSW2 {targetSub2}\r");
+            }
+        }
+
+
+        private async void tbSpeakerSubMaster_MouseUp(object sender, MouseEventArgs e)
+        {
+            _masterMoving = false;
+            isScrolling = false;
+
+            await Task.Delay(150);
+
+            _ = _telnet.SendAsync("CV?\r");
+        }
+
+        private void AVRControl_Activated(object sender, EventArgs e)
+        {
+            if (this.Icon == null || this.Icon.Handle == IntPtr.Zero)
+            {
+                this.Icon = Properties.Resources.AVRControl;
+            }
+        }
+
+        private async void btnResetSpeaker_Click(object sender, EventArgs e)
+        {
+            isScrolling = true;
+
+            this.tbSpeakerFrontL.Value = 50;
+            this.tbSpeakerFrontR.Value = 50;
+            this.tbSpeakerCenter.Value = 50;
+            this.tbSpeakerSubwoofer1.Value = 50;
+            this.tbSpeakerSubwoofer2.Value = 50;
+            this.tbSpeakerSurroundL.Value = 50;
+            this.tbSpeakerSurroundR.Value = 50;
+            this.tbSpeakerSubMaster.Value = 50;
+
+            this.lbSpeakerFrontLShowValue.Text = "0.0 dB";
+            this.lbSpeakerFrontRShowValue.Text = "0.0 dB";
+            this.lbSpeakerCenterShowValue.Text = "0.0 dB";
+            this.lbSpeakerSubwoofer1ShowValue.Text = "0.0 dB";
+            this.lbSpeakerSubwoofer2ShowValue.Text = "0.0 dB";
+            this.lbSpeakerSurroundLShowValue.Text = "0.0 dB";
+            this.lbSpeakerSurroundRShowValue.Text = "0.0 dB";
+            this.lbSpeakerSubMasterShowValue.Text = "0.0 dB";
+
+            string[] commands = { "CVFL", "CVFR", "CVC", "CVSW", "CVSW2", "CVSL", "CVSR" };
+            int neutralValue = 50;
+
+            try
+            {
+                foreach (string cmd in commands)
+                {
+                    await _telnet.SendAsync($"{cmd} {neutralValue}\r");
+
+                    await Task.Delay(30);
+                }
+
+
+
+                await Task.Delay(500);
+                await _telnet.SendAsync("CV?\r");
+            }
+            finally
+            {
+                await Task.Delay(200);
+                isScrolling = false;
+            }
+        }
+
+
+
+
+
         // Form Events END ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

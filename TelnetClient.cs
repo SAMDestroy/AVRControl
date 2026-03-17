@@ -21,6 +21,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -29,7 +30,8 @@ public class AsyncTelnetClient
     private TcpClient _client;
     private NetworkStream _stream;
     private bool _shouldReconnect = false;
-    private bool Initialized = false;
+    public bool Initialized { get; private set; } = false;
+
     private CancellationTokenSource _cts;
 
     private string _IP;
@@ -91,13 +93,17 @@ public class AsyncTelnetClient
             return "Connecting...";
         }
     }
-    // XML Reader END ////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    // Connector Part
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public bool IsHostOnline(string ipAddress)
+
+
+// XML Reader END ////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Connector Part
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+public bool IsHostOnline(string ipAddress)
     {
         try
         {
@@ -171,6 +177,8 @@ public class AsyncTelnetClient
                     await InitialCmd(linkCts.Token);
 
                     await Task.WhenAny(readLoopTask, heartbeatTask);
+
+                    Initialized = false;
 
                     linkCts.Cancel();
                     try
@@ -286,9 +294,10 @@ public class AsyncTelnetClient
                 Initialized = true;
 
                 string combinedCmd = "ZM?\r";
-                byte[] heartbeatMsg = Encoding.UTF8.GetBytes(combinedCmd);
+                byte[] InitialMsg = Encoding.UTF8.GetBytes(combinedCmd);
 
-                await _stream.WriteAsync(heartbeatMsg, 0, heartbeatMsg.Length, token);
+                await _stream.WriteAsync(InitialMsg, 0, InitialMsg.Length, token);
+
                 await _stream.FlushAsync(token);
             }
         }

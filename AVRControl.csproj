@@ -163,7 +163,8 @@
     <Content Include="res\Vol_Down.png" />
     <Content Include="res\Vol_Mute.png" />
     <Content Include="res\Vol_Up.png" />
-    <Content Include="Screenshot.png" />
+    <Content Include="Screenshot1.png" />
+    <Content Include="Screenshot2.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

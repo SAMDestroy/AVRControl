@@ -1,8 +1,10 @@
 # AVRControl
 
 A lightweight C# Windows Forms tool for basic Telnet control of Denon and Marantz AVRs.
+Tested on Denon X4500H with 5.1 Audyssey Setup
 
-![screenshot](Screenshot.png)
+![screenshot](Screenshot1.png)
+![screenshot](Screenshot2.png)
 
 ## Overview
 AVRControl is a portable application designed for quick and easy control of your AV Receiver directly from your Windows desktop.
@@ -31,31 +33,36 @@ No installation required.
 <hr>
 CHANGELOG:
 
-🚀 **AVRControl v1.1.0 – The Architecture Update**
-This release marks a major milestone in system stability, modular design, and user flexibility.
 
-💡 **Deployment Options & Flexibility**
+🚀 **AVRControl v1.2.0 – The Audio Precision Update**
+This release introduces advanced speaker calibration tools and a high-resilience network engine for seamless control.
 
-- **Portable Mode:** Run the app directly from any folder. Perfect for users who prefer to pin the app to the Taskbar or manage their own custom Autostart entries. In this mode, the Systray option can be toggled on or off freely.
-- **Installation Mode:** Use the built-in "Install" feature to automatically set up AVRControl in your Roaming directory with a Windows Autostart entry. Note: To ensure seamless background operation, the Systray mode is permanently enabled and locked when installed.
 
 ✨ **New Features**
 
-- **Enhanced Tray Menu:** New context menu featuring a direct link to the GitHub project page, a dedicated "Show/Hide" toggle, and modernized icons.
-- **Smart Config System:** Migrated to a key-value based configuration (AVRControl.cfg). Settings like IP and Systray status are now stored securely with specific identifiers.
-- **Robust XML Parsing:** Friendly name retrieval (e.g., "PlayStation") is now asynchronous. Built-in timeouts and fallbacks prevent crashes during AVR reboots or firmware updates.
+- **Advanced Speaker Control:** A dedicated new tab for real-time channel level adjustments (Channel Volume Offset), mirroring the precision of the original web interface.
+- **Master Subwoofer Slider:** Control both subwoofers simultaneously with the Master Slider. It features a smart Delta Protection system that preserves your custom level ratio between Sub 1 and Sub 2 while moving.
+- **One-Click Speaker Reset:** A new global "Reset" button that instantly returns all speaker offsets to a neutral 0.0 dB state with a synchronized hardware refresh.
+- **Authentic DB Display:** All speaker labels feature high-precision dB readouts, including the characteristic "+" and "-" prefixes (e.g., +1.5 dB) for a true AVR feel.
+
 
 🛠️ **Technical Improvements**
 
-- **Modular Architecture:** Fully transitioned to Partial Classes. Logic is now separated into specialized modules (Parser, Toggles, Setup, Helpers), significantly improving maintainability.
-- **Zero-Dependency Release:** The GitHub update system now uses native string parsing. The application requires no external DLLs and remains a clean, single EXE file.
-- **Optimized State Management:** Separated connection status (Port Check) from actual Power Status (Telnet feedback) to prevent false UI indications.
+- **Standby Resilience:** Completely overhauled the TCP Watchdog. The app now survives standby and hibernate cycles, performing a silent "Self-Healing" reconnect upon wake-up.
+- **Smart Command Throttling:** Implemented a hardware-safe 50ms/100ms throttle for all sliders. This prevents network buffer overflows and ensures smooth, lag-free communication with the AVR.
+- **Flicker-Free UI:** Introduced a new state-locking mechanism (isScrolling) that prevents sliders from "jumping" or "jittering" while the user is actively making adjustments.
+- **Optimized Power Management:** Integrated an intelligent UI-Gate that automatically switches the app back to the Main Tab when the AVR is powered off, ensuring a clean state for the next session.
+
 
 🐛 **Bugfixes**
 
-- Fixed: "Connection Refused" exception handled for port 8080 during AVR boot cycles.
-- Fixed: Initializing issue where isRunningFromRoaming failed to detect the installation status in partial classes.
-- Fixed: Eliminated UI flickering and redundant config write-access through improved focus checks.
+- **Fixed:** Resolved the "Disappearing Icon" issue where the app icon would vanish from the taskbar after a Windows standby/resume cycle.
+- **Fixed:** Improved Telnet parser stability to handle fragmented multi-line responses during high-traffic status updates.
+- **Fixed:** Corrected the "Subwoofer EL" command syntax specifically for X-Series models to ensure 100% command acceptance.
+
+**Developer Note:**
+The new Speaker Control operates on the Channel Volume (CV) level. This allows for safe, temporary adjustments during playback without overwriting your permanent Audyssey room calibration.
+
 
 ## License
 This project is licensed under the GPU V3 License. See the LICENSE file for details.

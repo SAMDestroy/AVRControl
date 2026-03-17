@@ -37,6 +37,16 @@ namespace AVRControl
 
             // Showing on Status Label
             this.lbConnectStatus.Text = data;
+
+            if (!_telnet.Initialized)
+            {
+                AVRControlsToggle(false);
+                HeosControlsToggle(false);
+                StopHeosTimeline();
+
+                this.AVRSource.Text = "N/A";
+                this.ShowVolume.Text = "N/A";
+            }
         }
 
         // AVR Telnet Data Loop
@@ -48,7 +58,7 @@ namespace AVRControl
                 return;
             }
 
-            // Console.WriteLine($"NORMALDATA: {data}");
+             Console.WriteLine($"NORMALDATA: {data}");
 
             if (data.StartsWith("MVMAX")) // We dont need it
             {
@@ -152,7 +162,7 @@ namespace AVRControl
             {
                 _muted = false;
                 this.ShowVolume.Text = "Vol: " + CurVol.ToString();
-                this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
+                this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
                 this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             }
             else if (data.StartsWith("MV") && isScrolling == false)
@@ -162,10 +172,35 @@ namespace AVRControl
 
                 this.ShowVolume.Text = "Vol: " + CurVol.ToString();
                 this.SliderVolume.Value = CurVol;
-                this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
+                this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
                 this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             }
-            
+
+            else if (data.Contains("CV") && !isScrolling && !_masterMoving)
+            {
+                string[] lines = data.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string line in lines)
+                {
+                    string cleanLine = line.Trim();
+                    if (cleanLine.Length < 4 || cleanLine == "CVEND") continue;
+
+                    var match = System.Text.RegularExpressions.Regex.Match(cleanLine, @"\d+$");
+                    if (match.Success)
+                    {
+                        int val = int.Parse(match.Value);
+
+                        if (val > 100) val = val / 10;
+
+                        this.Invoke((MethodInvoker)delegate {
+                            UpdateSpeakerSlider(cleanLine, val);
+                        });
+                    }
+                }
+            }
+
+
+
         }
 
         // HEOS LOOP
@@ -215,7 +250,6 @@ namespace AVRControl
                 {
                     _maxDuration = duration;
 
-                    // Sync nur, wenn wir nicht im 3-Sekunden-Skip-Schutz sind
                     if ((DateTime.Now - _lastUserInteraction).TotalSeconds >= 3.0)
                     {
                         if (Math.Abs(_localCurPos - curPos) > 2000) _localCurPos = curPos;

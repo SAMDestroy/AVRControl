@@ -13,7 +13,12 @@ GNU General Public License for more details.
 */
 
 using System;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+
 
 namespace AVRControl
 {
@@ -108,6 +113,29 @@ namespace AVRControl
             return string.Format("{0:D2}:{1:D2}", t.Minutes + (t.Hours * 60), t.Seconds);
         }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void UpdateSpeakerSlider(string data, int val)
+        {
+            if (data.Contains("CVC")) { tbSpeakerCenter.Value = val; lbSpeakerCenterShowValue.Text = GetDBString(val); }
+            else if (data.Contains("CVSW2")) { tbSpeakerSubwoofer2.Value = val; lbSpeakerSubwoofer2ShowValue.Text = GetDBString(val); }
+            else if (data.Contains("CVSW")) { tbSpeakerSubwoofer1.Value = val; lbSpeakerSubwoofer1ShowValue.Text = GetDBString(val); }
+            else if (data.Contains("CVFL")) { tbSpeakerFrontL.Value = val; lbSpeakerFrontLShowValue.Text = GetDBString(val); }
+            else if (data.Contains("CVFR")) { tbSpeakerFrontR.Value = val; lbSpeakerFrontRShowValue.Text = GetDBString(val); }
+            else if (data.Contains("CVSL")) { tbSpeakerSurroundL.Value = val; lbSpeakerSurroundLShowValue.Text = GetDBString(val); }
+            else if (data.Contains("CVSR")) { tbSpeakerSurroundR.Value = val; lbSpeakerSurroundRShowValue.Text = GetDBString(val); }
+        }
+        private string GetDBString(int value)
+        {
+            double db = (value - 50) / 2.0;
+
+            if (Math.Abs(db) < 0.01) db = 0.0;
+
+            string sign = (db > 0) ? "+" : "";
+
+            return sign + db.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + " dB";
+        }
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
