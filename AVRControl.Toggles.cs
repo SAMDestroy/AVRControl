@@ -22,10 +22,6 @@ namespace AVRControl
     {
         private void AVRControlsToggle(bool enabled)
         {
-            if (enabled == _lastAvrToggleState) return;
-
-            _lastAvrToggleState = enabled;
-
             if (this.InvokeRequired)
             {
                 this.BeginInvoke(new Action<bool>(AVRControlsToggle), enabled);
@@ -83,9 +79,6 @@ namespace AVRControl
         }
         private void HeosControlsToggle(bool enabled)
         {
-            if (enabled == _lastHeosToggleState) return;
-
-            _lastHeosToggleState = enabled;
 
             if (this.InvokeRequired)
             {

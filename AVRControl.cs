@@ -43,9 +43,6 @@ namespace AVRControl
         private bool IsHeosPlayPause = false;
         private bool _isShuffleOn = false;
 
-        private bool _lastAvrToggleState = true;
-        private bool _lastHeosToggleState = true;
-
         private int _deltaSub1 = 0;
         private int _deltaSub2 = 0;
         private bool _masterMoving = false;
@@ -60,7 +57,8 @@ namespace AVRControl
         {
             InitializeComponent();
 
-            this.Icon = Properties.Resources.AVRControl;
+            // this.Icon = Properties.Resources.AVRControl;
+            this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             this.Text = $"AVRControl v{Application.ProductVersion}";
 
             this.notifyIcon1.Icon = this.Icon;
