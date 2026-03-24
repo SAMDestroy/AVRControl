@@ -570,6 +570,7 @@ namespace AVRControl
                     this.WindowState = FormWindowState.Normal;
 
                     this.Activate();
+                    this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
                     this.ResumeLayout(false);
                 }
             }
@@ -625,6 +626,7 @@ namespace AVRControl
                 this.WindowState = FormWindowState.Normal;
 
                 this.Activate();
+                this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
                 this.ResumeLayout(false);
             }
 
