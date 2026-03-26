@@ -46,6 +46,7 @@ namespace AVRControl
             {
                 CreateParams cp = base.CreateParams;
                 cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
+
                 return cp;
             }
         }
@@ -1541,10 +1542,13 @@ namespace AVRControl
             this.Controls.Add(this.LogoPicture);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.ShowInTaskbar = true;
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.MaximizeBox = false;
             this.Name = "AVRControl";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AVRControl";
+            this.Icon = global::AVRControl.Properties.Resources.AVRControl;
             this.Activated += new System.EventHandler(this.AVRControl_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.AVRControl_Load);

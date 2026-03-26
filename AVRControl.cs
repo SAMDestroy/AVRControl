@@ -23,8 +23,12 @@ using System.Windows.Forms;
 
 namespace AVRControl
 {
+
     public partial class AVRControl : Form
     {
+
+        private Icon _appIcon;
+
         private string roamingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AVRControl", "AVRControl.exe");
         private bool isRunningFromRoaming = false;
         private string currentConfigPath;
@@ -55,14 +59,21 @@ namespace AVRControl
 
         public AVRControl()
         {
-            InitializeComponent();
-
             // this.Icon = Properties.Resources.AVRControl;
-            this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            _appIcon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.Icon = _appIcon;
             this.Text = $"AVRControl v{Application.ProductVersion}";
 
-            this.notifyIcon1.Icon = this.Icon;
+            InitializeComponent();
+
+            this.notifyIcon1.Icon = _appIcon;
             this.notifyIcon1.Text = this.Text;
+
+            
+
+            this.CreateHandle();
+
+            SystemEvents.PowerModeChanged += OnPowerModeChanged;
 
             _telnet = new AsyncTelnetClient();
             _telnet.DataReceived += OnDataReceived;
@@ -79,20 +90,46 @@ namespace AVRControl
 
         // Form Init Part
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        protected override void SetVisibleCore(bool value)
+        {
+            if (!this.IsHandleCreated && value && cbSysTray.Checked)
+            {
+                value = false;
+                if (!this.IsHandleCreated) CreateHandle();
+            }
+            base.SetVisibleCore(value);
+        }
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            if (this.Visible && cbSysTray.Checked && !this.IsHandleCreated)
+            {
+                this.Visible = false;
+                return;
+            }
+            base.OnVisibleChanged(e);
+        }
+        private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            if (e.Mode == PowerModes.Resume)
+            {
+                this.Icon = (Icon)_appIcon.Clone();
+            }
+        }
         private void AVRControl_Load(object sender, EventArgs e)
         {
+            this.Icon = (Icon)_appIcon.Clone();
+
             RefreshInstallState();
             LoadDevice();
 
             if (cbSysTray.Checked)
             {
-                this.WindowState = FormWindowState.Minimized;
-                this.ShowInTaskbar = false;
+                this.Hide();
             }
             else
             {
                 this.Opacity = 100;
-                this.ShowInTaskbar = true;
             }
         }
         private void LoadDevice()
@@ -530,7 +567,7 @@ namespace AVRControl
             if (cbSysTray.Checked && this.WindowState == FormWindowState.Minimized)
             {
                 this.Hide();
-                this.ShowInTaskbar = false;
+                //this.ShowInTaskbar = false;
             }
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -545,7 +582,10 @@ namespace AVRControl
             _telnet.Stop();
             _heosTelnet.Stop();
 
-            if (notifyIcon1 != null) notifyIcon1.Dispose();
+            if (notifyIcon1 != null)
+                notifyIcon1.Dispose();
+
+            SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -554,27 +594,23 @@ namespace AVRControl
         }
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button != MouseButtons.Left) return;
+
+            if (this.Visible && this.WindowState != FormWindowState.Minimized)
             {
-                if (this.Visible && this.WindowState != FormWindowState.Minimized)
-                {
-                    this.Hide();
-                    this.ShowInTaskbar = false;
-                }
-                else
-                {
-                    this.SuspendLayout();
+                this.Hide();
+            }
+            else
+            {
+                if (this.Icon != null) this.Icon.Dispose();
+                this.Icon = (Icon)_appIcon.Clone();
 
-                    this.Show();
-                    this.ShowInTaskbar = true;
-                    this.WindowState = FormWindowState.Normal;
-
-                    this.Activate();
-                    this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-                    this.ResumeLayout(false);
-                }
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                this.Activate();
             }
         }
+        
         private void cbSysTray_CheckedChanged(object sender, EventArgs e)
         {
             if (notifyIcon1 != null)
@@ -615,18 +651,18 @@ namespace AVRControl
             if (this.Visible && this.WindowState != FormWindowState.Minimized)
             {
                 this.Hide();
-                this.ShowInTaskbar = false;
+                //this.ShowInTaskbar = false;
             }
             else
             {
                 this.SuspendLayout();
 
                 this.Show();
-                this.ShowInTaskbar = true;
+                //this.ShowInTaskbar = true;
                 this.WindowState = FormWindowState.Normal;
 
                 this.Activate();
-                this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+                this.Icon = (Icon)_appIcon.Clone();
                 this.ResumeLayout(false);
             }
 
@@ -916,7 +952,7 @@ namespace AVRControl
         {
             if (this.Icon == null || this.Icon.Handle == IntPtr.Zero)
             {
-                this.Icon = Properties.Resources.AVRControl;
+                this.Icon = _appIcon;
             }
         }
 
