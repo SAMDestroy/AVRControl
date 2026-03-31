@@ -28,6 +28,8 @@ namespace AVRControl
                 return;
             }
 
+            IsAVROn = enabled;
+
             this.btnVolUp.Enabled = enabled;
             this.btnVolDown.Enabled = enabled;
             this.btnToggleMute.Enabled = enabled;
@@ -92,6 +94,8 @@ namespace AVRControl
             this.btnHeosPlayShuffle.Enabled = enabled;
             this.btnHeosPlayRepeatAll.Enabled = enabled;
             this.btnHeosPlayRepeatOne.Enabled = enabled;
+
+            this.pnlProgressBack.Visible = enabled;
 
             if (!enabled || !IsAVROn)
             {

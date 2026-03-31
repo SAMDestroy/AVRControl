@@ -16,6 +16,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace AVRControl
@@ -51,7 +52,8 @@ namespace AVRControl
             }
         }
 
-        
+
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace AVRControl
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-        {
+        {            
             this.components = new System.ComponentModel.Container();
             this.CopyrightNote = new System.Windows.Forms.Label();
             this.InfoNote = new System.Windows.Forms.Label();
@@ -80,6 +82,8 @@ namespace AVRControl
             this.LogoPicture = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pnlProgressBack = new System.Windows.Forms.Panel();
+            this.pnlProgressBar = new System.Windows.Forms.Panel();
             this.lbHeosAVRNetType_Data = new System.Windows.Forms.Label();
             this.lbHeosAVRID_Data = new System.Windows.Forms.Label();
             this.lbHeosAVRVersion_Data = new System.Windows.Forms.Label();
@@ -88,7 +92,6 @@ namespace AVRControl
             this.lbHeosAVRID = new System.Windows.Forms.Label();
             this.lbHeosAVRVersion = new System.Windows.Forms.Label();
             this.lbHeosAVRName = new System.Windows.Forms.Label();
-            this.pbProgress = new System.Windows.Forms.ProgressBar();
             this.lblTime = new System.Windows.Forms.Label();
             this.lbAlbumCover = new System.Windows.Forms.Label();
             this.pbAlbumArt = new System.Windows.Forms.PictureBox();
@@ -172,6 +175,7 @@ namespace AVRControl
             ((System.ComponentModel.ISupportInitialize)(this.LogoPicture)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.pnlProgressBack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbAlbumArt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatOne)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatAll)).BeginInit();
@@ -386,6 +390,7 @@ namespace AVRControl
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.LightSlateGray;
+            this.tabPage1.Controls.Add(this.pnlProgressBack);
             this.tabPage1.Controls.Add(this.lbHeosAVRNetType_Data);
             this.tabPage1.Controls.Add(this.lbHeosAVRID_Data);
             this.tabPage1.Controls.Add(this.lbHeosAVRVersion_Data);
@@ -394,7 +399,6 @@ namespace AVRControl
             this.tabPage1.Controls.Add(this.lbHeosAVRID);
             this.tabPage1.Controls.Add(this.lbHeosAVRVersion);
             this.tabPage1.Controls.Add(this.lbHeosAVRName);
-            this.tabPage1.Controls.Add(this.pbProgress);
             this.tabPage1.Controls.Add(this.lblTime);
             this.tabPage1.Controls.Add(this.lbAlbumCover);
             this.tabPage1.Controls.Add(this.pbAlbumArt);
@@ -449,6 +453,24 @@ namespace AVRControl
             this.tabPage1.Size = new System.Drawing.Size(994, 692);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
+            // 
+            // pnlProgressBack
+            // 
+            this.pnlProgressBack.BackColor = System.Drawing.Color.DarkGray;
+            this.pnlProgressBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlProgressBack.Controls.Add(this.pnlProgressBar);
+            this.pnlProgressBack.Location = new System.Drawing.Point(43, 457);
+            this.pnlProgressBack.Name = "pnlProgressBack";
+            this.pnlProgressBack.Size = new System.Drawing.Size(875, 13);
+            this.pnlProgressBack.TabIndex = 124;
+            // 
+            // pnlProgressBar
+            // 
+            this.pnlProgressBar.BackColor = System.Drawing.Color.SteelBlue;
+            this.pnlProgressBar.Location = new System.Drawing.Point(1, 1);
+            this.pnlProgressBar.Name = "pnlProgressBar";
+            this.pnlProgressBar.Size = new System.Drawing.Size(1, 13);
+            this.pnlProgressBar.TabIndex = 0;
             // 
             // lbHeosAVRNetType_Data
             // 
@@ -533,15 +555,6 @@ namespace AVRControl
             this.lbHeosAVRName.Size = new System.Drawing.Size(73, 25);
             this.lbHeosAVRName.TabIndex = 116;
             this.lbHeosAVRName.Text = "Client:";
-            // 
-            // pbProgress
-            // 
-            this.pbProgress.Location = new System.Drawing.Point(43, 461);
-            this.pbProgress.Name = "pbProgress";
-            this.pbProgress.Size = new System.Drawing.Size(868, 10);
-            this.pbProgress.Step = 1;
-            this.pbProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.pbProgress.TabIndex = 115;
             // 
             // lblTime
             // 
@@ -1542,13 +1555,12 @@ namespace AVRControl
             this.Controls.Add(this.LogoPicture);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.ShowInTaskbar = true;
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.Icon = global::AVRControl.Properties.Resources.AVRControl;
             this.MaximizeBox = false;
             this.Name = "AVRControl";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AVRControl";
-            this.Icon = global::AVRControl.Properties.Resources.AVRControl;
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Activated += new System.EventHandler(this.AVRControl_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.AVRControl_Load);
@@ -1558,6 +1570,7 @@ namespace AVRControl
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.pnlProgressBack.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbAlbumArt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatOne)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatAll)).EndInit();
@@ -1611,7 +1624,6 @@ namespace AVRControl
         private System.Windows.Forms.Label lbHeosAVRID;
         private System.Windows.Forms.Label lbHeosAVRVersion;
         private System.Windows.Forms.Label lbHeosAVRName;
-        private ProgressBar pbProgress;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Label lbAlbumCover;
         private PictureBox pbAlbumArt;
@@ -1692,6 +1704,8 @@ namespace AVRControl
         private System.Windows.Forms.Label lbBottomOverlay;
         private System.Windows.Forms.Label HorizontalLine;
         private Button btnResetSpeaker;
+        private Panel pnlProgressBack;
+        private Panel pnlProgressBar;
     }
 }
 

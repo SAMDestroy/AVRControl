@@ -26,34 +26,36 @@ namespace AVRControl
     {
         private void timerProgress_Tick(object sender, EventArgs e)
         {
-            if (!IsAVROn)
-            {
-                timerProgress.Stop();
-                return;
-            }
+            if (!IsAVROn) { timerProgress.Stop(); return; }
 
             if (_maxDuration > 0)
             {
-                _localCurPos += timerProgress.Interval; // 100ms oder 1000ms
+                _localCurPos += timerProgress.Interval;
 
                 if (_localCurPos <= _maxDuration)
                 {
-                    pbProgress.Value = Math.Min(_localCurPos, _maxDuration);
+                    double percent = (double)_localCurPos / _maxDuration;
+                    pnlProgressBar.Width = (int)(pnlProgressBack.ClientRectangle.Width * Math.Min(percent, 1.0));
+
                     lblTime.Text = $"{FormatTime(_localCurPos)} / {FormatTime(_maxDuration)}";
                 }
             }
         }
+
         private void StopHeosTimeline()
         {
             // _isMusicPlaying = false;
             _maxDuration = 0;
             _localCurPos = 0;
 
-            this.Invoke((MethodInvoker)delegate {
-                timerProgress.Stop();
-                pbProgress.Value = 0;
-                lblTime.Text = "00:00 / 00:00";
-            });
+            if (this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    timerProgress.Stop();
+                    pnlProgressBar.Width = 0;
+                    lblTime.Text = "00:00 / 00:00";
+                });
+            }
         }
 
         private void ResetTimelineImmediate()
@@ -61,11 +63,15 @@ namespace AVRControl
             _localCurPos = 0;
             _lastUserInteraction = DateTime.Now;
 
-            this.Invoke((MethodInvoker)delegate {
-                pbProgress.Value = 0;
-                lblTime.Text = "00:00 / 00:00";
-            });
+            if (this.IsHandleCreated)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    pnlProgressBar.Width = 0;
+                    lblTime.Text = "00:00 / 00:00";
+                });
+            }
         }
+
         private string ExtractJsonValue(string data, string key)
         {
             if (string.IsNullOrEmpty(data) || string.IsNullOrEmpty(key)) return "";

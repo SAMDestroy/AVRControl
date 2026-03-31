@@ -21,11 +21,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 namespace AVRControl
 {
 
     public partial class AVRControl : Form
     {
+
 
         private Icon _appIcon;
 
@@ -40,7 +42,8 @@ namespace AVRControl
         private bool isScrolling = false;
         private System.Windows.Forms.Timer timerProgress;
         private int _localCurPos = 0;
-        private int _maxDuration = 0;
+        private int _maxDuration = 0;        
+        private bool _songChangePending = false;
         private DateTime _lastUserInteraction = DateTime.MinValue;
         private DateTime _lastVolumeSend = DateTime.MinValue;
         private DateTime _lastSpeakerSend = DateTime.MinValue;
@@ -60,7 +63,8 @@ namespace AVRControl
         public AVRControl()
         {
             // this.Icon = Properties.Resources.AVRControl;
-            _appIcon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+           // _appIcon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+           _appIcon = (Icon)Properties.Resources.AVRControl.Clone();
             this.Icon = _appIcon;
             this.Text = $"AVRControl v{Application.ProductVersion}";
 
@@ -95,27 +99,31 @@ namespace AVRControl
         {
             if (!this.IsHandleCreated && value && cbSysTray.Checked)
             {
+                CreateHandle();
                 value = false;
-                if (!this.IsHandleCreated) CreateHandle();
             }
             base.SetVisibleCore(value);
         }
-        protected override void OnVisibleChanged(EventArgs e)
+
+        protected override void OnHandleCreated(EventArgs e)
         {
-            if (this.Visible && cbSysTray.Checked && !this.IsHandleCreated)
-            {
-                this.Visible = false;
-                return;
-            }
-            base.OnVisibleChanged(e);
-        }
-        private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
-        {
-            if (e.Mode == PowerModes.Resume)
+            base.OnHandleCreated(e);
+
+            if (_appIcon != null)
             {
                 this.Icon = (Icon)_appIcon.Clone();
             }
         }
+
+        private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            if (e.Mode == PowerModes.Resume)
+            {
+                this.ShowInTaskbar = false;
+                this.ShowInTaskbar = true;
+            }
+        }
+
         private void AVRControl_Load(object sender, EventArgs e)
         {
             this.Icon = (Icon)_appIcon.Clone();

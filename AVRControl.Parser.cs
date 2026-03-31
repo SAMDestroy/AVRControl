@@ -58,7 +58,7 @@ namespace AVRControl
                 return;
             }
 
-             Console.WriteLine($"NORMALDATA: {data}");
+           //  Console.WriteLine($"NORMALDATA: {data}");
 
             if (data.StartsWith("MVMAX")) // We dont need it
             {
@@ -248,25 +248,42 @@ namespace AVRControl
                 if (int.TryParse(ExtractJsonValue(data, "cur_pos"), out int curPos) &&
                     int.TryParse(ExtractJsonValue(data, "duration"), out int duration))
                 {
+
+                    if (_songChangePending || (curPos < 1000 && _localCurPos > 5000))
+                    {
+                        _localCurPos = 0;
+                        _songChangePending = false;
+                    }
+
+                    if (curPos == 0 && _localCurPos > 2000 && !_songChangePending) return;
+
                     _maxDuration = duration;
 
                     if ((DateTime.Now - _lastUserInteraction).TotalSeconds >= 3.0)
                     {
-                        if (Math.Abs(_localCurPos - curPos) > 2000) _localCurPos = curPos;
+                        _localCurPos = curPos;
                     }
 
-                    if (pbProgress.Maximum != _maxDuration)
-                        pbProgress.Maximum = _maxDuration;
+                    double percent = (double)_localCurPos / _maxDuration;
+                    pnlProgressBar.Width = (int)(pnlProgressBack.ClientRectangle.Width * Math.Min(percent, 1.0));
                 }
                 return;
             }
 
+
             if (data.Contains("event/player_now_playing_changed"))
             {
+                _songChangePending = true;
                 _localCurPos = 0;
-                pbProgress.Value = 0;
+                _maxDuration = 0;
+                pnlProgressBar.Width = 0;
+                lblTime.Text = "00:00 / 00:00";
+
                 _ = UpdateHeosDetails();
+                return;
             }
+
+
 
             if (data.Contains("player/get_now_playing_media"))
             {
@@ -276,7 +293,7 @@ namespace AVRControl
                 }
                 else
                 {
-                    Console.WriteLine("HEOS meldete Fail - ignoriere Anzeige-Update.");
+                    //Console.WriteLine("HEOS meldete Fail - ignoriere Anzeige-Update.");
                 }
             }
 

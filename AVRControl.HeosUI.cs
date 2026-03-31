@@ -113,10 +113,7 @@ namespace AVRControl
                         if (_maxDuration != duration)
                         {
                             _maxDuration = duration;
-
-                            pbProgress.Value = 0;
-                            pbProgress.Maximum = _maxDuration;
-
+                            pnlProgressBar.Width = 0;
                             _localCurPos = curPos;
                         }
 
@@ -125,7 +122,10 @@ namespace AVRControl
                             _localCurPos = curPos;
                         }
 
-                        pbProgress.Value = Math.Min(_localCurPos, pbProgress.Maximum);
+                        double percent = (double)_localCurPos / _maxDuration;
+                        pnlProgressBar.Width = (int)(pnlProgressBack.ClientRectangle.Width * Math.Min(percent, 1.0));
+
+                        lblTime.Text = $"{FormatTime(_localCurPos)} / {FormatTime(_maxDuration)}";
 
                         if (state == "play" && IsAVROn)
                         {
@@ -137,8 +137,9 @@ namespace AVRControl
                         }
                     }
 
-                    //Console.WriteLine($"Anzeige aktualisiert: [{serviceName}] {state} - {artist} - {song}");
                 });
+
+
             }
             catch (Exception ex)
             {
@@ -149,7 +150,6 @@ namespace AVRControl
         {
             if (string.IsNullOrEmpty(_activePid))
             {
-                // Console.WriteLine("PID ist LEER!");
                 await _heosTelnet.SendAsync("heos://player/get_players");
                 return;
             }
