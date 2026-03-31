@@ -3,8 +3,8 @@
 A lightweight C# Windows Forms tool for basic Telnet control of Denon and Marantz AVRs.
 Tested on Denon X4500H with 5.1 Audyssey Setup
 
-<img src="Screenshot1.png" width="700" alt="AVRControl Main-Page">
-<img src="Screenshot2.png" width="700" alt="AVRControl Speaker-Page">
+<img src="Screenshot1.png" width="525" alt="AVRControl Main-Page">
+<img src="Screenshot2.png" width="525" alt="AVRControl Speaker-Page">
 
 ## Overview
 AVRControl is a portable application designed for quick and easy control of your AV Receiver directly from your Windows desktop.
