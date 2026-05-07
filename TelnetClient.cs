@@ -30,19 +30,22 @@ public class AsyncTelnetClient
     private TcpClient _client;
     private NetworkStream _stream;
     private bool _shouldReconnect = false;
+    private bool _isConnecting = false;
+    private DateTime _lastResponseTime = DateTime.UtcNow;
     public bool Initialized { get; private set; } = false;
 
     private CancellationTokenSource _cts;
 
     private string _IP;
 
+    public int ConnectedPort { get; private set; }
+
     public bool DoStatusUpdates { get; set; }
 
     public event Action<string> DataReceived;
     public event Action<string> ErrorOccurred;
     public event Action<string> StatusChanged;
-
-
+   
     // XML Reader Part
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public async Task<string> ReadXMLDeviceInfoAsync()
@@ -52,24 +55,21 @@ public class AsyncTelnetClient
 
         try
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(2) })
             {
-                client.Timeout = TimeSpan.FromSeconds(2);
-
                 var responseLite = await client.GetAsync(urlLite);
-                if (!responseLite.IsSuccessStatusCode) return "Booting...";
+                if (!responseLite.IsSuccessStatusCode) return "HEOS";
 
                 string liteXmlString = await responseLite.Content.ReadAsStringAsync();
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(liteXmlString);
 
                 var rawvalue = xmlDoc.DocumentElement.SelectSingleNode("//InputFuncSelect")?.InnerText;
-                if (string.IsNullOrEmpty(rawvalue)) return "No Info";
+                if (string.IsNullOrEmpty(rawvalue)) return "HEOS";
 
-                if (rawvalue == "TV") return "TV Audio";
                 if (rawvalue == "NET") return "HEOS";
+                if (rawvalue == "TV") return "TV Audio";
 
-                // 2. Friendly Name via AppCommand
                 string xmlPayload = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<tx>\n<cmd id=\"1\">GetRenameSource</cmd>\n</tx>";
                 var content = new StringContent(xmlPayload, Encoding.UTF8, "text/xml");
 
@@ -77,8 +77,8 @@ public class AsyncTelnetClient
                 if (!responseCommand.IsSuccessStatusCode) return rawvalue;
 
                 string commandResponse = await responseCommand.Content.ReadAsStringAsync();
-                XDocument doc = XDocument.Parse(commandResponse);
 
+                var doc = System.Xml.Linq.XDocument.Parse(commandResponse);
                 var friendlyName = doc.Descendants("list")
                     .Where(x => x.Element("name")?.Value == rawvalue)
                     .Select(x => x.Element("rename")?.Value)
@@ -87,23 +87,18 @@ public class AsyncTelnetClient
                 return friendlyName ?? rawvalue;
             }
         }
-        catch (Exception ex)
+        catch
         {
-            System.Diagnostics.Debug.WriteLine($"XML-Abruf verweigert (AVR bootet noch?): {ex.Message}");
-            return "Connecting...";
+            return "HEOS";
         }
     }
+    // XML Reader END ////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-// XML Reader END ////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// Connector Part
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-public bool IsHostOnline(string ipAddress)
+    // Connector Part
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public bool IsHostOnline(string ipAddress)
     {
         try
         {
@@ -140,80 +135,82 @@ public bool IsHostOnline(string ipAddress)
     }
     public async Task StartAsync(string hostname, int port)
     {
+        if (_isConnecting) return;
+        _isConnecting = true;
+
         _shouldReconnect = true;
         _IP = hostname;
+        this.ConnectedPort = port;
 
-        while (_shouldReconnect)
+        try
         {
-            _cts = new CancellationTokenSource();
-            _client = new TcpClient();
-
-            try
+            while (_shouldReconnect)
             {
-                StatusChanged?.Invoke("Connecting...");
+                _cts = new CancellationTokenSource();
+                _client = new TcpClient();
 
-                // Keep-Alive
-                _client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
-                uint dummy = 0;
-                byte[] inOptionValues = new byte[System.Runtime.InteropServices.Marshal.SizeOf(dummy) * 3];
-                BitConverter.GetBytes((uint)1).CopyTo(inOptionValues, 0);
-                BitConverter.GetBytes((uint)5000).CopyTo(inOptionValues, 4);
-                BitConverter.GetBytes((uint)1000).CopyTo(inOptionValues, 8);
-                _client.Client.IOControl(IOControlCode.KeepAliveValues, inOptionValues, null);
-
-                using (_cts.Token.Register(() => _client?.Close()))
+                try
                 {
-                    await _client.ConnectAsync(hostname, port);
+                    StatusChanged?.Invoke("Connecting...");
+
+                    _client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+                    uint dummy = 0;
+                    byte[] inOptionValues = new byte[System.Runtime.InteropServices.Marshal.SizeOf(dummy) * 3];
+                    BitConverter.GetBytes((uint)1).CopyTo(inOptionValues, 0);
+                    BitConverter.GetBytes((uint)5000).CopyTo(inOptionValues, 4);
+                    BitConverter.GetBytes((uint)1000).CopyTo(inOptionValues, 8);
+                    _client.Client.IOControl(IOControlCode.KeepAliveValues, inOptionValues, null);
+
+                    using (_cts.Token.Register(() => _client?.Close()))
+                    {
+                        await _client.ConnectAsync(hostname, port);
+                    }
+
+                    StatusChanged?.Invoke("Connected!");
+
+                    _stream = _client.GetStream();
+                    _stream.ReadTimeout = 10000;
+
+                    using (var linkCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token))
+                    {
+                        var heartbeatTask = SendHeartbeatAsync(port, linkCts.Token);
+                        var readLoopTask = ReadLoopAsync(linkCts.Token);
+
+                        await InitialCmd(port, linkCts.Token);
+
+                        await Task.WhenAny(readLoopTask, heartbeatTask);
+
+                        Initialized = false;
+                        linkCts.Cancel();
+                        try { await Task.WhenAll(readLoopTask, heartbeatTask); } catch { }
+                    }
+
+                    throw new Exception("Connection closed by watchdog");
                 }
-
-                _stream = _client.GetStream();
-                _stream.ReadTimeout = 10000;
-
-                using (var linkCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token))
+                catch (Exception ex)
                 {
-                    var heartbeatTask = SendHeartbeatAsync(linkCts.Token);
-                    var readLoopTask = ReadLoopAsync(linkCts.Token);
+                    if (!_shouldReconnect) break;
 
-                    await InitialCmd(linkCts.Token);
-
-                    await Task.WhenAny(readLoopTask, heartbeatTask);
-
+                    ErrorOccurred?.Invoke($"Disconnected: {ex.Message}");
+                    StatusChanged?.Invoke($"{ex.Message} - Reconnect in 5s...");
                     Initialized = false;
 
-                    linkCts.Cancel();
-                    try
-                    {
-                        await Task.WhenAll(readLoopTask, heartbeatTask);
-                    }
-                    catch {
-                            //Expected Cancel
-                          }
+                    try { await Task.Delay(5000, CancellationToken.None); } catch { break; }
                 }
-
-                throw new Exception("Connection closed by watchdog");
-            }
-            catch (Exception ex)
-            {
-                if (!_shouldReconnect || _cts == null || _cts.Token.IsCancellationRequested) break;
-
-                ErrorOccurred?.Invoke($"Disconnected: {ex.Message}");
-                StatusChanged?.Invoke($"{ex.Message} - Reconnect in 5s...");
-                Initialized = false;
-
-                try { await Task.Delay(5000, _cts.Token); } catch { break; }
-            }
-            finally
-            {
-                try { _stream?.Close(); } catch { }
-                try { _client?.Close(); } catch { }
-
-                _cts?.Dispose();
-                _cts = null;
+                finally
+                {
+                    try { _stream?.Close(); } catch { }
+                    try { _client?.Close(); } catch { }
+                    _cts?.Dispose();
+                    _cts = null;
+                }
             }
         }
+        finally
+        {
+            _isConnecting = false;
+        }
     }
-
-
     public bool IsConnected()
     {
         try
@@ -231,74 +228,88 @@ public bool IsHostOnline(string ipAddress)
         }
         catch { return false; }
     }
-    public async Task SendHeartbeatAsync(CancellationToken token)
+    public async Task SendHeartbeatAsync(int port, CancellationToken token)
     {
+        _lastResponseTime = DateTime.UtcNow;
+
         try
         {
             while (!token.IsCancellationRequested && _client != null && _client.Connected)
             {
-                if (_stream != null && _stream.CanWrite)
-                {
-                    int currentPort = ((IPEndPoint)_client.Client.RemoteEndPoint).Port;
+                int timeoutLimit = 15; // Port 23
+                int delayMs = 5000;    // Standard Delay
 
-                    if (currentPort == 1255)
-                    {
-                        // HEOS Heartbeat
-                        await SendAsync("heos://system/heart_beat", token);
-                    }
-                    else if (currentPort == 23 && DoStatusUpdates)
-                    {
-                        string combinedCmd = "SI?\rMS?\r";
-                        await SendAsync(combinedCmd, token);
-                    }
-                }
-
-                int delayMs = 5000;
                 try
                 {
-                    int port = ((IPEndPoint)_client.Client.RemoteEndPoint).Port;
-                    if (port == 1255) delayMs = 10000;
+                    if (port == 1255)
+                    {
+                        timeoutLimit = 25; // HEOS (because 10s Interval)
+                        delayMs = 10000;
+                    }
                 }
                 catch { }
+
+                if (DoStatusUpdates)
+                {
+                    if ((DateTime.UtcNow - _lastResponseTime).TotalSeconds > timeoutLimit)
+                    {
+                        throw new Exception($"Watchdog: No answer from AVR since {timeoutLimit}s.");
+                    }
+                }
+                else
+                {
+                    _lastResponseTime = DateTime.UtcNow;
+                }
+
+                if (_stream != null && _stream.CanWrite)
+                {
+                    if (port == 1255)
+                    {
+                        // HEOS Heartbeat
+                        await SendAsync("heos://system/heart_beat", token, port);
+                    }
+                    else if (port == 23)
+                    {
+                        if (DoStatusUpdates)
+                        {
+                            string combinedCmd = "SI?\rMS?\r";
+                            await SendAsync(combinedCmd, token, port);
+                        }
+                        else
+                        {
+                            await SendAsync("ZM?\r", token, port);
+                        }
+                    }
+                }
 
                 await Task.Delay(delayMs, token);
             }
         }
-        catch (OperationCanceledException)
-        {
-            // Expected Cancel
-        }
+        catch (OperationCanceledException) { }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Heartbeat Error: {ex.Message}");
+            throw;
         }
     }
-
-    public async Task InitialCmd(CancellationToken token)
+    public async Task InitialCmd(int port, CancellationToken token)
     {
-        int currentPort = ((IPEndPoint)_client.Client.RemoteEndPoint).Port;
-
-        if (currentPort == 1255)
+        if (port == 1255)
         {
             // For HEOS
-            await SendAsync("heos://system/register_for_change_events?enable=on");
-            await SendAsync("heos://player/get_players"); // Get PID (maybe not working because of missing PID but np)
-            await SendAsync("heos://player/get_now_playing_media");
-
-            Console.WriteLine("HEOS Initialisierung gesendet.");
+            await SendAsync("heos://system/register_for_change_events?enable=on", token, port);
+            await SendAsync("heos://player/get_players", token, port); // Get PID (maybe not working because of missing PID but np)
+            await SendAsync("heos://player/get_play_state", token, port);
+            await SendAsync("heos://player/get_now_playing_media", token, port);
         }
-        else if (currentPort == 23)
+        else if (port == 23)
         {
             if (_stream != null && _stream.CanWrite && !Initialized)
             {
                 Initialized = true;
 
-                string combinedCmd = "ZM?\r";
-                byte[] InitialMsg = Encoding.UTF8.GetBytes(combinedCmd);
-
-                await _stream.WriteAsync(InitialMsg, 0, InitialMsg.Length, token);
-
-                await _stream.FlushAsync(token);
+                string combinedCmd = "ZM?\rSI?\r";
+                await SendAsync(combinedCmd, token, port);
             }
         }
     }
@@ -311,13 +322,11 @@ public bool IsHostOnline(string ipAddress)
             {
                 int bytesRead = await _stream.ReadAsync(buffer, 0, buffer.Length, token);
 
-                if (bytesRead == 0)
-                {
-                    break;
-                }
+                if (bytesRead == 0) break;
+
+                _lastResponseTime = DateTime.UtcNow;
 
                 string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
                 string[] messages = receivedData.Split(new[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var msg in messages)
                 {
@@ -325,25 +334,21 @@ public bool IsHostOnline(string ipAddress)
                 }
             }
         }
-        catch (OperationCanceledException)
-        {
-            // Expected Cancel
-        }
+        catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            // Real Exception
             System.Diagnostics.Debug.WriteLine($"ReadLoop Error: {ex.Message}");
         }
     }
-
-    public async Task SendAsync(string cmd, CancellationToken token = default)
+    public async Task SendAsync(string cmd, CancellationToken token = default, int port = -1)
     {
+        int targetPort = (port == -1) ? this.ConnectedPort : port;
+
         if (_client != null && _client.Connected && _stream != null && _stream.CanWrite)
         {
             try
             {
-                int currentPort = ((IPEndPoint)_client.Client.RemoteEndPoint).Port;
-                string suffix = (currentPort == 1255) ? "\r\n" : "\r";
+                string suffix = (targetPort == 1255) ? "\r\n" : "\r";
 
                 if (!cmd.EndsWith(suffix)) cmd += suffix;
 
@@ -352,17 +357,13 @@ public bool IsHostOnline(string ipAddress)
                 await _stream.WriteAsync(Msg, 0, Msg.Length, token);
                 await _stream.FlushAsync(token);
             }
-            catch (OperationCanceledException)
-            {
-                // Expected Cancel
-            }
+            catch (OperationCanceledException) { }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Send Error: {ex.Message}");
             }
         }
     }
-
     private void Cleanup()
     {
         try

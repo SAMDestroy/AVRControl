@@ -67,6 +67,7 @@ namespace AVRControl
                 if (!timerProgress.Enabled && state != "pause")
                 {
                     timerProgress.Start();
+                    this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PauseIcon;
                 }
 
                 string imageUrl = ExtractJsonValue(json, "image_url");
@@ -75,9 +76,12 @@ namespace AVRControl
 
                 // Spotify Fix
                 string serviceName = "HEOS";
-                if (sid == 4 && (json.ToLower().Contains("spotify") || album.ToLower().Contains("spotify")))
+                if (sid == 4)
                 {
-                    serviceName = "Spotify Connect";
+                    if (json.ToLower().Contains("spotify") || album.ToLower().Contains("spotify"))
+                        serviceName = "Spotify Connect";
+                    else
+                        serviceName = "HEOS Music";
                 }
                 else
                 {
@@ -97,56 +101,54 @@ namespace AVRControl
                     };
                 }
 
-                this.Invoke((MethodInvoker)delegate {
+                _lastHeosService = serviceName;
+                this.AVRSource.Text = _lastHeosService;                
+                this.HeosTrackInfoArtist.Text = artist;
+                this.HeosTrackInfoAlbum.Text = album;
+                this.HeosTrackInfoSong.Text = song;
+                this.lbConnectStatus.Text = "Connected! (HEOS Mode)";
 
-                    this.AVRSource.Text = serviceName;
-                    this.HeosTrackInfoArtist.Text = artist;
-                    this.HeosTrackInfoAlbum.Text = album;
-                    this.HeosTrackInfoSong.Text = song;
-                    this.lbConnectStatus.Text = "Connected! (HEOS Mode)";
+                int.TryParse(curPosStr, out int curPos);
+                int.TryParse(durationStr, out int duration);
 
-                    int.TryParse(curPosStr, out int curPos);
-                    int.TryParse(durationStr, out int duration);
-
-                    if (duration > 0)
+                if (duration > 0)
+                {
+                    if (_maxDuration != duration)
                     {
-                        if (_maxDuration != duration)
-                        {
-                            _maxDuration = duration;
-                            pnlProgressBar.Width = 0;
-                            _localCurPos = curPos;
-                        }
-
-                        if (Math.Abs(_localCurPos - curPos) > 2000)
-                        {
-                            _localCurPos = curPos;
-                        }
-
-                        double percent = (double)_localCurPos / _maxDuration;
-                        pnlProgressBar.Width = (int)(pnlProgressBack.ClientRectangle.Width * Math.Min(percent, 1.0));
-
-                        lblTime.Text = $"{FormatTime(_localCurPos)} / {FormatTime(_maxDuration)}";
-
-                        if (state == "play" && IsAVROn)
-                        {
-                            if (!timerProgress.Enabled) timerProgress.Start();
-                        }
-                        else
-                        {
-                            timerProgress.Stop();
-                        }
+                        _maxDuration = duration;
+                        pnlProgressBar.Width = 0;
+                        _localCurPos = curPos;
                     }
 
-                });
+                    if (Math.Abs(_localCurPos - curPos) > 2000)
+                    {
+                        _localCurPos = curPos;
+                    }
 
+                    double percent = (double)_localCurPos / _maxDuration;
+                    pnlProgressBar.Width = (int)(pnlProgressBack.ClientRectangle.Width * Math.Min(percent, 1.0));
 
+                    lblTime.Text = $"{FormatTime(_localCurPos)} / {FormatTime(_maxDuration)}";
+
+                    if (state == "play" && IsAVROn)
+                    {
+                        if (!timerProgress.Enabled) timerProgress.Start();
+
+                        this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PauseIcon;
+                    }
+                    else
+                    {
+                        timerProgress.Stop();
+                        this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PauseIcon;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Fehler beim Parsen der Metadaten: " + ex.Message);
             }
         }
-        private async Task UpdateHeosDetails()
+        public async Task UpdateHeosDetails()
         {
             if (string.IsNullOrEmpty(_activePid))
             {
@@ -157,7 +159,6 @@ namespace AVRControl
             string command = $"heos://player/get_now_playing_media?pid={_activePid}";
             await _heosTelnet.SendAsync(command);
         }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

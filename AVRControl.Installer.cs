@@ -63,7 +63,6 @@ namespace AVRControl
 
             CheckForGitHubUpdate();
 
-            // Titel dynamisch setzen
             string mode = isRunningFromRoaming ? "[Installed]" : "[Portable]";
             this.Text = $"AVRControl v{Application.ProductVersion} {mode}";
         }
@@ -116,7 +115,6 @@ namespace AVRControl
                 btnInstall.BackColor = Color.Gold;
             }
         }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

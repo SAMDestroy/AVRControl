@@ -765,7 +765,7 @@ namespace AVRControl
             // btnHeosPlayPause
             // 
             this.btnHeosPlayPause.BackColor = System.Drawing.Color.Transparent;
-            this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PauseIcon;
+            this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PlayIcon;
             this.btnHeosPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnHeosPlayPause.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnHeosPlayPause.Location = new System.Drawing.Point(63, 344);
@@ -1060,7 +1060,7 @@ namespace AVRControl
             // 
             this.lbVol80.AutoSize = true;
             this.lbVol80.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol80.ForeColor = System.Drawing.Color.Peru;
+            this.lbVol80.ForeColor = System.Drawing.Color.SandyBrown;
             this.lbVol80.Location = new System.Drawing.Point(674, 156);
             this.lbVol80.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbVol80.Name = "lbVol80";

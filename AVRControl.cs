@@ -20,15 +20,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
-
 namespace AVRControl
 {
-
     public partial class AVRControl : Form
     {
-
-
         private Icon _appIcon;
 
         private string roamingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AVRControl", "AVRControl.exe");
@@ -44,7 +39,11 @@ namespace AVRControl
         private int _localCurPos = 0;
         private int _maxDuration = 0;        
         private bool _songChangePending = false;
+
+        private string _lastHeosService = "";
+
         private DateTime _lastUserInteraction = DateTime.MinValue;
+
         private DateTime _lastVolumeSend = DateTime.MinValue;
         private DateTime _lastSpeakerSend = DateTime.MinValue;
         private bool IsHeosPlayPause = false;
@@ -54,7 +53,6 @@ namespace AVRControl
         private int _deltaSub2 = 0;
         private bool _masterMoving = false;
 
-
         private AsyncTelnetClient _telnet;
 
         private AsyncTelnetClient _heosTelnet;
@@ -62,20 +60,14 @@ namespace AVRControl
 
         public AVRControl()
         {
-            // this.Icon = Properties.Resources.AVRControl;
-           // _appIcon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-           _appIcon = (Icon)Properties.Resources.AVRControl.Clone();
+            InitializeComponent();
+
+            _appIcon = (Icon)Properties.Resources.AVRControl.Clone();
             this.Icon = _appIcon;
             this.Text = $"AVRControl v{Application.ProductVersion}";
 
-            InitializeComponent();
-
             this.notifyIcon1.Icon = _appIcon;
             this.notifyIcon1.Text = this.Text;
-
-            
-
-            this.CreateHandle();
 
             SystemEvents.PowerModeChanged += OnPowerModeChanged;
 
@@ -86,12 +78,10 @@ namespace AVRControl
             _heosTelnet = new AsyncTelnetClient();
             _heosTelnet.DataReceived += OnHeosDataReceived;
 
-
             timerProgress = new System.Windows.Forms.Timer();
             timerProgress.Interval = 100;
             timerProgress.Tick += timerProgress_Tick;
         }
-
         // Form Init Part
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///
@@ -104,26 +94,18 @@ namespace AVRControl
             }
             base.SetVisibleCore(value);
         }
-
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            base.OnHandleCreated(e);
-
-            if (_appIcon != null)
-            {
-                this.Icon = (Icon)_appIcon.Clone();
-            }
-        }
-
         private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
             if (e.Mode == PowerModes.Resume)
             {
                 this.ShowInTaskbar = false;
+
+                if (this.Icon != null) this.Icon.Dispose();
+                this.Icon = (Icon)_appIcon.Clone();
+
                 this.ShowInTaskbar = true;
             }
         }
-
         private void AVRControl_Load(object sender, EventArgs e)
         {
             this.Icon = (Icon)_appIcon.Clone();
@@ -179,18 +161,15 @@ namespace AVRControl
                         _ = _telnet.StartAsync(tbIP.Text, 23);
 
                         this.lbConnectStatus.Text = "Connected!";
-
                     }
                     else
                     {
                         this.lbConnectStatus.Text = "IP online but Port 23 closed...";
-
                     }
                 }
                 else
                 {
                     this.lbConnectStatus.Text = "IP offline or wrong...";
-
                 }
             }
             catch (Exception ex)
@@ -341,7 +320,7 @@ namespace AVRControl
                     IsHeosPlayPause = false;
                     cmd = $"heos://player/set_play_state?pid={_activePid}&state=play";
                 }
-                    await _heosTelnet.SendAsync(cmd);
+                await _heosTelnet.SendAsync(cmd);
             }
             else
             {
@@ -617,8 +596,7 @@ namespace AVRControl
                 this.WindowState = FormWindowState.Normal;
                 this.Activate();
             }
-        }
-        
+        }        
         private void cbSysTray_CheckedChanged(object sender, EventArgs e)
         {
             if (notifyIcon1 != null)
@@ -638,7 +616,6 @@ namespace AVRControl
                 System.Diagnostics.Debug.WriteLine("Fehler beim Speichern des Systray-Status: " + ex.Message);
             }
         }
-
         private void gitHubPageToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             try
@@ -673,9 +650,7 @@ namespace AVRControl
                 this.Icon = (Icon)_appIcon.Clone();
                 this.ResumeLayout(false);
             }
-
         }
-
         private async void lblTabSpeaker_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 1;
@@ -690,7 +665,6 @@ namespace AVRControl
            
             this.ActiveControl = null;
         }
-
         private void lblTabMain_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 0;
@@ -700,47 +674,38 @@ namespace AVRControl
 
             this.ActiveControl = null;
         }
-
         private void BtnVolDown_MouseLeave(object sender, EventArgs e)
         {
             this.btnVolDown.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private void BtnVolUp_MouseLeave(object sender, EventArgs e)
         {
             this.btnVolUp.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private void btnHeosPlayPause_MouseLeave(object sender, EventArgs e)
         {
             this.btnHeosPlayPause.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private void btnHeaosPlayBack_MouseLeave(object sender, EventArgs e)
         {
             this.btnHeosPlayBack.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private void btnHeosPlaySkip_MouseLeave(object sender, EventArgs e)
         {
             this.btnHeosPlaySkip.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private void btnHeosPlayShuffle_MouseLeave(object sender, EventArgs e)
         {
             this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private void btnHeosPlayRepeatAll_MouseLeave(object sender, EventArgs e)
         {
             this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private void btnHeosPlayRepeatOne_MouseLeave(object sender, EventArgs e)
         {
             this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.DarkGray;
         }
-
         private async void tbSpeakerFrontL_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -754,7 +719,6 @@ namespace AVRControl
                 await _telnet.SendAsync($"CVFL {tbSpeakerFrontL.Value}\r");
             }
         }
-
         private async void tbSpeakerFrontL_MouseUp(object sender, MouseEventArgs e)
         {
             await Task.Delay(150);
@@ -763,7 +727,6 @@ namespace AVRControl
 
             isScrolling = false;           
         }
-
         private async void tbSpeakerCenter_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -776,9 +739,7 @@ namespace AVRControl
 
                 await _telnet.SendAsync($"CVC {tbSpeakerCenter.Value}\r");
             }
-
         }
-
         private async void tbSpeakerCenter_MouseUp(object sender, MouseEventArgs e)
         {
             await Task.Delay(150);
@@ -787,7 +748,6 @@ namespace AVRControl
 
             isScrolling = false;
         }
-
         private async void tbSpeakerFrontR_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -801,7 +761,6 @@ namespace AVRControl
                 await _telnet.SendAsync($"CVFR {tbSpeakerFrontR.Value}\r");
             }
         }
-
         private async void tbSpeakerFrontR_MouseUp(object sender, MouseEventArgs e)
         {
             await Task.Delay(150);
@@ -810,7 +769,6 @@ namespace AVRControl
 
             isScrolling = false;
         }
-
         private async void tbSpeakerSurroundL_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -824,7 +782,6 @@ namespace AVRControl
                 await _telnet.SendAsync($"CVSL {tbSpeakerSurroundL.Value}\r");
             }
         }
-
         private async void tbSpeakerSurroundL_MouseUp(object sender, MouseEventArgs e)
         {
             await Task.Delay(150);
@@ -833,7 +790,6 @@ namespace AVRControl
 
             isScrolling = false;
         }
-
         private async void tbSpeakerSurroundR_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -847,7 +803,6 @@ namespace AVRControl
                 await _telnet.SendAsync($"CVSR {tbSpeakerSurroundR.Value}\r");
             }
         }
-
         private async void tbSpeakerSurroundR_MouseUp(object sender, MouseEventArgs e)
         {
             await Task.Delay(150);
@@ -856,7 +811,6 @@ namespace AVRControl
 
             isScrolling = false;
         }
-
         private async void tbSpeakerSubwoofer1_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -870,7 +824,6 @@ namespace AVRControl
                 await _telnet.SendAsync($"CVSW {tbSpeakerSubwoofer1.Value}\r");
             }
         }
-
         private async void tbSpeakerSubwoofer1_MouseUp(object sender, MouseEventArgs e)
         {
             await Task.Delay(150);
@@ -879,7 +832,6 @@ namespace AVRControl
 
             isScrolling = false;
         }
-
         private async void tbSpeakerSubwoofer2_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -893,7 +845,6 @@ namespace AVRControl
                 await _telnet.SendAsync($"CVSW2 {tbSpeakerSubwoofer2.Value}\r");
             }
         }
-
         private async void tbSpeakerSubwoofer2_MouseUp(object sender, MouseEventArgs e)
         {
             isScrolling = false;
@@ -902,7 +853,6 @@ namespace AVRControl
 
             _ = _telnet.SendAsync("CV?\r");
         }
-
         private void tbSpeakerSubMaster_MouseDown(object sender, MouseEventArgs e)
         {
             _deltaSub1 = tbSpeakerSubwoofer1.Value - tbSpeakerSubMaster.Value;
@@ -910,7 +860,6 @@ namespace AVRControl
             _masterMoving = true;
             isScrolling = true;
         }
-
         private async void tbSpeakerSubMaster_Scroll(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -944,8 +893,6 @@ namespace AVRControl
                 await _telnet.SendAsync($"CVSW2 {targetSub2}\r");
             }
         }
-
-
         private async void tbSpeakerSubMaster_MouseUp(object sender, MouseEventArgs e)
         {
             _masterMoving = false;
@@ -955,15 +902,13 @@ namespace AVRControl
 
             _ = _telnet.SendAsync("CV?\r");
         }
-
         private void AVRControl_Activated(object sender, EventArgs e)
         {
             if (this.Icon == null || this.Icon.Handle == IntPtr.Zero)
             {
-                this.Icon = _appIcon;
+                this.Icon = (Icon)_appIcon.Clone();
             }
         }
-
         private async void btnResetSpeaker_Click(object sender, EventArgs e)
         {
             isScrolling = true;
@@ -998,8 +943,6 @@ namespace AVRControl
                     await Task.Delay(30);
                 }
 
-
-
                 await Task.Delay(500);
                 await _telnet.SendAsync("CV?\r");
             }
@@ -1009,11 +952,6 @@ namespace AVRControl
                 isScrolling = false;
             }
         }
-
-
-
-
-
         // Form Events END ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

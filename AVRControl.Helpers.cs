@@ -26,7 +26,7 @@ namespace AVRControl
     {
         private void timerProgress_Tick(object sender, EventArgs e)
         {
-            if (!IsAVROn) { timerProgress.Stop(); return; }
+            if (!IsAVROn) { return; }
 
             if (_maxDuration > 0)
             {
@@ -41,23 +41,20 @@ namespace AVRControl
                 }
             }
         }
-
         private void StopHeosTimeline()
         {
-            // _isMusicPlaying = false;
-            _maxDuration = 0;
-            _localCurPos = 0;
-
             if (this.InvokeRequired)
             {
-                this.Invoke((MethodInvoker)delegate {
-                    timerProgress.Stop();
-                    pnlProgressBar.Width = 0;
-                    lblTime.Text = "00:00 / 00:00";
-                });
+                this.BeginInvoke(new Action(StopHeosTimeline));
+                return;
             }
-        }
 
+            _maxDuration = 0;
+            _localCurPos = 0;
+            timerProgress.Stop();
+            pnlProgressBar.Width = 0;
+            lblTime.Text = "00:00 / 00:00";
+        }
         private void ResetTimelineImmediate()
         {
             _localCurPos = 0;
@@ -71,7 +68,6 @@ namespace AVRControl
                 });
             }
         }
-
         private string ExtractJsonValue(string data, string key)
         {
             if (string.IsNullOrEmpty(data) || string.IsNullOrEmpty(key)) return "";
@@ -118,7 +114,6 @@ namespace AVRControl
             TimeSpan t = TimeSpan.FromMilliseconds(ms);
             return string.Format("{0:D2}:{1:D2}", t.Minutes + (t.Hours * 60), t.Seconds);
         }
-
         private void UpdateSpeakerSlider(string data, int val)
         {
             if (data.Contains("CVC")) { tbSpeakerCenter.Value = val; lbSpeakerCenterShowValue.Text = GetDBString(val); }
@@ -139,9 +134,6 @@ namespace AVRControl
 
             return sign + db.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + " dB";
         }
-
-
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

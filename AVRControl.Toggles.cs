@@ -74,6 +74,9 @@ namespace AVRControl
                 this.PowerToggle.Text = "ON";
                 this.AVRSource.Text = "ON";
 
+                this.SliderVolume.Value = CurVol;
+                this.ShowVolume.Text = "Vol: " + CurVol.ToString();
+
                 this.btnVolDown.BackColor = System.Drawing.Color.DarkGray;
                 this.btnVolUp.BackColor = System.Drawing.Color.DarkGray;
                 this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
@@ -81,7 +84,6 @@ namespace AVRControl
         }
         private void HeosControlsToggle(bool enabled)
         {
-
             if (this.InvokeRequired)
             {
                 this.BeginInvoke(new Action<bool>(HeosControlsToggle), enabled);
@@ -104,6 +106,8 @@ namespace AVRControl
                 this.HeosTrackInfoArtist.Text = "";
                 this.HeosTrackInfoAlbum.Text = "";
                 this.HeosTrackInfoSong.Text = "";
+
+                this.lblTime.Text = "";
 
                 this.lbAlbumCover.Text = "";
 
@@ -151,7 +155,6 @@ namespace AVRControl
                 this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.DarkGray;
             }
         }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
