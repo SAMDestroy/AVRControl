@@ -29,6 +29,8 @@ namespace AVRControl
         [STAThread]
         static void Main()
         {
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+
             if (!mutex.WaitOne(TimeSpan.FromSeconds(3), true))
             {
                 MessageBox.Show("AVRControl already running...", "Info");

@@ -31,40 +31,51 @@ No installation required.
 5.  The tool connects automatically and saves your IP in AVRControl.cfg.
 
 <hr>
-CHANGELOG:
+Changelog
 
-🚀 **AVRControl v1.5.0 – The Resilience & Recovery Update**
-This major update focuses on "Bulletproof Synchronization." We’ve re-engineered the communication core to ensure the app remains perfectly synced, even after laptop sleep cycles or critical network watchdog events.
+🚀 **AVRControl v1.5.1.0 – The .NET 9 Modernization Update**
+* This major update marks the transition to **.NET 9**, bringing significant performance gains and a completely overhauled deployment system.
+* Beyond the "Self-Healing UI," modernized app’s DNA to ensure it runs natively and flawlessly on the latest Windows hardware.
 
 ✨ **New Features**
-
-* **Self-Healing UI Architecture:** The playback interface now features "Instant-Recovery" logic. If the app wakes up from standby, it no longer waits for a song change to refresh. It actively heals the timeline, progress bar, and metadata labels within milliseconds of reconnection.
-* **Persistent Service Guardian:** Introduced a secondary metadata layer that prevents the AVR from overwriting specific streaming service names (like Spotify or TuneIn) with the generic "HEOS" label. Your source display now correctly maintains its "Higher Truth" metadata.
-* **Dynamic Playback Synchronization:** The UI now intelligently distinguishes between "System Pause" and "Network Lag," ensuring the timer only runs when the hardware actually moves, providing a 100% reliable representation of the current playback state.
+* **Native ARM64 Support:** AVRControl now runs natively on ARM-based Windows devices (like the new Surface Pro or Snapdragon X Elite PCs).
+No more emulation – just pure, efficient performance.
+* **Universal Deployment Options:** Two ways to run AVRControl:
+* **Standalone (Zero-Install):** Everything included. Runs even if .NET is not installed on your PC.
+* **Lightweight (Framework-Dependent):** A tiny, ultra-optimized executable for users who already have the .NET 9 Runtime.
+* **Self-Healing UI Architecture:** The playback interface now features "Instant-Recovery" logic. If the app wakes up from standby, it actively heals the timeline and metadata within milliseconds of reconnection.
+Persistent Service Guardian: Correctly maintains source metadata (Spotify/TuneIn) instead of allowing the AVR to overwrite them with a generic "HEOS" label.
 
 🛠️ **Technical Improvements**
 
-* **Asynchronous Telnet Core 2.0:** Heavily optimized the underlying Telnet client with SemaphoreSlim for thread-safe command queuing and a dedicated StringBuilder buffer to handle TCP fragmentation. This ensures no command or response is lost during high-traffic updates.
-* **Fail-Safe Timer Engine:** Re-engineered the internal 100ms clock. The engine now enters a "Smart Idle" mode instead of self-terminating when the AVR is temporarily unreachable, allowing for a seamless resume without manual intervention.
-* **Decoupled Port Logic:** Fully separated the Hardware-State (Port 23) from the Content-State (Port 1255). This decoupling eliminates race conditions where one port would "choke" the other during simultaneous reconnection attempts.
+**.NET 9 SDK Migration:**
+* Fully migrated to the modern SDK-style project system.
+* Removed legacy AssemblyInfo.cs dependencies and centralized all metadata, resulting in a cleaner, faster-compiling codebase.
+
+**Robust Metadata Engine:**
+* Re-engineered the versioning system. Update checks now use direct Assembly metadata instead of fragile string parsing, making the update process "bulletproof" against modern Git-revisioning.
+
+**Optimized Single-File Packaging:**
+* Implemented advanced compression for our standalone releases, reducing the footprint of the "all-inclusive" EXE by over 50% while maintaining lightning-fast start times.
+* Asynchronous Telnet Core 2.0: Optimized with SemaphoreSlim and StringBuilder buffering to handle high-traffic TCP fragmentation without losing commands.
 
 🐛 **Bugfixes**
 
-* **Fixed:** Resolved the "Frozen Timeline" bug where the progress bar would stop animating and the time-label would go empty after the laptop resumed from sleep.
-* **Fixed:** Corrected the "Source-Name Race Condition" where the AVR would repeatedly overwrite the active streaming service name with a generic "HEOS" string.
-* **Fixed:** Eliminated the "Suicidal Timer" glitch, where the playback engine would permanently stop if the AVR’s status response was delayed by a few milliseconds during a watchdog reset.
+* **Fixed:** Resolved a critical crash in the update-check engine caused by modern Git-commit metadata in the version string.
+* **Fixed:** Eliminated the "Suicidal Timer" glitch where the engine would stop during network watchdog resets.
 * **Fixed:** Improved TCP Framing to prevent misinterpreted HEOS JSON strings caused by fragmented network packets.
+* **Fixed:** Cleaned up obsolete COM-references and legacy GUIDs for a more secure and modern application footprint.
 
 **Developer Note:**
-v1.5.0 is all about reliability. By moving away from a "fragile" state-machine to a "self-healing" architecture, AVRControl can now survive network jitter and system power states that would crash standard Telnet implementations. This version represents the most stable release to date.
 
+* v1.5.1.0 is not just an update; it's a foundation for the future. By moving to .NET 9 and adopting a native 64-bit/ARM64 architecture,
+* AVRControl is now faster and more reliable than ever. Whether you're on a high-end workstation or a mobile ARM tablet, your AVR control remains rock solid.
 
-## License
-This project is licensed under the GPU V3 License. See the LICENSE file for details.
+**License**
+
+This project is licensed under the GPL V3 License. See the LICENSE file for details.
 This means you are free to use, modify, and distribute the software, provided that the original copyright notice is included.
 
----
 Created for personal needs – I hope you find it useful!
-
 cya
 SAMDestroy

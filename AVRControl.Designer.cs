@@ -61,1539 +61,1583 @@ namespace AVRControl
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-        {            
-            this.components = new System.ComponentModel.Container();
-            this.CopyrightNote = new System.Windows.Forms.Label();
-            this.InfoNote = new System.Windows.Forms.Label();
-            this.LabelPowerToggle = new System.Windows.Forms.Label();
-            this.lblIP = new System.Windows.Forms.Label();
-            this.tbIP = new System.Windows.Forms.TextBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.PowerToggle = new System.Windows.Forms.CheckBox();
-            this.lbConnectStatus = new System.Windows.Forms.Label();
-            this.cbSysTray = new System.Windows.Forms.CheckBox();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.cmsTray = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.gitHubPageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemShowHide = new System.Windows.Forms.ToolStripMenuItem();
-            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnInstall = new System.Windows.Forms.Button();
-            this.LogoPicture = new System.Windows.Forms.PictureBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.pnlProgressBack = new System.Windows.Forms.Panel();
-            this.pnlProgressBar = new System.Windows.Forms.Panel();
-            this.lbHeosAVRNetType_Data = new System.Windows.Forms.Label();
-            this.lbHeosAVRID_Data = new System.Windows.Forms.Label();
-            this.lbHeosAVRVersion_Data = new System.Windows.Forms.Label();
-            this.lbHeosAVRName_Data = new System.Windows.Forms.Label();
-            this.lbHeosAVRNetType = new System.Windows.Forms.Label();
-            this.lbHeosAVRID = new System.Windows.Forms.Label();
-            this.lbHeosAVRVersion = new System.Windows.Forms.Label();
-            this.lbHeosAVRName = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
-            this.lbAlbumCover = new System.Windows.Forms.Label();
-            this.pbAlbumArt = new System.Windows.Forms.PictureBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.lbHeosPlayRepeatOne = new System.Windows.Forms.Label();
-            this.btnHeosPlayRepeatOne = new System.Windows.Forms.PictureBox();
-            this.lbHeosPlayRepeatAll = new System.Windows.Forms.Label();
-            this.btnHeosPlayRepeatAll = new System.Windows.Forms.PictureBox();
-            this.lbHeosPlayShuffle = new System.Windows.Forms.Label();
-            this.lbHeosPlaySkip = new System.Windows.Forms.Label();
-            this.lbHeosPlayBack = new System.Windows.Forms.Label();
-            this.lbHeosPlayPause = new System.Windows.Forms.Label();
-            this.btnHeosPlayShuffle = new System.Windows.Forms.PictureBox();
-            this.btnHeosPlayBack = new System.Windows.Forms.PictureBox();
-            this.btnHeosPlaySkip = new System.Windows.Forms.PictureBox();
-            this.btnHeosPlayPause = new System.Windows.Forms.PictureBox();
-            this.lbHeosSong = new System.Windows.Forms.Label();
-            this.lbHeosAlbum = new System.Windows.Forms.Label();
-            this.lbHeosArtist = new System.Windows.Forms.Label();
-            this.HeosTrackInfoArtist = new System.Windows.Forms.Label();
-            this.HeosTrackInfoSong = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lbUp = new System.Windows.Forms.Label();
-            this.lbMute = new System.Windows.Forms.Label();
-            this.lbDown = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnToggleMute = new System.Windows.Forms.PictureBox();
-            this.btnVolDown = new System.Windows.Forms.PictureBox();
-            this.btnVolUp = new System.Windows.Forms.PictureBox();
-            this.SliderVolume = new System.Windows.Forms.TrackBar();
-            this.ShowVolume = new System.Windows.Forms.Label();
-            this.lbVol10 = new System.Windows.Forms.Label();
-            this.lbVol20 = new System.Windows.Forms.Label();
-            this.lbVol30 = new System.Windows.Forms.Label();
-            this.lbVol40 = new System.Windows.Forms.Label();
-            this.lbVol50 = new System.Windows.Forms.Label();
-            this.lbVol60 = new System.Windows.Forms.Label();
-            this.lbVol70 = new System.Windows.Forms.Label();
-            this.lbVol80 = new System.Windows.Forms.Label();
-            this.lbVol90 = new System.Windows.Forms.Label();
-            this.lbVol100 = new System.Windows.Forms.Label();
-            this.lbAVRSource = new System.Windows.Forms.Label();
-            this.AVRSource = new System.Windows.Forms.Label();
-            this.lbAVRSourceAudio = new System.Windows.Forms.Label();
-            this.AVRSourceAudio = new System.Windows.Forms.Label();
-            this.lbAVRSoundMode = new System.Windows.Forms.Label();
-            this.AVRSoundMode = new System.Windows.Forms.Label();
-            this.HeosTrackInfoAlbum = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnResetSpeaker = new System.Windows.Forms.Button();
-            this.lbSpeakerSubMasterShowValue = new System.Windows.Forms.Label();
-            this.tbSpeakerSubMaster = new System.Windows.Forms.TrackBar();
-            this.lbSpeakerSubwoofer2ShowValue = new System.Windows.Forms.Label();
-            this.lbSpeakerSubwoofer1ShowValue = new System.Windows.Forms.Label();
-            this.lbSpeakerSurroundRShowValue = new System.Windows.Forms.Label();
-            this.lbSpeakerSurroundLShowValue = new System.Windows.Forms.Label();
-            this.lbSpeakerFrontRShowValue = new System.Windows.Forms.Label();
-            this.lbSpeakerCenterShowValue = new System.Windows.Forms.Label();
-            this.lbSpeakerFrontLShowValue = new System.Windows.Forms.Label();
-            this.tbSpeakerSubwoofer2 = new System.Windows.Forms.TrackBar();
-            this.tbSpeakerSubwoofer1 = new System.Windows.Forms.TrackBar();
-            this.tbSpeakerSurroundR = new System.Windows.Forms.TrackBar();
-            this.tbSpeakerSurroundL = new System.Windows.Forms.TrackBar();
-            this.tbSpeakerFrontR = new System.Windows.Forms.TrackBar();
-            this.tbSpeakerCenter = new System.Windows.Forms.TrackBar();
-            this.tbSpeakerFrontL = new System.Windows.Forms.TrackBar();
-            this.lbSpeakerSubwoofer1and2 = new System.Windows.Forms.Label();
-            this.lbSpeakerSubwoofer2 = new System.Windows.Forms.Label();
-            this.lbSpeakerSubwoofer1 = new System.Windows.Forms.Label();
-            this.lbSpeakerSurroundR = new System.Windows.Forms.Label();
-            this.lbSpeakerSurroundL = new System.Windows.Forms.Label();
-            this.lbSpeakerFrontR = new System.Windows.Forms.Label();
-            this.lbSpeakerCenter = new System.Windows.Forms.Label();
-            this.lbSpeakerFrontL = new System.Windows.Forms.Label();
-            this.pnlTabOverlay = new System.Windows.Forms.Label();
-            this.lblTabMain = new System.Windows.Forms.Label();
-            this.lblTabSpeaker = new System.Windows.Forms.Label();
-            this.lbBottomOverlay = new System.Windows.Forms.Label();
-            this.HorizontalLine = new System.Windows.Forms.Label();
-            this.cmsTray.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPicture)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.pnlProgressBack.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAlbumArt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatOne)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatAll)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayShuffle)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayBack)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlaySkip)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayPause)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnToggleMute)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnVolDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnVolUp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SliderVolume)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSubMaster)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSubwoofer2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSubwoofer1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSurroundR)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSurroundL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerFrontR)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerCenter)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerFrontL)).BeginInit();
-            this.SuspendLayout();
+        {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AVRControl));
+            CopyrightNote = new System.Windows.Forms.Label();
+            InfoNote = new System.Windows.Forms.Label();
+            LabelPowerToggle = new System.Windows.Forms.Label();
+            lblIP = new System.Windows.Forms.Label();
+            tbIP = new TextBox();
+            btnSave = new Button();
+            PowerToggle = new CheckBox();
+            lbConnectStatus = new System.Windows.Forms.Label();
+            cbSysTray = new CheckBox();
+            notifyIcon1 = new NotifyIcon(components);
+            cmsTray = new ContextMenuStrip(components);
+            gitHubPageToolStripMenuItem1 = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripMenuItemShowHide = new ToolStripMenuItem();
+            quitToolStripMenuItem = new ToolStripMenuItem();
+            btnInstall = new Button();
+            LogoPicture = new PictureBox();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            pnlProgressBack = new Panel();
+            pnlProgressBar = new Panel();
+            lbHeosAVRNetType_Data = new System.Windows.Forms.Label();
+            lbHeosAVRID_Data = new System.Windows.Forms.Label();
+            lbHeosAVRVersion_Data = new System.Windows.Forms.Label();
+            lbHeosAVRName_Data = new System.Windows.Forms.Label();
+            lbHeosAVRNetType = new System.Windows.Forms.Label();
+            lbHeosAVRID = new System.Windows.Forms.Label();
+            lbHeosAVRVersion = new System.Windows.Forms.Label();
+            lbHeosAVRName = new System.Windows.Forms.Label();
+            lblTime = new System.Windows.Forms.Label();
+            lbAlbumCover = new System.Windows.Forms.Label();
+            pbAlbumArt = new PictureBox();
+            label9 = new System.Windows.Forms.Label();
+            lbHeosPlayRepeatOne = new System.Windows.Forms.Label();
+            btnHeosPlayRepeatOne = new PictureBox();
+            lbHeosPlayRepeatAll = new System.Windows.Forms.Label();
+            btnHeosPlayRepeatAll = new PictureBox();
+            lbHeosPlayShuffle = new System.Windows.Forms.Label();
+            lbHeosPlaySkip = new System.Windows.Forms.Label();
+            lbHeosPlayBack = new System.Windows.Forms.Label();
+            lbHeosPlayPause = new System.Windows.Forms.Label();
+            btnHeosPlayShuffle = new PictureBox();
+            btnHeosPlayBack = new PictureBox();
+            btnHeosPlaySkip = new PictureBox();
+            btnHeosPlayPause = new PictureBox();
+            lbHeosSong = new System.Windows.Forms.Label();
+            lbHeosAlbum = new System.Windows.Forms.Label();
+            lbHeosArtist = new System.Windows.Forms.Label();
+            HeosTrackInfoArtist = new System.Windows.Forms.Label();
+            HeosTrackInfoSong = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            lbUp = new System.Windows.Forms.Label();
+            lbMute = new System.Windows.Forms.Label();
+            lbDown = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            btnToggleMute = new PictureBox();
+            btnVolDown = new PictureBox();
+            btnVolUp = new PictureBox();
+            SliderVolume = new TrackBar();
+            ShowVolume = new System.Windows.Forms.Label();
+            lbVol10 = new System.Windows.Forms.Label();
+            lbVol20 = new System.Windows.Forms.Label();
+            lbVol30 = new System.Windows.Forms.Label();
+            lbVol40 = new System.Windows.Forms.Label();
+            lbVol50 = new System.Windows.Forms.Label();
+            lbVol60 = new System.Windows.Forms.Label();
+            lbVol70 = new System.Windows.Forms.Label();
+            lbVol80 = new System.Windows.Forms.Label();
+            lbVol90 = new System.Windows.Forms.Label();
+            lbVol100 = new System.Windows.Forms.Label();
+            lbAVRSource = new System.Windows.Forms.Label();
+            AVRSource = new System.Windows.Forms.Label();
+            lbAVRSourceAudio = new System.Windows.Forms.Label();
+            AVRSourceAudio = new System.Windows.Forms.Label();
+            lbAVRSoundMode = new System.Windows.Forms.Label();
+            AVRSoundMode = new System.Windows.Forms.Label();
+            HeosTrackInfoAlbum = new System.Windows.Forms.Label();
+            tabPage2 = new TabPage();
+            btnResetSpeaker = new Button();
+            lbSpeakerSubMasterShowValue = new System.Windows.Forms.Label();
+            tbSpeakerSubMaster = new TrackBar();
+            lbSpeakerSubwoofer2ShowValue = new System.Windows.Forms.Label();
+            lbSpeakerSubwoofer1ShowValue = new System.Windows.Forms.Label();
+            lbSpeakerSurroundRShowValue = new System.Windows.Forms.Label();
+            lbSpeakerSurroundLShowValue = new System.Windows.Forms.Label();
+            lbSpeakerFrontRShowValue = new System.Windows.Forms.Label();
+            lbSpeakerCenterShowValue = new System.Windows.Forms.Label();
+            lbSpeakerFrontLShowValue = new System.Windows.Forms.Label();
+            tbSpeakerSubwoofer2 = new TrackBar();
+            tbSpeakerSubwoofer1 = new TrackBar();
+            tbSpeakerSurroundR = new TrackBar();
+            tbSpeakerSurroundL = new TrackBar();
+            tbSpeakerFrontR = new TrackBar();
+            tbSpeakerCenter = new TrackBar();
+            tbSpeakerFrontL = new TrackBar();
+            lbSpeakerSubwoofer1and2 = new System.Windows.Forms.Label();
+            lbSpeakerSubwoofer2 = new System.Windows.Forms.Label();
+            lbSpeakerSubwoofer1 = new System.Windows.Forms.Label();
+            lbSpeakerSurroundR = new System.Windows.Forms.Label();
+            lbSpeakerSurroundL = new System.Windows.Forms.Label();
+            lbSpeakerFrontR = new System.Windows.Forms.Label();
+            lbSpeakerCenter = new System.Windows.Forms.Label();
+            lbSpeakerFrontL = new System.Windows.Forms.Label();
+            pnlTabOverlay = new System.Windows.Forms.Label();
+            lblTabMain = new System.Windows.Forms.Label();
+            lblTabSpeaker = new System.Windows.Forms.Label();
+            lbBottomOverlay = new System.Windows.Forms.Label();
+            HorizontalLine = new System.Windows.Forms.Label();
+            cmsTray.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)LogoPicture).BeginInit();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            pnlProgressBack.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbAlbumArt).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayRepeatOne).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayRepeatAll).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayShuffle).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayBack).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlaySkip).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayPause).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnToggleMute).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnVolDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnVolUp).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SliderVolume).BeginInit();
+            tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSubMaster).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSurroundR).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSurroundL).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontR).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerCenter).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontL).BeginInit();
+            SuspendLayout();
             // 
             // CopyrightNote
             // 
-            this.CopyrightNote.AutoSize = true;
-            this.CopyrightNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Italic);
-            this.CopyrightNote.ForeColor = System.Drawing.Color.White;
-            this.CopyrightNote.Location = new System.Drawing.Point(820, 914);
-            this.CopyrightNote.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.CopyrightNote.Name = "CopyrightNote";
-            this.CopyrightNote.Size = new System.Drawing.Size(161, 25);
-            this.CopyrightNote.TabIndex = 10;
-            this.CopyrightNote.Text = "by SAMDestroy";
+            CopyrightNote.AutoSize = true;
+            CopyrightNote.Font = new Font("Microsoft Sans Serif", 7.875F, FontStyle.Italic);
+            CopyrightNote.ForeColor = Color.White;
+            CopyrightNote.Location = new Point(547, 731);
+            CopyrightNote.Margin = new Padding(4, 0, 4, 0);
+            CopyrightNote.Name = "CopyrightNote";
+            CopyrightNote.Size = new Size(105, 17);
+            CopyrightNote.TabIndex = 10;
+            CopyrightNote.Text = "by SAMDestroy";
             // 
             // InfoNote
             // 
-            this.InfoNote.AutoSize = true;
-            this.InfoNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InfoNote.ForeColor = System.Drawing.Color.White;
-            this.InfoNote.Location = new System.Drawing.Point(635, 16);
-            this.InfoNote.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.InfoNote.Name = "InfoNote";
-            this.InfoNote.Size = new System.Drawing.Size(196, 50);
-            this.InfoNote.TabIndex = 11;
-            this.InfoNote.Text = "Denon / Marantz\nAVR Telnet Control";
+            InfoNote.AutoSize = true;
+            InfoNote.Font = new Font("Microsoft Sans Serif", 7.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            InfoNote.ForeColor = Color.White;
+            InfoNote.Location = new Point(423, 13);
+            InfoNote.Margin = new Padding(4, 0, 4, 0);
+            InfoNote.Name = "InfoNote";
+            InfoNote.Size = new Size(129, 34);
+            InfoNote.TabIndex = 11;
+            InfoNote.Text = "Denon / Marantz\nAVR Telnet Control";
             // 
             // LabelPowerToggle
             // 
-            this.LabelPowerToggle.AutoSize = true;
-            this.LabelPowerToggle.ForeColor = System.Drawing.Color.White;
-            this.LabelPowerToggle.Location = new System.Drawing.Point(496, 16);
-            this.LabelPowerToggle.Name = "LabelPowerToggle";
-            this.LabelPowerToggle.Size = new System.Drawing.Size(125, 25);
-            this.LabelPowerToggle.TabIndex = 13;
-            this.LabelPowerToggle.Text = "Main Power";
+            LabelPowerToggle.AutoSize = true;
+            LabelPowerToggle.ForeColor = Color.White;
+            LabelPowerToggle.Location = new Point(331, 13);
+            LabelPowerToggle.Margin = new Padding(2, 0, 2, 0);
+            LabelPowerToggle.Name = "LabelPowerToggle";
+            LabelPowerToggle.Size = new Size(86, 20);
+            LabelPowerToggle.TabIndex = 13;
+            LabelPowerToggle.Text = "Main Power";
             // 
             // lblIP
             // 
-            this.lblIP.AutoSize = true;
-            this.lblIP.ForeColor = System.Drawing.Color.White;
-            this.lblIP.Location = new System.Drawing.Point(24, 48);
-            this.lblIP.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblIP.Name = "lblIP";
-            this.lblIP.Size = new System.Drawing.Size(37, 25);
-            this.lblIP.TabIndex = 3;
-            this.lblIP.Text = "IP:";
+            lblIP.AutoSize = true;
+            lblIP.ForeColor = Color.White;
+            lblIP.Location = new Point(16, 38);
+            lblIP.Margin = new Padding(4, 0, 4, 0);
+            lblIP.Name = "lblIP";
+            lblIP.Size = new Size(24, 20);
+            lblIP.TabIndex = 3;
+            lblIP.Text = "IP:";
             // 
             // tbIP
             // 
-            this.tbIP.BackColor = System.Drawing.Color.DarkGray;
-            this.tbIP.Location = new System.Drawing.Point(80, 43);
-            this.tbIP.Margin = new System.Windows.Forms.Padding(6);
-            this.tbIP.Name = "tbIP";
-            this.tbIP.Size = new System.Drawing.Size(209, 31);
-            this.tbIP.TabIndex = 2;
-            this.tbIP.TabStop = false;
+            tbIP.BackColor = Color.DarkGray;
+            tbIP.Location = new Point(53, 34);
+            tbIP.Margin = new Padding(4, 5, 4, 5);
+            tbIP.Name = "tbIP";
+            tbIP.Size = new Size(141, 27);
+            tbIP.TabIndex = 2;
+            tbIP.TabStop = false;
             // 
             // btnSave
             // 
-            this.btnSave.BackColor = System.Drawing.Color.DarkGray;
-            this.btnSave.Location = new System.Drawing.Point(320, 41);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(6);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(142, 44);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            btnSave.BackColor = Color.DarkGray;
+            btnSave.Location = new Point(213, 33);
+            btnSave.Margin = new Padding(4, 5, 4, 5);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(95, 35);
+            btnSave.TabIndex = 1;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += BtnSave_Click;
             // 
             // PowerToggle
             // 
-            this.PowerToggle.Appearance = System.Windows.Forms.Appearance.Button;
-            this.PowerToggle.BackColor = System.Drawing.Color.SlateGray;
-            this.PowerToggle.Enabled = false;
-            this.PowerToggle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
-            this.PowerToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.PowerToggle.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PowerToggle.ForeColor = System.Drawing.Color.White;
-            this.PowerToggle.Location = new System.Drawing.Point(499, 47);
-            this.PowerToggle.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.PowerToggle.Name = "PowerToggle";
-            this.PowerToggle.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.PowerToggle.Size = new System.Drawing.Size(120, 35);
-            this.PowerToggle.TabIndex = 12;
-            this.PowerToggle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.PowerToggle.UseVisualStyleBackColor = false;
-            this.PowerToggle.Click += new System.EventHandler(this.PowerToggle_Click);
+            PowerToggle.Appearance = Appearance.Button;
+            PowerToggle.BackColor = Color.SlateGray;
+            PowerToggle.Enabled = false;
+            PowerToggle.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            PowerToggle.FlatStyle = FlatStyle.Flat;
+            PowerToggle.Font = new Font("Microsoft Sans Serif", 6F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            PowerToggle.ForeColor = Color.White;
+            PowerToggle.Location = new Point(333, 35);
+            PowerToggle.Margin = new Padding(2, 0, 2, 0);
+            PowerToggle.Name = "PowerToggle";
+            PowerToggle.Padding = new Padding(4, 0, 4, 0);
+            PowerToggle.Size = new Size(80, 30);
+            PowerToggle.TabIndex = 12;
+            PowerToggle.TextAlign = ContentAlignment.MiddleCenter;
+            PowerToggle.UseVisualStyleBackColor = false;
+            PowerToggle.Click += PowerToggle_Click;
             // 
             // lbConnectStatus
             // 
-            this.lbConnectStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbConnectStatus.ForeColor = System.Drawing.Color.Khaki;
-            this.lbConnectStatus.Location = new System.Drawing.Point(12, 4);
-            this.lbConnectStatus.Name = "lbConnectStatus";
-            this.lbConnectStatus.Size = new System.Drawing.Size(450, 23);
-            this.lbConnectStatus.TabIndex = 34;
-            this.lbConnectStatus.Text = "label2";
+            lbConnectStatus.Font = new Font("Microsoft Sans Serif", 7.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbConnectStatus.ForeColor = Color.Khaki;
+            lbConnectStatus.Location = new Point(8, 3);
+            lbConnectStatus.Margin = new Padding(2, 0, 2, 0);
+            lbConnectStatus.Name = "lbConnectStatus";
+            lbConnectStatus.Size = new Size(300, 18);
+            lbConnectStatus.TabIndex = 34;
+            lbConnectStatus.Text = "label2";
             // 
             // cbSysTray
             // 
-            this.cbSysTray.AutoSize = true;
-            this.cbSysTray.ForeColor = System.Drawing.Color.White;
-            this.cbSysTray.Location = new System.Drawing.Point(840, 56);
-            this.cbSysTray.Name = "cbSysTray";
-            this.cbSysTray.Size = new System.Drawing.Size(123, 29);
-            this.cbSysTray.TabIndex = 67;
-            this.cbSysTray.Text = "SysTray";
-            this.cbSysTray.UseVisualStyleBackColor = true;
-            this.cbSysTray.CheckedChanged += new System.EventHandler(this.cbSysTray_CheckedChanged);
+            cbSysTray.AutoSize = true;
+            cbSysTray.ForeColor = Color.White;
+            cbSysTray.Location = new Point(560, 45);
+            cbSysTray.Margin = new Padding(2);
+            cbSysTray.Name = "cbSysTray";
+            cbSysTray.Size = new Size(79, 24);
+            cbSysTray.TabIndex = 67;
+            cbSysTray.Text = "SysTray";
+            cbSysTray.UseVisualStyleBackColor = true;
+            cbSysTray.CheckedChanged += cbSysTray_CheckedChanged;
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.ContextMenuStrip = this.cmsTray;
-            this.notifyIcon1.Text = "AVRControl";
-            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
+            notifyIcon1.ContextMenuStrip = cmsTray;
+            notifyIcon1.Text = "AVRControl";
+            notifyIcon1.MouseClick += notifyIcon1_MouseClick;
             // 
             // cmsTray
             // 
-            this.cmsTray.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.cmsTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gitHubPageToolStripMenuItem1,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemShowHide,
-            this.quitToolStripMenuItem});
-            this.cmsTray.Name = "cmsTray";
-            this.cmsTray.Size = new System.Drawing.Size(222, 124);
+            cmsTray.ImageScalingSize = new Size(32, 32);
+            cmsTray.Items.AddRange(new ToolStripItem[] { gitHubPageToolStripMenuItem1, toolStripSeparator1, toolStripMenuItemShowHide, quitToolStripMenuItem });
+            cmsTray.Name = "cmsTray";
+            cmsTray.Size = new Size(162, 82);
             // 
             // gitHubPageToolStripMenuItem1
             // 
-            this.gitHubPageToolStripMenuItem1.Image = global::AVRControl.Properties.Resources.github;
-            this.gitHubPageToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.gitHubPageToolStripMenuItem1.Name = "gitHubPageToolStripMenuItem1";
-            this.gitHubPageToolStripMenuItem1.Size = new System.Drawing.Size(221, 38);
-            this.gitHubPageToolStripMenuItem1.Text = "GitHub Page";
-            this.gitHubPageToolStripMenuItem1.Click += new System.EventHandler(this.gitHubPageToolStripMenuItem1_Click);
+            gitHubPageToolStripMenuItem1.Image = (Image)resources.GetObject("gitHubPageToolStripMenuItem1.Image");
+            gitHubPageToolStripMenuItem1.ImageScaling = ToolStripItemImageScaling.None;
+            gitHubPageToolStripMenuItem1.Name = "gitHubPageToolStripMenuItem1";
+            gitHubPageToolStripMenuItem1.Size = new Size(161, 24);
+            gitHubPageToolStripMenuItem1.Text = "GitHub Page";
+            gitHubPageToolStripMenuItem1.Click += gitHubPageToolStripMenuItem1_Click;
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(158, 6);
             // 
             // toolStripMenuItemShowHide
             // 
-            this.toolStripMenuItemShowHide.Image = global::AVRControl.Properties.Resources.showhide;
-            this.toolStripMenuItemShowHide.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripMenuItemShowHide.Name = "toolStripMenuItemShowHide";
-            this.toolStripMenuItemShowHide.Size = new System.Drawing.Size(221, 38);
-            this.toolStripMenuItemShowHide.Text = "Show/Hide";
-            this.toolStripMenuItemShowHide.Click += new System.EventHandler(this.toolStripMenuItemShowHide_Click);
+            toolStripMenuItemShowHide.Image = (Image)resources.GetObject("toolStripMenuItemShowHide.Image");
+            toolStripMenuItemShowHide.ImageScaling = ToolStripItemImageScaling.None;
+            toolStripMenuItemShowHide.Name = "toolStripMenuItemShowHide";
+            toolStripMenuItemShowHide.Size = new Size(161, 24);
+            toolStripMenuItemShowHide.Text = "Show/Hide";
+            toolStripMenuItemShowHide.Click += toolStripMenuItemShowHide_Click;
             // 
             // quitToolStripMenuItem
             // 
-            this.quitToolStripMenuItem.Image = global::AVRControl.Properties.Resources.quit;
-            this.quitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(221, 38);
-            this.quitToolStripMenuItem.Text = "Quit";
-            this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+            quitToolStripMenuItem.Image = (Image)resources.GetObject("quitToolStripMenuItem.Image");
+            quitToolStripMenuItem.ImageScaling = ToolStripItemImageScaling.None;
+            quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            quitToolStripMenuItem.Size = new Size(161, 24);
+            quitToolStripMenuItem.Text = "Quit";
+            quitToolStripMenuItem.Click += quitToolStripMenuItem_Click;
             // 
             // btnInstall
             // 
-            this.btnInstall.BackColor = System.Drawing.Color.DarkGray;
-            this.btnInstall.Location = new System.Drawing.Point(838, 6);
-            this.btnInstall.Name = "btnInstall";
-            this.btnInstall.Size = new System.Drawing.Size(142, 44);
-            this.btnInstall.TabIndex = 68;
-            this.btnInstall.Text = "button1";
-            this.btnInstall.UseVisualStyleBackColor = false;
-            this.btnInstall.Click += new System.EventHandler(this.btnInstall_Click);
+            btnInstall.BackColor = Color.DarkGray;
+            btnInstall.Location = new Point(559, 5);
+            btnInstall.Margin = new Padding(2);
+            btnInstall.Name = "btnInstall";
+            btnInstall.Size = new Size(95, 35);
+            btnInstall.TabIndex = 68;
+            btnInstall.Text = "button1";
+            btnInstall.UseVisualStyleBackColor = false;
+            btnInstall.Click += btnInstall_Click;
             // 
             // LogoPicture
             // 
-            this.LogoPicture.BackColor = System.Drawing.Color.Transparent;
-            this.LogoPicture.Image = global::AVRControl.Properties.Resources.apple_klein;
-            this.LogoPicture.Location = new System.Drawing.Point(756, 846);
-            this.LogoPicture.Margin = new System.Windows.Forms.Padding(6);
-            this.LogoPicture.Name = "LogoPicture";
-            this.LogoPicture.Size = new System.Drawing.Size(200, 96);
-            this.LogoPicture.TabIndex = 14;
-            this.LogoPicture.TabStop = false;
+            LogoPicture.BackColor = Color.Transparent;
+            LogoPicture.Image = (Image)resources.GetObject("LogoPicture.Image");
+            LogoPicture.Location = new Point(504, 698);
+            LogoPicture.Margin = new Padding(4, 5, 4, 5);
+            LogoPicture.Name = "LogoPicture";
+            LogoPicture.Size = new Size(133, 56);
+            LogoPicture.TabIndex = 14;
+            LogoPicture.TabStop = false;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(-8, 105);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1010, 739);
-            this.tabControl1.TabIndex = 69;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Location = new Point(-5, 84);
+            tabControl1.Margin = new Padding(2);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(673, 591);
+            tabControl1.TabIndex = 69;
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.LightSlateGray;
-            this.tabPage1.Controls.Add(this.pnlProgressBack);
-            this.tabPage1.Controls.Add(this.lbHeosAVRNetType_Data);
-            this.tabPage1.Controls.Add(this.lbHeosAVRID_Data);
-            this.tabPage1.Controls.Add(this.lbHeosAVRVersion_Data);
-            this.tabPage1.Controls.Add(this.lbHeosAVRName_Data);
-            this.tabPage1.Controls.Add(this.lbHeosAVRNetType);
-            this.tabPage1.Controls.Add(this.lbHeosAVRID);
-            this.tabPage1.Controls.Add(this.lbHeosAVRVersion);
-            this.tabPage1.Controls.Add(this.lbHeosAVRName);
-            this.tabPage1.Controls.Add(this.lblTime);
-            this.tabPage1.Controls.Add(this.lbAlbumCover);
-            this.tabPage1.Controls.Add(this.pbAlbumArt);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.lbHeosPlayRepeatOne);
-            this.tabPage1.Controls.Add(this.btnHeosPlayRepeatOne);
-            this.tabPage1.Controls.Add(this.lbHeosPlayRepeatAll);
-            this.tabPage1.Controls.Add(this.btnHeosPlayRepeatAll);
-            this.tabPage1.Controls.Add(this.lbHeosPlayShuffle);
-            this.tabPage1.Controls.Add(this.lbHeosPlaySkip);
-            this.tabPage1.Controls.Add(this.lbHeosPlayBack);
-            this.tabPage1.Controls.Add(this.lbHeosPlayPause);
-            this.tabPage1.Controls.Add(this.btnHeosPlayShuffle);
-            this.tabPage1.Controls.Add(this.btnHeosPlayBack);
-            this.tabPage1.Controls.Add(this.btnHeosPlaySkip);
-            this.tabPage1.Controls.Add(this.btnHeosPlayPause);
-            this.tabPage1.Controls.Add(this.lbHeosSong);
-            this.tabPage1.Controls.Add(this.lbHeosAlbum);
-            this.tabPage1.Controls.Add(this.lbHeosArtist);
-            this.tabPage1.Controls.Add(this.HeosTrackInfoArtist);
-            this.tabPage1.Controls.Add(this.HeosTrackInfoSong);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.lbUp);
-            this.tabPage1.Controls.Add(this.lbMute);
-            this.tabPage1.Controls.Add(this.lbDown);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.btnToggleMute);
-            this.tabPage1.Controls.Add(this.btnVolDown);
-            this.tabPage1.Controls.Add(this.btnVolUp);
-            this.tabPage1.Controls.Add(this.SliderVolume);
-            this.tabPage1.Controls.Add(this.ShowVolume);
-            this.tabPage1.Controls.Add(this.lbVol10);
-            this.tabPage1.Controls.Add(this.lbVol20);
-            this.tabPage1.Controls.Add(this.lbVol30);
-            this.tabPage1.Controls.Add(this.lbVol40);
-            this.tabPage1.Controls.Add(this.lbVol50);
-            this.tabPage1.Controls.Add(this.lbVol60);
-            this.tabPage1.Controls.Add(this.lbVol70);
-            this.tabPage1.Controls.Add(this.lbVol80);
-            this.tabPage1.Controls.Add(this.lbVol90);
-            this.tabPage1.Controls.Add(this.lbVol100);
-            this.tabPage1.Controls.Add(this.lbAVRSource);
-            this.tabPage1.Controls.Add(this.AVRSource);
-            this.tabPage1.Controls.Add(this.lbAVRSourceAudio);
-            this.tabPage1.Controls.Add(this.AVRSourceAudio);
-            this.tabPage1.Controls.Add(this.lbAVRSoundMode);
-            this.tabPage1.Controls.Add(this.AVRSoundMode);
-            this.tabPage1.Controls.Add(this.HeosTrackInfoAlbum);
-            this.tabPage1.Location = new System.Drawing.Point(8, 39);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(994, 692);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Main";
+            tabPage1.BackColor = Color.LightSlateGray;
+            tabPage1.Controls.Add(pnlProgressBack);
+            tabPage1.Controls.Add(lbHeosAVRNetType_Data);
+            tabPage1.Controls.Add(lbHeosAVRID_Data);
+            tabPage1.Controls.Add(lbHeosAVRVersion_Data);
+            tabPage1.Controls.Add(lbHeosAVRName_Data);
+            tabPage1.Controls.Add(lbHeosAVRNetType);
+            tabPage1.Controls.Add(lbHeosAVRID);
+            tabPage1.Controls.Add(lbHeosAVRVersion);
+            tabPage1.Controls.Add(lbHeosAVRName);
+            tabPage1.Controls.Add(lblTime);
+            tabPage1.Controls.Add(lbAlbumCover);
+            tabPage1.Controls.Add(pbAlbumArt);
+            tabPage1.Controls.Add(label9);
+            tabPage1.Controls.Add(lbHeosPlayRepeatOne);
+            tabPage1.Controls.Add(btnHeosPlayRepeatOne);
+            tabPage1.Controls.Add(lbHeosPlayRepeatAll);
+            tabPage1.Controls.Add(btnHeosPlayRepeatAll);
+            tabPage1.Controls.Add(lbHeosPlayShuffle);
+            tabPage1.Controls.Add(lbHeosPlaySkip);
+            tabPage1.Controls.Add(lbHeosPlayBack);
+            tabPage1.Controls.Add(lbHeosPlayPause);
+            tabPage1.Controls.Add(btnHeosPlayShuffle);
+            tabPage1.Controls.Add(btnHeosPlayBack);
+            tabPage1.Controls.Add(btnHeosPlaySkip);
+            tabPage1.Controls.Add(btnHeosPlayPause);
+            tabPage1.Controls.Add(lbHeosSong);
+            tabPage1.Controls.Add(lbHeosAlbum);
+            tabPage1.Controls.Add(lbHeosArtist);
+            tabPage1.Controls.Add(HeosTrackInfoArtist);
+            tabPage1.Controls.Add(HeosTrackInfoSong);
+            tabPage1.Controls.Add(label2);
+            tabPage1.Controls.Add(lbUp);
+            tabPage1.Controls.Add(lbMute);
+            tabPage1.Controls.Add(lbDown);
+            tabPage1.Controls.Add(label1);
+            tabPage1.Controls.Add(btnToggleMute);
+            tabPage1.Controls.Add(btnVolDown);
+            tabPage1.Controls.Add(btnVolUp);
+            tabPage1.Controls.Add(SliderVolume);
+            tabPage1.Controls.Add(ShowVolume);
+            tabPage1.Controls.Add(lbVol10);
+            tabPage1.Controls.Add(lbVol20);
+            tabPage1.Controls.Add(lbVol30);
+            tabPage1.Controls.Add(lbVol40);
+            tabPage1.Controls.Add(lbVol50);
+            tabPage1.Controls.Add(lbVol60);
+            tabPage1.Controls.Add(lbVol70);
+            tabPage1.Controls.Add(lbVol80);
+            tabPage1.Controls.Add(lbVol90);
+            tabPage1.Controls.Add(lbVol100);
+            tabPage1.Controls.Add(lbAVRSource);
+            tabPage1.Controls.Add(AVRSource);
+            tabPage1.Controls.Add(lbAVRSourceAudio);
+            tabPage1.Controls.Add(AVRSourceAudio);
+            tabPage1.Controls.Add(lbAVRSoundMode);
+            tabPage1.Controls.Add(AVRSoundMode);
+            tabPage1.Controls.Add(HeosTrackInfoAlbum);
+            tabPage1.Location = new Point(4, 29);
+            tabPage1.Margin = new Padding(2);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(2);
+            tabPage1.Size = new Size(665, 558);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Main";
             // 
             // pnlProgressBack
             // 
-            this.pnlProgressBack.BackColor = System.Drawing.Color.DarkGray;
-            this.pnlProgressBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlProgressBack.Controls.Add(this.pnlProgressBar);
-            this.pnlProgressBack.Location = new System.Drawing.Point(43, 457);
-            this.pnlProgressBack.Name = "pnlProgressBack";
-            this.pnlProgressBack.Size = new System.Drawing.Size(875, 13);
-            this.pnlProgressBack.TabIndex = 124;
+            pnlProgressBack.BackColor = Color.DarkGray;
+            pnlProgressBack.BorderStyle = BorderStyle.FixedSingle;
+            pnlProgressBack.Controls.Add(pnlProgressBar);
+            pnlProgressBack.Location = new Point(29, 366);
+            pnlProgressBack.Margin = new Padding(2);
+            pnlProgressBack.Name = "pnlProgressBack";
+            pnlProgressBack.Size = new Size(584, 11);
+            pnlProgressBack.TabIndex = 124;
             // 
             // pnlProgressBar
             // 
-            this.pnlProgressBar.BackColor = System.Drawing.Color.SteelBlue;
-            this.pnlProgressBar.Location = new System.Drawing.Point(1, 1);
-            this.pnlProgressBar.Name = "pnlProgressBar";
-            this.pnlProgressBar.Size = new System.Drawing.Size(1, 13);
-            this.pnlProgressBar.TabIndex = 0;
+            pnlProgressBar.BackColor = Color.SteelBlue;
+            pnlProgressBar.Location = new Point(1, 1);
+            pnlProgressBar.Margin = new Padding(2);
+            pnlProgressBar.Name = "pnlProgressBar";
+            pnlProgressBar.Size = new Size(1, 10);
+            pnlProgressBar.TabIndex = 0;
             // 
             // lbHeosAVRNetType_Data
             // 
-            this.lbHeosAVRNetType_Data.AutoSize = true;
-            this.lbHeosAVRNetType_Data.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosAVRNetType_Data.ForeColor = System.Drawing.Color.Khaki;
-            this.lbHeosAVRNetType_Data.Location = new System.Drawing.Point(122, 622);
-            this.lbHeosAVRNetType_Data.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosAVRNetType_Data.Name = "lbHeosAVRNetType_Data";
-            this.lbHeosAVRNetType_Data.Size = new System.Drawing.Size(0, 24);
-            this.lbHeosAVRNetType_Data.TabIndex = 123;
+            lbHeosAVRNetType_Data.AutoSize = true;
+            lbHeosAVRNetType_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosAVRNetType_Data.ForeColor = Color.Khaki;
+            lbHeosAVRNetType_Data.Location = new Point(81, 501);
+            lbHeosAVRNetType_Data.Margin = new Padding(4, 0, 4, 0);
+            lbHeosAVRNetType_Data.Name = "lbHeosAVRNetType_Data";
+            lbHeosAVRNetType_Data.Size = new Size(0, 15);
+            lbHeosAVRNetType_Data.TabIndex = 123;
             // 
             // lbHeosAVRID_Data
             // 
-            this.lbHeosAVRID_Data.AutoSize = true;
-            this.lbHeosAVRID_Data.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosAVRID_Data.ForeColor = System.Drawing.Color.Khaki;
-            this.lbHeosAVRID_Data.Location = new System.Drawing.Point(122, 589);
-            this.lbHeosAVRID_Data.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosAVRID_Data.Name = "lbHeosAVRID_Data";
-            this.lbHeosAVRID_Data.Size = new System.Drawing.Size(0, 24);
-            this.lbHeosAVRID_Data.TabIndex = 122;
+            lbHeosAVRID_Data.AutoSize = true;
+            lbHeosAVRID_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosAVRID_Data.ForeColor = Color.Khaki;
+            lbHeosAVRID_Data.Location = new Point(81, 473);
+            lbHeosAVRID_Data.Margin = new Padding(4, 0, 4, 0);
+            lbHeosAVRID_Data.Name = "lbHeosAVRID_Data";
+            lbHeosAVRID_Data.Size = new Size(0, 15);
+            lbHeosAVRID_Data.TabIndex = 122;
             // 
             // lbHeosAVRVersion_Data
             // 
-            this.lbHeosAVRVersion_Data.AutoSize = true;
-            this.lbHeosAVRVersion_Data.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosAVRVersion_Data.ForeColor = System.Drawing.Color.Khaki;
-            this.lbHeosAVRVersion_Data.Location = new System.Drawing.Point(122, 556);
-            this.lbHeosAVRVersion_Data.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosAVRVersion_Data.Name = "lbHeosAVRVersion_Data";
-            this.lbHeosAVRVersion_Data.Size = new System.Drawing.Size(0, 24);
-            this.lbHeosAVRVersion_Data.TabIndex = 121;
+            lbHeosAVRVersion_Data.AutoSize = true;
+            lbHeosAVRVersion_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosAVRVersion_Data.ForeColor = Color.Khaki;
+            lbHeosAVRVersion_Data.Location = new Point(81, 446);
+            lbHeosAVRVersion_Data.Margin = new Padding(4, 0, 4, 0);
+            lbHeosAVRVersion_Data.Name = "lbHeosAVRVersion_Data";
+            lbHeosAVRVersion_Data.Size = new Size(0, 15);
+            lbHeosAVRVersion_Data.TabIndex = 121;
             // 
             // lbHeosAVRName_Data
             // 
-            this.lbHeosAVRName_Data.AutoSize = true;
-            this.lbHeosAVRName_Data.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosAVRName_Data.ForeColor = System.Drawing.Color.Khaki;
-            this.lbHeosAVRName_Data.Location = new System.Drawing.Point(121, 523);
-            this.lbHeosAVRName_Data.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosAVRName_Data.Name = "lbHeosAVRName_Data";
-            this.lbHeosAVRName_Data.Size = new System.Drawing.Size(0, 24);
-            this.lbHeosAVRName_Data.TabIndex = 120;
+            lbHeosAVRName_Data.AutoSize = true;
+            lbHeosAVRName_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosAVRName_Data.ForeColor = Color.Khaki;
+            lbHeosAVRName_Data.Location = new Point(81, 421);
+            lbHeosAVRName_Data.Margin = new Padding(4, 0, 4, 0);
+            lbHeosAVRName_Data.Name = "lbHeosAVRName_Data";
+            lbHeosAVRName_Data.Size = new Size(0, 15);
+            lbHeosAVRName_Data.TabIndex = 120;
             // 
             // lbHeosAVRNetType
             // 
-            this.lbHeosAVRNetType.AutoSize = true;
-            this.lbHeosAVRNetType.ForeColor = System.Drawing.Color.White;
-            this.lbHeosAVRNetType.Location = new System.Drawing.Point(20, 621);
-            this.lbHeosAVRNetType.Name = "lbHeosAVRNetType";
-            this.lbHeosAVRNetType.Size = new System.Drawing.Size(99, 25);
-            this.lbHeosAVRNetType.TabIndex = 119;
-            this.lbHeosAVRNetType.Text = "NetType:";
+            lbHeosAVRNetType.AutoSize = true;
+            lbHeosAVRNetType.ForeColor = Color.White;
+            lbHeosAVRNetType.Location = new Point(15, 497);
+            lbHeosAVRNetType.Margin = new Padding(2, 0, 2, 0);
+            lbHeosAVRNetType.Name = "lbHeosAVRNetType";
+            lbHeosAVRNetType.Size = new Size(67, 20);
+            lbHeosAVRNetType.TabIndex = 119;
+            lbHeosAVRNetType.Text = "NetType:";
             // 
             // lbHeosAVRID
             // 
-            this.lbHeosAVRID.AutoSize = true;
-            this.lbHeosAVRID.ForeColor = System.Drawing.Color.White;
-            this.lbHeosAVRID.Location = new System.Drawing.Point(20, 588);
-            this.lbHeosAVRID.Name = "lbHeosAVRID";
-            this.lbHeosAVRID.Size = new System.Drawing.Size(105, 25);
-            this.lbHeosAVRID.TabIndex = 118;
-            this.lbHeosAVRID.Text = "Player ID:";
+            lbHeosAVRID.AutoSize = true;
+            lbHeosAVRID.ForeColor = Color.White;
+            lbHeosAVRID.Location = new Point(15, 470);
+            lbHeosAVRID.Margin = new Padding(2, 0, 2, 0);
+            lbHeosAVRID.Name = "lbHeosAVRID";
+            lbHeosAVRID.Size = new Size(71, 20);
+            lbHeosAVRID.TabIndex = 118;
+            lbHeosAVRID.Text = "Player ID:";
             // 
             // lbHeosAVRVersion
             // 
-            this.lbHeosAVRVersion.AutoSize = true;
-            this.lbHeosAVRVersion.ForeColor = System.Drawing.Color.White;
-            this.lbHeosAVRVersion.Location = new System.Drawing.Point(20, 554);
-            this.lbHeosAVRVersion.Name = "lbHeosAVRVersion";
-            this.lbHeosAVRVersion.Size = new System.Drawing.Size(91, 25);
-            this.lbHeosAVRVersion.TabIndex = 117;
-            this.lbHeosAVRVersion.Text = "Version:";
+            lbHeosAVRVersion.AutoSize = true;
+            lbHeosAVRVersion.ForeColor = Color.White;
+            lbHeosAVRVersion.Location = new Point(15, 443);
+            lbHeosAVRVersion.Margin = new Padding(2, 0, 2, 0);
+            lbHeosAVRVersion.Name = "lbHeosAVRVersion";
+            lbHeosAVRVersion.Size = new Size(60, 20);
+            lbHeosAVRVersion.TabIndex = 117;
+            lbHeosAVRVersion.Text = "Version:";
             // 
             // lbHeosAVRName
             // 
-            this.lbHeosAVRName.AutoSize = true;
-            this.lbHeosAVRName.ForeColor = System.Drawing.Color.White;
-            this.lbHeosAVRName.Location = new System.Drawing.Point(22, 522);
-            this.lbHeosAVRName.Name = "lbHeosAVRName";
-            this.lbHeosAVRName.Size = new System.Drawing.Size(73, 25);
-            this.lbHeosAVRName.TabIndex = 116;
-            this.lbHeosAVRName.Text = "Client:";
+            lbHeosAVRName.AutoSize = true;
+            lbHeosAVRName.ForeColor = Color.White;
+            lbHeosAVRName.Location = new Point(15, 418);
+            lbHeosAVRName.Margin = new Padding(2, 0, 2, 0);
+            lbHeosAVRName.Name = "lbHeosAVRName";
+            lbHeosAVRName.Size = new Size(50, 20);
+            lbHeosAVRName.TabIndex = 116;
+            lbHeosAVRName.Text = "Client:";
             // 
             // lblTime
             // 
-            this.lblTime.ForeColor = System.Drawing.Color.White;
-            this.lblTime.Location = new System.Drawing.Point(406, 482);
-            this.lblTime.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(161, 27);
-            this.lblTime.TabIndex = 114;
+            lblTime.ForeColor = Color.White;
+            lblTime.Location = new Point(271, 386);
+            lblTime.Margin = new Padding(4, 0, 4, 0);
+            lblTime.Name = "lblTime";
+            lblTime.Size = new Size(107, 22);
+            lblTime.TabIndex = 114;
             // 
             // lbAlbumCover
             // 
-            this.lbAlbumCover.AutoSize = true;
-            this.lbAlbumCover.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAlbumCover.ForeColor = System.Drawing.Color.White;
-            this.lbAlbumCover.Location = new System.Drawing.Point(409, 635);
-            this.lbAlbumCover.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbAlbumCover.Name = "lbAlbumCover";
-            this.lbAlbumCover.Size = new System.Drawing.Size(139, 26);
-            this.lbAlbumCover.TabIndex = 113;
-            this.lbAlbumCover.Text = "Album Cover";
+            lbAlbumCover.AutoSize = true;
+            lbAlbumCover.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbAlbumCover.ForeColor = Color.White;
+            lbAlbumCover.Location = new Point(277, 505);
+            lbAlbumCover.Margin = new Padding(4, 0, 4, 0);
+            lbAlbumCover.Name = "lbAlbumCover";
+            lbAlbumCover.Size = new Size(88, 17);
+            lbAlbumCover.TabIndex = 113;
+            lbAlbumCover.Text = "Album Cover";
             // 
             // pbAlbumArt
             // 
-            this.pbAlbumArt.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbAlbumArt.Location = new System.Drawing.Point(421, 511);
-            this.pbAlbumArt.Name = "pbAlbumArt";
-            this.pbAlbumArt.Size = new System.Drawing.Size(112, 123);
-            this.pbAlbumArt.TabIndex = 112;
-            this.pbAlbumArt.TabStop = false;
+            pbAlbumArt.BackgroundImageLayout = ImageLayout.Zoom;
+            pbAlbumArt.Location = new Point(281, 409);
+            pbAlbumArt.Margin = new Padding(2);
+            pbAlbumArt.Name = "pbAlbumArt";
+            pbAlbumArt.Size = new Size(75, 98);
+            pbAlbumArt.TabIndex = 112;
+            pbAlbumArt.TabStop = false;
             // 
             // label9
             // 
-            this.label9.BackColor = System.Drawing.Color.DarkGray;
-            this.label9.Location = new System.Drawing.Point(-8, 326);
-            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(1000, 1);
-            this.label9.TabIndex = 111;
+            label9.BackColor = Color.DarkGray;
+            label9.Location = new Point(-5, 261);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(667, 1);
+            label9.TabIndex = 111;
             // 
             // lbHeosPlayRepeatOne
             // 
-            this.lbHeosPlayRepeatOne.AutoSize = true;
-            this.lbHeosPlayRepeatOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosPlayRepeatOne.ForeColor = System.Drawing.Color.White;
-            this.lbHeosPlayRepeatOne.Location = new System.Drawing.Point(795, 403);
-            this.lbHeosPlayRepeatOne.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosPlayRepeatOne.Name = "lbHeosPlayRepeatOne";
-            this.lbHeosPlayRepeatOne.Size = new System.Drawing.Size(129, 26);
-            this.lbHeosPlayRepeatOne.TabIndex = 110;
-            this.lbHeosPlayRepeatOne.Text = "Repeat One";
+            lbHeosPlayRepeatOne.AutoSize = true;
+            lbHeosPlayRepeatOne.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosPlayRepeatOne.ForeColor = Color.White;
+            lbHeosPlayRepeatOne.Location = new Point(530, 324);
+            lbHeosPlayRepeatOne.Margin = new Padding(4, 0, 4, 0);
+            lbHeosPlayRepeatOne.Name = "lbHeosPlayRepeatOne";
+            lbHeosPlayRepeatOne.Size = new Size(85, 17);
+            lbHeosPlayRepeatOne.TabIndex = 110;
+            lbHeosPlayRepeatOne.Text = "Repeat One";
             // 
             // btnHeosPlayRepeatOne
             // 
-            this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.Transparent;
-            this.btnHeosPlayRepeatOne.BackgroundImage = global::AVRControl.Properties.Resources.RepeatOneIcon;
-            this.btnHeosPlayRepeatOne.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHeosPlayRepeatOne.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnHeosPlayRepeatOne.Location = new System.Drawing.Point(818, 344);
-            this.btnHeosPlayRepeatOne.Margin = new System.Windows.Forms.Padding(6);
-            this.btnHeosPlayRepeatOne.Name = "btnHeosPlayRepeatOne";
-            this.btnHeosPlayRepeatOne.Size = new System.Drawing.Size(73, 53);
-            this.btnHeosPlayRepeatOne.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnHeosPlayRepeatOne.TabIndex = 109;
-            this.btnHeosPlayRepeatOne.TabStop = false;
-            this.btnHeosPlayRepeatOne.Click += new System.EventHandler(this.btnHeosPlayRepeatOne_Click);
-            this.btnHeosPlayRepeatOne.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayRepeatOne_MouseDown);
-            this.btnHeosPlayRepeatOne.MouseEnter += new System.EventHandler(this.btnHeosPlayRepeatOne_MouseEnter);
-            this.btnHeosPlayRepeatOne.MouseLeave += new System.EventHandler(this.btnHeosPlayRepeatOne_MouseLeave);
-            this.btnHeosPlayRepeatOne.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayRepeatOne_MouseUp);
+            btnHeosPlayRepeatOne.BackColor = Color.Transparent;
+            btnHeosPlayRepeatOne.BackgroundImage = (Image)resources.GetObject("btnHeosPlayRepeatOne.BackgroundImage");
+            btnHeosPlayRepeatOne.BackgroundImageLayout = ImageLayout.Center;
+            btnHeosPlayRepeatOne.BorderStyle = BorderStyle.FixedSingle;
+            btnHeosPlayRepeatOne.Location = new Point(545, 275);
+            btnHeosPlayRepeatOne.Margin = new Padding(4, 5, 4, 5);
+            btnHeosPlayRepeatOne.Name = "btnHeosPlayRepeatOne";
+            btnHeosPlayRepeatOne.Size = new Size(49, 43);
+            btnHeosPlayRepeatOne.SizeMode = PictureBoxSizeMode.Zoom;
+            btnHeosPlayRepeatOne.TabIndex = 109;
+            btnHeosPlayRepeatOne.TabStop = false;
+            btnHeosPlayRepeatOne.Click += btnHeosPlayRepeatOne_Click;
+            btnHeosPlayRepeatOne.MouseDown += btnHeosPlayRepeatOne_MouseDown;
+            btnHeosPlayRepeatOne.MouseEnter += btnHeosPlayRepeatOne_MouseEnter;
+            btnHeosPlayRepeatOne.MouseLeave += btnHeosPlayRepeatOne_MouseLeave;
+            btnHeosPlayRepeatOne.MouseUp += btnHeosPlayRepeatOne_MouseUp;
             // 
             // lbHeosPlayRepeatAll
             // 
-            this.lbHeosPlayRepeatAll.AutoSize = true;
-            this.lbHeosPlayRepeatAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosPlayRepeatAll.ForeColor = System.Drawing.Color.White;
-            this.lbHeosPlayRepeatAll.Location = new System.Drawing.Point(648, 405);
-            this.lbHeosPlayRepeatAll.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosPlayRepeatAll.Name = "lbHeosPlayRepeatAll";
-            this.lbHeosPlayRepeatAll.Size = new System.Drawing.Size(113, 26);
-            this.lbHeosPlayRepeatAll.TabIndex = 108;
-            this.lbHeosPlayRepeatAll.Text = "Repeat All";
+            lbHeosPlayRepeatAll.AutoSize = true;
+            lbHeosPlayRepeatAll.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosPlayRepeatAll.ForeColor = Color.White;
+            lbHeosPlayRepeatAll.Location = new Point(432, 324);
+            lbHeosPlayRepeatAll.Margin = new Padding(4, 0, 4, 0);
+            lbHeosPlayRepeatAll.Name = "lbHeosPlayRepeatAll";
+            lbHeosPlayRepeatAll.Size = new Size(73, 17);
+            lbHeosPlayRepeatAll.TabIndex = 108;
+            lbHeosPlayRepeatAll.Text = "Repeat All";
             // 
             // btnHeosPlayRepeatAll
             // 
-            this.btnHeosPlayRepeatAll.BackColor = System.Drawing.Color.Transparent;
-            this.btnHeosPlayRepeatAll.BackgroundImage = global::AVRControl.Properties.Resources.RepeatAllIcon;
-            this.btnHeosPlayRepeatAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHeosPlayRepeatAll.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnHeosPlayRepeatAll.Location = new System.Drawing.Point(667, 344);
-            this.btnHeosPlayRepeatAll.Margin = new System.Windows.Forms.Padding(6);
-            this.btnHeosPlayRepeatAll.Name = "btnHeosPlayRepeatAll";
-            this.btnHeosPlayRepeatAll.Size = new System.Drawing.Size(73, 53);
-            this.btnHeosPlayRepeatAll.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnHeosPlayRepeatAll.TabIndex = 107;
-            this.btnHeosPlayRepeatAll.TabStop = false;
-            this.btnHeosPlayRepeatAll.Click += new System.EventHandler(this.btnHeosPlayRepeatAll_Click);
-            this.btnHeosPlayRepeatAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayRepeatAll_MouseDown);
-            this.btnHeosPlayRepeatAll.MouseEnter += new System.EventHandler(this.btnHeosPlayRepeatAll_MouseEnter);
-            this.btnHeosPlayRepeatAll.MouseLeave += new System.EventHandler(this.btnHeosPlayRepeatAll_MouseLeave);
-            this.btnHeosPlayRepeatAll.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayRepeatAll_MouseUp);
+            btnHeosPlayRepeatAll.BackColor = Color.Transparent;
+            btnHeosPlayRepeatAll.BackgroundImage = (Image)resources.GetObject("btnHeosPlayRepeatAll.BackgroundImage");
+            btnHeosPlayRepeatAll.BackgroundImageLayout = ImageLayout.Center;
+            btnHeosPlayRepeatAll.BorderStyle = BorderStyle.FixedSingle;
+            btnHeosPlayRepeatAll.Location = new Point(445, 275);
+            btnHeosPlayRepeatAll.Margin = new Padding(4, 5, 4, 5);
+            btnHeosPlayRepeatAll.Name = "btnHeosPlayRepeatAll";
+            btnHeosPlayRepeatAll.Size = new Size(49, 43);
+            btnHeosPlayRepeatAll.SizeMode = PictureBoxSizeMode.Zoom;
+            btnHeosPlayRepeatAll.TabIndex = 107;
+            btnHeosPlayRepeatAll.TabStop = false;
+            btnHeosPlayRepeatAll.Click += btnHeosPlayRepeatAll_Click;
+            btnHeosPlayRepeatAll.MouseDown += btnHeosPlayRepeatAll_MouseDown;
+            btnHeosPlayRepeatAll.MouseEnter += btnHeosPlayRepeatAll_MouseEnter;
+            btnHeosPlayRepeatAll.MouseLeave += btnHeosPlayRepeatAll_MouseLeave;
+            btnHeosPlayRepeatAll.MouseUp += btnHeosPlayRepeatAll_MouseUp;
             // 
             // lbHeosPlayShuffle
             // 
-            this.lbHeosPlayShuffle.AutoSize = true;
-            this.lbHeosPlayShuffle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosPlayShuffle.ForeColor = System.Drawing.Color.White;
-            this.lbHeosPlayShuffle.Location = new System.Drawing.Point(513, 405);
-            this.lbHeosPlayShuffle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosPlayShuffle.Name = "lbHeosPlayShuffle";
-            this.lbHeosPlayShuffle.Size = new System.Drawing.Size(80, 26);
-            this.lbHeosPlayShuffle.TabIndex = 106;
-            this.lbHeosPlayShuffle.Text = "Shuffle";
+            lbHeosPlayShuffle.AutoSize = true;
+            lbHeosPlayShuffle.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosPlayShuffle.ForeColor = Color.White;
+            lbHeosPlayShuffle.Location = new Point(342, 324);
+            lbHeosPlayShuffle.Margin = new Padding(4, 0, 4, 0);
+            lbHeosPlayShuffle.Name = "lbHeosPlayShuffle";
+            lbHeosPlayShuffle.Size = new Size(52, 17);
+            lbHeosPlayShuffle.TabIndex = 106;
+            lbHeosPlayShuffle.Text = "Shuffle";
             // 
             // lbHeosPlaySkip
             // 
-            this.lbHeosPlaySkip.AutoSize = true;
-            this.lbHeosPlaySkip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosPlaySkip.ForeColor = System.Drawing.Color.White;
-            this.lbHeosPlaySkip.Location = new System.Drawing.Point(375, 403);
-            this.lbHeosPlaySkip.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosPlaySkip.Name = "lbHeosPlaySkip";
-            this.lbHeosPlaySkip.Size = new System.Drawing.Size(55, 26);
-            this.lbHeosPlaySkip.TabIndex = 105;
-            this.lbHeosPlaySkip.Text = "Skip";
+            lbHeosPlaySkip.AutoSize = true;
+            lbHeosPlaySkip.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosPlaySkip.ForeColor = Color.White;
+            lbHeosPlaySkip.Location = new Point(250, 324);
+            lbHeosPlaySkip.Margin = new Padding(4, 0, 4, 0);
+            lbHeosPlaySkip.Name = "lbHeosPlaySkip";
+            lbHeosPlaySkip.Size = new Size(35, 17);
+            lbHeosPlaySkip.TabIndex = 105;
+            lbHeosPlaySkip.Text = "Skip";
             // 
             // lbHeosPlayBack
             // 
-            this.lbHeosPlayBack.AutoSize = true;
-            this.lbHeosPlayBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosPlayBack.ForeColor = System.Drawing.Color.White;
-            this.lbHeosPlayBack.Location = new System.Drawing.Point(220, 403);
-            this.lbHeosPlayBack.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosPlayBack.Name = "lbHeosPlayBack";
-            this.lbHeosPlayBack.Size = new System.Drawing.Size(61, 26);
-            this.lbHeosPlayBack.TabIndex = 104;
-            this.lbHeosPlayBack.Text = "Back";
+            lbHeosPlayBack.AutoSize = true;
+            lbHeosPlayBack.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosPlayBack.ForeColor = Color.White;
+            lbHeosPlayBack.Location = new Point(147, 324);
+            lbHeosPlayBack.Margin = new Padding(4, 0, 4, 0);
+            lbHeosPlayBack.Name = "lbHeosPlayBack";
+            lbHeosPlayBack.Size = new Size(39, 17);
+            lbHeosPlayBack.TabIndex = 104;
+            lbHeosPlayBack.Text = "Back";
             // 
             // lbHeosPlayPause
             // 
-            this.lbHeosPlayPause.AutoSize = true;
-            this.lbHeosPlayPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosPlayPause.ForeColor = System.Drawing.Color.White;
-            this.lbHeosPlayPause.Location = new System.Drawing.Point(38, 403);
-            this.lbHeosPlayPause.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosPlayPause.Name = "lbHeosPlayPause";
-            this.lbHeosPlayPause.Size = new System.Drawing.Size(123, 26);
-            this.lbHeosPlayPause.TabIndex = 103;
-            this.lbHeosPlayPause.Text = "Play/Pause";
+            lbHeosPlayPause.AutoSize = true;
+            lbHeosPlayPause.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosPlayPause.ForeColor = Color.White;
+            lbHeosPlayPause.Location = new Point(25, 324);
+            lbHeosPlayPause.Margin = new Padding(4, 0, 4, 0);
+            lbHeosPlayPause.Name = "lbHeosPlayPause";
+            lbHeosPlayPause.Size = new Size(79, 17);
+            lbHeosPlayPause.TabIndex = 103;
+            lbHeosPlayPause.Text = "Play/Pause";
             // 
             // btnHeosPlayShuffle
             // 
-            this.btnHeosPlayShuffle.BackColor = System.Drawing.Color.Transparent;
-            this.btnHeosPlayShuffle.BackgroundImage = global::AVRControl.Properties.Resources.ShuffleIcon;
-            this.btnHeosPlayShuffle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHeosPlayShuffle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnHeosPlayShuffle.Location = new System.Drawing.Point(516, 344);
-            this.btnHeosPlayShuffle.Margin = new System.Windows.Forms.Padding(6);
-            this.btnHeosPlayShuffle.Name = "btnHeosPlayShuffle";
-            this.btnHeosPlayShuffle.Size = new System.Drawing.Size(73, 53);
-            this.btnHeosPlayShuffle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnHeosPlayShuffle.TabIndex = 102;
-            this.btnHeosPlayShuffle.TabStop = false;
-            this.btnHeosPlayShuffle.Click += new System.EventHandler(this.btnHeosPlayShuffle_Click);
-            this.btnHeosPlayShuffle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayShuffle_MouseDown);
-            this.btnHeosPlayShuffle.MouseEnter += new System.EventHandler(this.btnHeosPlayShuffle_MouseEnter);
-            this.btnHeosPlayShuffle.MouseLeave += new System.EventHandler(this.btnHeosPlayShuffle_MouseLeave);
-            this.btnHeosPlayShuffle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayShuffle_MouseUp);
+            btnHeosPlayShuffle.BackColor = Color.Transparent;
+            btnHeosPlayShuffle.BackgroundImage = (Image)resources.GetObject("btnHeosPlayShuffle.BackgroundImage");
+            btnHeosPlayShuffle.BackgroundImageLayout = ImageLayout.Center;
+            btnHeosPlayShuffle.BorderStyle = BorderStyle.FixedSingle;
+            btnHeosPlayShuffle.Location = new Point(344, 275);
+            btnHeosPlayShuffle.Margin = new Padding(4, 5, 4, 5);
+            btnHeosPlayShuffle.Name = "btnHeosPlayShuffle";
+            btnHeosPlayShuffle.Size = new Size(49, 43);
+            btnHeosPlayShuffle.SizeMode = PictureBoxSizeMode.Zoom;
+            btnHeosPlayShuffle.TabIndex = 102;
+            btnHeosPlayShuffle.TabStop = false;
+            btnHeosPlayShuffle.Click += btnHeosPlayShuffle_Click;
+            btnHeosPlayShuffle.MouseDown += btnHeosPlayShuffle_MouseDown;
+            btnHeosPlayShuffle.MouseEnter += btnHeosPlayShuffle_MouseEnter;
+            btnHeosPlayShuffle.MouseLeave += btnHeosPlayShuffle_MouseLeave;
+            btnHeosPlayShuffle.MouseUp += btnHeosPlayShuffle_MouseUp;
             // 
             // btnHeosPlayBack
             // 
-            this.btnHeosPlayBack.BackColor = System.Drawing.Color.Transparent;
-            this.btnHeosPlayBack.BackgroundImage = global::AVRControl.Properties.Resources.BackIcon;
-            this.btnHeosPlayBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHeosPlayBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnHeosPlayBack.Location = new System.Drawing.Point(214, 344);
-            this.btnHeosPlayBack.Margin = new System.Windows.Forms.Padding(6);
-            this.btnHeosPlayBack.Name = "btnHeosPlayBack";
-            this.btnHeosPlayBack.Size = new System.Drawing.Size(73, 53);
-            this.btnHeosPlayBack.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnHeosPlayBack.TabIndex = 101;
-            this.btnHeosPlayBack.TabStop = false;
-            this.btnHeosPlayBack.Click += new System.EventHandler(this.btnHeosPlayBack_Click);
-            this.btnHeosPlayBack.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayBack_MouseDown);
-            this.btnHeosPlayBack.MouseEnter += new System.EventHandler(this.btnHeosPlayBack_MouseEnter);
-            this.btnHeosPlayBack.MouseLeave += new System.EventHandler(this.btnHeaosPlayBack_MouseLeave);
-            this.btnHeosPlayBack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayBack_MouseUp);
+            btnHeosPlayBack.BackColor = Color.Transparent;
+            btnHeosPlayBack.BackgroundImage = (Image)resources.GetObject("btnHeosPlayBack.BackgroundImage");
+            btnHeosPlayBack.BackgroundImageLayout = ImageLayout.Center;
+            btnHeosPlayBack.BorderStyle = BorderStyle.FixedSingle;
+            btnHeosPlayBack.Location = new Point(143, 275);
+            btnHeosPlayBack.Margin = new Padding(4, 5, 4, 5);
+            btnHeosPlayBack.Name = "btnHeosPlayBack";
+            btnHeosPlayBack.Size = new Size(49, 43);
+            btnHeosPlayBack.SizeMode = PictureBoxSizeMode.Zoom;
+            btnHeosPlayBack.TabIndex = 101;
+            btnHeosPlayBack.TabStop = false;
+            btnHeosPlayBack.Click += btnHeosPlayBack_Click;
+            btnHeosPlayBack.MouseDown += btnHeosPlayBack_MouseDown;
+            btnHeosPlayBack.MouseEnter += btnHeosPlayBack_MouseEnter;
+            btnHeosPlayBack.MouseLeave += btnHeaosPlayBack_MouseLeave;
+            btnHeosPlayBack.MouseUp += btnHeosPlayBack_MouseUp;
             // 
             // btnHeosPlaySkip
             // 
-            this.btnHeosPlaySkip.BackColor = System.Drawing.Color.Transparent;
-            this.btnHeosPlaySkip.BackgroundImage = global::AVRControl.Properties.Resources.SkipIcon;
-            this.btnHeosPlaySkip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHeosPlaySkip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnHeosPlaySkip.Location = new System.Drawing.Point(365, 344);
-            this.btnHeosPlaySkip.Margin = new System.Windows.Forms.Padding(6);
-            this.btnHeosPlaySkip.Name = "btnHeosPlaySkip";
-            this.btnHeosPlaySkip.Size = new System.Drawing.Size(73, 53);
-            this.btnHeosPlaySkip.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnHeosPlaySkip.TabIndex = 100;
-            this.btnHeosPlaySkip.TabStop = false;
-            this.btnHeosPlaySkip.Click += new System.EventHandler(this.btnHeosPlaySkip_Click);
-            this.btnHeosPlaySkip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlaySkip_MouseDown);
-            this.btnHeosPlaySkip.MouseEnter += new System.EventHandler(this.btnHeosPlaySkip_MouseEnter);
-            this.btnHeosPlaySkip.MouseLeave += new System.EventHandler(this.btnHeosPlaySkip_MouseLeave);
-            this.btnHeosPlaySkip.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlaySkip_MouseUp);
+            btnHeosPlaySkip.BackColor = Color.Transparent;
+            btnHeosPlaySkip.BackgroundImage = (Image)resources.GetObject("btnHeosPlaySkip.BackgroundImage");
+            btnHeosPlaySkip.BackgroundImageLayout = ImageLayout.Center;
+            btnHeosPlaySkip.BorderStyle = BorderStyle.FixedSingle;
+            btnHeosPlaySkip.Location = new Point(243, 275);
+            btnHeosPlaySkip.Margin = new Padding(4, 5, 4, 5);
+            btnHeosPlaySkip.Name = "btnHeosPlaySkip";
+            btnHeosPlaySkip.Size = new Size(49, 43);
+            btnHeosPlaySkip.SizeMode = PictureBoxSizeMode.Zoom;
+            btnHeosPlaySkip.TabIndex = 100;
+            btnHeosPlaySkip.TabStop = false;
+            btnHeosPlaySkip.Click += btnHeosPlaySkip_Click;
+            btnHeosPlaySkip.MouseDown += btnHeosPlaySkip_MouseDown;
+            btnHeosPlaySkip.MouseEnter += btnHeosPlaySkip_MouseEnter;
+            btnHeosPlaySkip.MouseLeave += btnHeosPlaySkip_MouseLeave;
+            btnHeosPlaySkip.MouseUp += btnHeosPlaySkip_MouseUp;
             // 
             // btnHeosPlayPause
             // 
-            this.btnHeosPlayPause.BackColor = System.Drawing.Color.Transparent;
-            this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PlayIcon;
-            this.btnHeosPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHeosPlayPause.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnHeosPlayPause.Location = new System.Drawing.Point(63, 344);
-            this.btnHeosPlayPause.Margin = new System.Windows.Forms.Padding(6);
-            this.btnHeosPlayPause.Name = "btnHeosPlayPause";
-            this.btnHeosPlayPause.Size = new System.Drawing.Size(73, 53);
-            this.btnHeosPlayPause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnHeosPlayPause.TabIndex = 99;
-            this.btnHeosPlayPause.TabStop = false;
-            this.btnHeosPlayPause.Click += new System.EventHandler(this.btnHeosPlayPause_Click);
-            this.btnHeosPlayPause.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayPause_MouseDown);
-            this.btnHeosPlayPause.MouseEnter += new System.EventHandler(this.btnHeosPlayPause_MouseEnter);
-            this.btnHeosPlayPause.MouseLeave += new System.EventHandler(this.btnHeosPlayPause_MouseLeave);
-            this.btnHeosPlayPause.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnHeosPlayPause_MouseUp);
+            btnHeosPlayPause.BackColor = Color.Transparent;
+            btnHeosPlayPause.BackgroundImage = (Image)resources.GetObject("btnHeosPlayPause.BackgroundImage");
+            btnHeosPlayPause.BackgroundImageLayout = ImageLayout.Center;
+            btnHeosPlayPause.BorderStyle = BorderStyle.FixedSingle;
+            btnHeosPlayPause.Location = new Point(42, 275);
+            btnHeosPlayPause.Margin = new Padding(4, 5, 4, 5);
+            btnHeosPlayPause.Name = "btnHeosPlayPause";
+            btnHeosPlayPause.Size = new Size(49, 43);
+            btnHeosPlayPause.SizeMode = PictureBoxSizeMode.Zoom;
+            btnHeosPlayPause.TabIndex = 99;
+            btnHeosPlayPause.TabStop = false;
+            btnHeosPlayPause.Click += btnHeosPlayPause_Click;
+            btnHeosPlayPause.MouseDown += btnHeosPlayPause_MouseDown;
+            btnHeosPlayPause.MouseEnter += btnHeosPlayPause_MouseEnter;
+            btnHeosPlayPause.MouseLeave += btnHeosPlayPause_MouseLeave;
+            btnHeosPlayPause.MouseUp += btnHeosPlayPause_MouseUp;
             // 
             // lbHeosSong
             // 
-            this.lbHeosSong.AutoSize = true;
-            this.lbHeosSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosSong.ForeColor = System.Drawing.Color.White;
-            this.lbHeosSong.Location = new System.Drawing.Point(444, 281);
-            this.lbHeosSong.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosSong.Name = "lbHeosSong";
-            this.lbHeosSong.Size = new System.Drawing.Size(69, 26);
-            this.lbHeosSong.TabIndex = 98;
-            this.lbHeosSong.Text = "Song:";
+            lbHeosSong.AutoSize = true;
+            lbHeosSong.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosSong.ForeColor = Color.White;
+            lbHeosSong.Location = new Point(295, 225);
+            lbHeosSong.Margin = new Padding(4, 0, 4, 0);
+            lbHeosSong.Name = "lbHeosSong";
+            lbHeosSong.Size = new Size(45, 17);
+            lbHeosSong.TabIndex = 98;
+            lbHeosSong.Text = "Song:";
             // 
             // lbHeosAlbum
             // 
-            this.lbHeosAlbum.AutoSize = true;
-            this.lbHeosAlbum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosAlbum.ForeColor = System.Drawing.Color.White;
-            this.lbHeosAlbum.Location = new System.Drawing.Point(443, 249);
-            this.lbHeosAlbum.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosAlbum.Name = "lbHeosAlbum";
-            this.lbHeosAlbum.Size = new System.Drawing.Size(81, 26);
-            this.lbHeosAlbum.TabIndex = 97;
-            this.lbHeosAlbum.Text = "Album:";
+            lbHeosAlbum.AutoSize = true;
+            lbHeosAlbum.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosAlbum.ForeColor = Color.White;
+            lbHeosAlbum.Location = new Point(295, 199);
+            lbHeosAlbum.Margin = new Padding(4, 0, 4, 0);
+            lbHeosAlbum.Name = "lbHeosAlbum";
+            lbHeosAlbum.Size = new Size(51, 17);
+            lbHeosAlbum.TabIndex = 97;
+            lbHeosAlbum.Text = "Album:";
             // 
             // lbHeosArtist
             // 
-            this.lbHeosArtist.AutoSize = true;
-            this.lbHeosArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbHeosArtist.ForeColor = System.Drawing.Color.White;
-            this.lbHeosArtist.Location = new System.Drawing.Point(443, 216);
-            this.lbHeosArtist.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbHeosArtist.Name = "lbHeosArtist";
-            this.lbHeosArtist.Size = new System.Drawing.Size(68, 26);
-            this.lbHeosArtist.TabIndex = 96;
-            this.lbHeosArtist.Text = "Artist:";
+            lbHeosArtist.AutoSize = true;
+            lbHeosArtist.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbHeosArtist.ForeColor = Color.White;
+            lbHeosArtist.Location = new Point(295, 173);
+            lbHeosArtist.Margin = new Padding(4, 0, 4, 0);
+            lbHeosArtist.Name = "lbHeosArtist";
+            lbHeosArtist.Size = new Size(44, 17);
+            lbHeosArtist.TabIndex = 96;
+            lbHeosArtist.Text = "Artist:";
             // 
             // HeosTrackInfoArtist
             // 
-            this.HeosTrackInfoArtist.AutoEllipsis = true;
-            this.HeosTrackInfoArtist.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HeosTrackInfoArtist.ForeColor = System.Drawing.Color.Khaki;
-            this.HeosTrackInfoArtist.Location = new System.Drawing.Point(522, 216);
-            this.HeosTrackInfoArtist.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.HeosTrackInfoArtist.Name = "HeosTrackInfoArtist";
-            this.HeosTrackInfoArtist.Size = new System.Drawing.Size(441, 24);
-            this.HeosTrackInfoArtist.TabIndex = 95;
+            HeosTrackInfoArtist.AutoEllipsis = true;
+            HeosTrackInfoArtist.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            HeosTrackInfoArtist.ForeColor = Color.Khaki;
+            HeosTrackInfoArtist.Location = new Point(348, 173);
+            HeosTrackInfoArtist.Margin = new Padding(4, 0, 4, 0);
+            HeosTrackInfoArtist.Name = "HeosTrackInfoArtist";
+            HeosTrackInfoArtist.Size = new Size(294, 19);
+            HeosTrackInfoArtist.TabIndex = 95;
             // 
             // HeosTrackInfoSong
             // 
-            this.HeosTrackInfoSong.AutoEllipsis = true;
-            this.HeosTrackInfoSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HeosTrackInfoSong.ForeColor = System.Drawing.Color.Khaki;
-            this.HeosTrackInfoSong.Location = new System.Drawing.Point(523, 283);
-            this.HeosTrackInfoSong.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.HeosTrackInfoSong.Name = "HeosTrackInfoSong";
-            this.HeosTrackInfoSong.Size = new System.Drawing.Size(440, 24);
-            this.HeosTrackInfoSong.TabIndex = 94;
+            HeosTrackInfoSong.AutoEllipsis = true;
+            HeosTrackInfoSong.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            HeosTrackInfoSong.ForeColor = Color.Khaki;
+            HeosTrackInfoSong.Location = new Point(348, 226);
+            HeosTrackInfoSong.Margin = new Padding(4, 0, 4, 0);
+            HeosTrackInfoSong.Name = "HeosTrackInfoSong";
+            HeosTrackInfoSong.Size = new Size(293, 19);
+            HeosTrackInfoSong.TabIndex = 94;
             // 
             // label2
             // 
-            this.label2.BackColor = System.Drawing.Color.DarkGray;
-            this.label2.Location = new System.Drawing.Point(-8, 445);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(1000, 1);
-            this.label2.TabIndex = 93;
+            label2.BackColor = Color.DarkGray;
+            label2.Location = new Point(-5, 356);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(667, 1);
+            label2.TabIndex = 93;
             // 
             // lbUp
             // 
-            this.lbUp.AutoSize = true;
-            this.lbUp.ForeColor = System.Drawing.Color.White;
-            this.lbUp.Location = new System.Drawing.Point(863, 73);
-            this.lbUp.Name = "lbUp";
-            this.lbUp.Size = new System.Drawing.Size(39, 25);
-            this.lbUp.TabIndex = 92;
-            this.lbUp.Text = "Up";
+            lbUp.AutoSize = true;
+            lbUp.ForeColor = Color.White;
+            lbUp.Location = new Point(575, 58);
+            lbUp.Margin = new Padding(2, 0, 2, 0);
+            lbUp.Name = "lbUp";
+            lbUp.Size = new Size(28, 20);
+            lbUp.TabIndex = 92;
+            lbUp.Text = "Up";
             // 
             // lbMute
             // 
-            this.lbMute.AutoSize = true;
-            this.lbMute.ForeColor = System.Drawing.Color.White;
-            this.lbMute.Location = new System.Drawing.Point(437, 73);
-            this.lbMute.Name = "lbMute";
-            this.lbMute.Size = new System.Drawing.Size(60, 25);
-            this.lbMute.TabIndex = 91;
-            this.lbMute.Text = "Mute";
+            lbMute.AutoSize = true;
+            lbMute.ForeColor = Color.White;
+            lbMute.Location = new Point(291, 58);
+            lbMute.Margin = new Padding(2, 0, 2, 0);
+            lbMute.Name = "lbMute";
+            lbMute.Size = new Size(43, 20);
+            lbMute.TabIndex = 91;
+            lbMute.Text = "Mute";
             // 
             // lbDown
             // 
-            this.lbDown.AutoSize = true;
-            this.lbDown.ForeColor = System.Drawing.Color.White;
-            this.lbDown.Location = new System.Drawing.Point(15, 73);
-            this.lbDown.Name = "lbDown";
-            this.lbDown.Size = new System.Drawing.Size(66, 25);
-            this.lbDown.TabIndex = 90;
-            this.lbDown.Text = "Down";
+            lbDown.AutoSize = true;
+            lbDown.ForeColor = Color.White;
+            lbDown.Location = new Point(10, 58);
+            lbDown.Margin = new Padding(2, 0, 2, 0);
+            lbDown.Name = "lbDown";
+            lbDown.Size = new Size(48, 20);
+            lbDown.TabIndex = 90;
+            lbDown.Text = "Down";
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.Color.DarkGray;
-            this.label1.Location = new System.Drawing.Point(-8, 199);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1000, 1);
-            this.label1.TabIndex = 67;
+            label1.BackColor = Color.DarkGray;
+            label1.Location = new Point(-5, 159);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(667, 1);
+            label1.TabIndex = 67;
             // 
             // btnToggleMute
             // 
-            this.btnToggleMute.BackColor = System.Drawing.Color.Transparent;
-            this.btnToggleMute.BackgroundImage = global::AVRControl.Properties.Resources.Vol_Mute;
-            this.btnToggleMute.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnToggleMute.Location = new System.Drawing.Point(431, 15);
-            this.btnToggleMute.Margin = new System.Windows.Forms.Padding(6);
-            this.btnToggleMute.Name = "btnToggleMute";
-            this.btnToggleMute.Size = new System.Drawing.Size(73, 53);
-            this.btnToggleMute.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnToggleMute.TabIndex = 70;
-            this.btnToggleMute.TabStop = false;
-            this.btnToggleMute.Click += new System.EventHandler(this.BtnToggleMute_Click);
-            this.btnToggleMute.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnToggleMute_MouseDown);
-            this.btnToggleMute.MouseEnter += new System.EventHandler(this.BtnToggleMute_MouseEnter);
-            this.btnToggleMute.MouseLeave += new System.EventHandler(this.BtnToggleMute_MouseLeave);
+            btnToggleMute.BackColor = Color.Transparent;
+            btnToggleMute.BackgroundImage = (Image)resources.GetObject("btnToggleMute.BackgroundImage");
+            btnToggleMute.BackgroundImageLayout = ImageLayout.Center;
+            btnToggleMute.BorderStyle = BorderStyle.FixedSingle;
+            btnToggleMute.Location = new Point(287, 12);
+            btnToggleMute.Margin = new Padding(4, 5, 4, 5);
+            btnToggleMute.Name = "btnToggleMute";
+            btnToggleMute.Size = new Size(49, 43);
+            btnToggleMute.SizeMode = PictureBoxSizeMode.Zoom;
+            btnToggleMute.TabIndex = 70;
+            btnToggleMute.TabStop = false;
+            btnToggleMute.Click += BtnToggleMute_Click;
+            btnToggleMute.MouseDown += BtnToggleMute_MouseDown;
+            btnToggleMute.MouseEnter += BtnToggleMute_MouseEnter;
+            btnToggleMute.MouseLeave += BtnToggleMute_MouseLeave;
             // 
             // btnVolDown
             // 
-            this.btnVolDown.BackColor = System.Drawing.Color.Transparent;
-            this.btnVolDown.BackgroundImage = global::AVRControl.Properties.Resources.Vol_Down;
-            this.btnVolDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnVolDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnVolDown.Location = new System.Drawing.Point(9, 15);
-            this.btnVolDown.Margin = new System.Windows.Forms.Padding(6);
-            this.btnVolDown.Name = "btnVolDown";
-            this.btnVolDown.Size = new System.Drawing.Size(73, 53);
-            this.btnVolDown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnVolDown.TabIndex = 72;
-            this.btnVolDown.TabStop = false;
-            this.btnVolDown.Click += new System.EventHandler(this.BtnVolDown_Click);
-            this.btnVolDown.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnVolDown_MouseDown);
-            this.btnVolDown.MouseEnter += new System.EventHandler(this.BtnVolDown_MouseEnter);
-            this.btnVolDown.MouseLeave += new System.EventHandler(this.BtnVolDown_MouseLeave);
-            this.btnVolDown.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnVolDown_MouseUp);
+            btnVolDown.BackColor = Color.Transparent;
+            btnVolDown.BackgroundImage = (Image)resources.GetObject("btnVolDown.BackgroundImage");
+            btnVolDown.BackgroundImageLayout = ImageLayout.Center;
+            btnVolDown.BorderStyle = BorderStyle.FixedSingle;
+            btnVolDown.Location = new Point(6, 12);
+            btnVolDown.Margin = new Padding(4, 5, 4, 5);
+            btnVolDown.Name = "btnVolDown";
+            btnVolDown.Size = new Size(49, 43);
+            btnVolDown.SizeMode = PictureBoxSizeMode.Zoom;
+            btnVolDown.TabIndex = 72;
+            btnVolDown.TabStop = false;
+            btnVolDown.Click += BtnVolDown_Click;
+            btnVolDown.MouseDown += BtnVolDown_MouseDown;
+            btnVolDown.MouseEnter += BtnVolDown_MouseEnter;
+            btnVolDown.MouseLeave += BtnVolDown_MouseLeave;
+            btnVolDown.MouseUp += BtnVolDown_MouseUp;
             // 
             // btnVolUp
             // 
-            this.btnVolUp.BackColor = System.Drawing.Color.Transparent;
-            this.btnVolUp.BackgroundImage = global::AVRControl.Properties.Resources.Vol_Up;
-            this.btnVolUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnVolUp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnVolUp.Location = new System.Drawing.Point(845, 15);
-            this.btnVolUp.Margin = new System.Windows.Forms.Padding(6);
-            this.btnVolUp.Name = "btnVolUp";
-            this.btnVolUp.Size = new System.Drawing.Size(73, 53);
-            this.btnVolUp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnVolUp.TabIndex = 71;
-            this.btnVolUp.TabStop = false;
-            this.btnVolUp.Click += new System.EventHandler(this.BtnVolUp_Click);
-            this.btnVolUp.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnVolUp_MouseDown);
-            this.btnVolUp.MouseEnter += new System.EventHandler(this.BtnVolUp_MouseEnter);
-            this.btnVolUp.MouseLeave += new System.EventHandler(this.BtnVolUp_MouseLeave);
-            this.btnVolUp.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnVolUp_MouseUp);
+            btnVolUp.BackColor = Color.Transparent;
+            btnVolUp.BackgroundImage = (Image)resources.GetObject("btnVolUp.BackgroundImage");
+            btnVolUp.BackgroundImageLayout = ImageLayout.Center;
+            btnVolUp.BorderStyle = BorderStyle.FixedSingle;
+            btnVolUp.Location = new Point(563, 12);
+            btnVolUp.Margin = new Padding(4, 5, 4, 5);
+            btnVolUp.Name = "btnVolUp";
+            btnVolUp.Size = new Size(49, 43);
+            btnVolUp.SizeMode = PictureBoxSizeMode.Zoom;
+            btnVolUp.TabIndex = 71;
+            btnVolUp.TabStop = false;
+            btnVolUp.Click += BtnVolUp_Click;
+            btnVolUp.MouseDown += BtnVolUp_MouseDown;
+            btnVolUp.MouseEnter += BtnVolUp_MouseEnter;
+            btnVolUp.MouseLeave += BtnVolUp_MouseLeave;
+            btnVolUp.MouseUp += BtnVolUp_MouseUp;
             // 
             // SliderVolume
             // 
-            this.SliderVolume.AutoSize = false;
-            this.SliderVolume.Enabled = false;
-            this.SliderVolume.Location = new System.Drawing.Point(21, 100);
-            this.SliderVolume.Margin = new System.Windows.Forms.Padding(24, 23, 24, 0);
-            this.SliderVolume.Maximum = 100;
-            this.SliderVolume.MaximumSize = new System.Drawing.Size(880, 96);
-            this.SliderVolume.Minimum = 10;
-            this.SliderVolume.Name = "SliderVolume";
-            this.SliderVolume.Size = new System.Drawing.Size(880, 58);
-            this.SliderVolume.SmallChange = 2;
-            this.SliderVolume.TabIndex = 68;
-            this.SliderVolume.Text = "SliderVolume";
-            this.SliderVolume.TickFrequency = 5;
-            this.SliderVolume.Value = 10;
-            this.SliderVolume.Scroll += new System.EventHandler(this.SliderVolume_Scroll);
-            this.SliderVolume.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SliderVolume_MouseUp);
+            SliderVolume.AutoSize = false;
+            SliderVolume.Enabled = false;
+            SliderVolume.Location = new Point(14, 80);
+            SliderVolume.Margin = new Padding(16, 18, 16, 0);
+            SliderVolume.Maximum = 100;
+            SliderVolume.MaximumSize = new Size(587, 77);
+            SliderVolume.Minimum = 10;
+            SliderVolume.Name = "SliderVolume";
+            SliderVolume.Size = new Size(587, 46);
+            SliderVolume.SmallChange = 2;
+            SliderVolume.TabIndex = 68;
+            SliderVolume.Text = "SliderVolume";
+            SliderVolume.TickFrequency = 5;
+            SliderVolume.Value = 10;
+            SliderVolume.Scroll += SliderVolume_Scroll;
+            SliderVolume.MouseUp += SliderVolume_MouseUp;
             // 
             // ShowVolume
             // 
-            this.ShowVolume.ForeColor = System.Drawing.Color.White;
-            this.ShowVolume.Location = new System.Drawing.Point(895, 107);
-            this.ShowVolume.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.ShowVolume.Name = "ShowVolume";
-            this.ShowVolume.Size = new System.Drawing.Size(80, 27);
-            this.ShowVolume.TabIndex = 69;
-            this.ShowVolume.Text = "Vol: 10";
+            ShowVolume.ForeColor = Color.White;
+            ShowVolume.Location = new Point(597, 81);
+            ShowVolume.Margin = new Padding(4, 0, 4, 0);
+            ShowVolume.Name = "ShowVolume";
+            ShowVolume.Size = new Size(53, 22);
+            ShowVolume.TabIndex = 69;
+            ShowVolume.Text = "Vol: 10";
             // 
             // lbVol10
             // 
-            this.lbVol10.AutoSize = true;
-            this.lbVol10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol10.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lbVol10.Location = new System.Drawing.Point(31, 156);
-            this.lbVol10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol10.Name = "lbVol10";
-            this.lbVol10.Size = new System.Drawing.Size(30, 24);
-            this.lbVol10.TabIndex = 73;
-            this.lbVol10.Text = "10";
+            lbVol10.AutoSize = true;
+            lbVol10.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol10.ForeColor = Color.DeepSkyBlue;
+            lbVol10.Location = new Point(21, 125);
+            lbVol10.Margin = new Padding(4, 0, 4, 0);
+            lbVol10.Name = "lbVol10";
+            lbVol10.Size = new Size(21, 15);
+            lbVol10.TabIndex = 73;
+            lbVol10.Text = "10";
             // 
             // lbVol20
             // 
-            this.lbVol20.AutoSize = true;
-            this.lbVol20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol20.ForeColor = System.Drawing.Color.MediumTurquoise;
-            this.lbVol20.Location = new System.Drawing.Point(123, 156);
-            this.lbVol20.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol20.Name = "lbVol20";
-            this.lbVol20.Size = new System.Drawing.Size(30, 24);
-            this.lbVol20.TabIndex = 74;
-            this.lbVol20.Text = "20";
+            lbVol20.AutoSize = true;
+            lbVol20.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol20.ForeColor = Color.MediumTurquoise;
+            lbVol20.Location = new Point(82, 125);
+            lbVol20.Margin = new Padding(4, 0, 4, 0);
+            lbVol20.Name = "lbVol20";
+            lbVol20.Size = new Size(21, 15);
+            lbVol20.TabIndex = 74;
+            lbVol20.Text = "20";
             // 
             // lbVol30
             // 
-            this.lbVol30.AutoSize = true;
-            this.lbVol30.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol30.ForeColor = System.Drawing.Color.PaleGreen;
-            this.lbVol30.Location = new System.Drawing.Point(215, 156);
-            this.lbVol30.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol30.Name = "lbVol30";
-            this.lbVol30.Size = new System.Drawing.Size(30, 24);
-            this.lbVol30.TabIndex = 75;
-            this.lbVol30.Text = "30";
+            lbVol30.AutoSize = true;
+            lbVol30.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol30.ForeColor = Color.PaleGreen;
+            lbVol30.Location = new Point(144, 125);
+            lbVol30.Margin = new Padding(4, 0, 4, 0);
+            lbVol30.Name = "lbVol30";
+            lbVol30.Size = new Size(21, 15);
+            lbVol30.TabIndex = 75;
+            lbVol30.Text = "30";
             // 
             // lbVol40
             // 
-            this.lbVol40.AutoSize = true;
-            this.lbVol40.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol40.ForeColor = System.Drawing.Color.GreenYellow;
-            this.lbVol40.Location = new System.Drawing.Point(307, 156);
-            this.lbVol40.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol40.Name = "lbVol40";
-            this.lbVol40.Size = new System.Drawing.Size(30, 24);
-            this.lbVol40.TabIndex = 76;
-            this.lbVol40.Text = "40";
+            lbVol40.AutoSize = true;
+            lbVol40.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol40.ForeColor = Color.GreenYellow;
+            lbVol40.Location = new Point(205, 125);
+            lbVol40.Margin = new Padding(4, 0, 4, 0);
+            lbVol40.Name = "lbVol40";
+            lbVol40.Size = new Size(21, 15);
+            lbVol40.TabIndex = 76;
+            lbVol40.Text = "40";
             // 
             // lbVol50
             // 
-            this.lbVol50.AutoSize = true;
-            this.lbVol50.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol50.ForeColor = System.Drawing.Color.Beige;
-            this.lbVol50.Location = new System.Drawing.Point(399, 156);
-            this.lbVol50.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol50.Name = "lbVol50";
-            this.lbVol50.Size = new System.Drawing.Size(32, 24);
-            this.lbVol50.TabIndex = 77;
-            this.lbVol50.Text = "50";
+            lbVol50.AutoSize = true;
+            lbVol50.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbVol50.ForeColor = Color.Beige;
+            lbVol50.Location = new Point(266, 125);
+            lbVol50.Margin = new Padding(4, 0, 4, 0);
+            lbVol50.Name = "lbVol50";
+            lbVol50.Size = new Size(23, 15);
+            lbVol50.TabIndex = 77;
+            lbVol50.Text = "50";
             // 
             // lbVol60
             // 
-            this.lbVol60.AutoSize = true;
-            this.lbVol60.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol60.ForeColor = System.Drawing.Color.PaleGoldenrod;
-            this.lbVol60.Location = new System.Drawing.Point(489, 156);
-            this.lbVol60.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol60.Name = "lbVol60";
-            this.lbVol60.Size = new System.Drawing.Size(30, 24);
-            this.lbVol60.TabIndex = 78;
-            this.lbVol60.Text = "60";
+            lbVol60.AutoSize = true;
+            lbVol60.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol60.ForeColor = Color.PaleGoldenrod;
+            lbVol60.Location = new Point(328, 125);
+            lbVol60.Margin = new Padding(4, 0, 4, 0);
+            lbVol60.Name = "lbVol60";
+            lbVol60.Size = new Size(21, 15);
+            lbVol60.TabIndex = 78;
+            lbVol60.Text = "60";
             // 
             // lbVol70
             // 
-            this.lbVol70.AutoSize = true;
-            this.lbVol70.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol70.ForeColor = System.Drawing.Color.Khaki;
-            this.lbVol70.Location = new System.Drawing.Point(582, 156);
-            this.lbVol70.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol70.Name = "lbVol70";
-            this.lbVol70.Size = new System.Drawing.Size(30, 24);
-            this.lbVol70.TabIndex = 79;
-            this.lbVol70.Text = "70";
+            lbVol70.AutoSize = true;
+            lbVol70.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol70.ForeColor = Color.Khaki;
+            lbVol70.Location = new Point(389, 125);
+            lbVol70.Margin = new Padding(4, 0, 4, 0);
+            lbVol70.Name = "lbVol70";
+            lbVol70.Size = new Size(21, 15);
+            lbVol70.TabIndex = 79;
+            lbVol70.Text = "70";
             // 
             // lbVol80
             // 
-            this.lbVol80.AutoSize = true;
-            this.lbVol80.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol80.ForeColor = System.Drawing.Color.SandyBrown;
-            this.lbVol80.Location = new System.Drawing.Point(674, 156);
-            this.lbVol80.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol80.Name = "lbVol80";
-            this.lbVol80.Size = new System.Drawing.Size(30, 24);
-            this.lbVol80.TabIndex = 80;
-            this.lbVol80.Text = "80";
+            lbVol80.AutoSize = true;
+            lbVol80.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol80.ForeColor = Color.SandyBrown;
+            lbVol80.Location = new Point(450, 125);
+            lbVol80.Margin = new Padding(4, 0, 4, 0);
+            lbVol80.Name = "lbVol80";
+            lbVol80.Size = new Size(21, 15);
+            lbVol80.TabIndex = 80;
+            lbVol80.Text = "80";
             // 
             // lbVol90
             // 
-            this.lbVol90.AutoSize = true;
-            this.lbVol90.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol90.ForeColor = System.Drawing.Color.DarkOrange;
-            this.lbVol90.Location = new System.Drawing.Point(766, 156);
-            this.lbVol90.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol90.Name = "lbVol90";
-            this.lbVol90.Size = new System.Drawing.Size(30, 24);
-            this.lbVol90.TabIndex = 81;
-            this.lbVol90.Text = "90";
+            lbVol90.AutoSize = true;
+            lbVol90.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol90.ForeColor = Color.DarkOrange;
+            lbVol90.Location = new Point(512, 125);
+            lbVol90.Margin = new Padding(4, 0, 4, 0);
+            lbVol90.Name = "lbVol90";
+            lbVol90.Size = new Size(21, 15);
+            lbVol90.TabIndex = 81;
+            lbVol90.Text = "90";
             // 
             // lbVol100
             // 
-            this.lbVol100.AutoSize = true;
-            this.lbVol100.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVol100.ForeColor = System.Drawing.Color.OrangeRed;
-            this.lbVol100.Location = new System.Drawing.Point(850, 156);
-            this.lbVol100.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbVol100.Name = "lbVol100";
-            this.lbVol100.Size = new System.Drawing.Size(40, 24);
-            this.lbVol100.TabIndex = 82;
-            this.lbVol100.Text = "100";
+            lbVol100.AutoSize = true;
+            lbVol100.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbVol100.ForeColor = Color.OrangeRed;
+            lbVol100.Location = new Point(570, 125);
+            lbVol100.Margin = new Padding(4, 0, 4, 0);
+            lbVol100.Name = "lbVol100";
+            lbVol100.Size = new Size(28, 15);
+            lbVol100.TabIndex = 82;
+            lbVol100.Text = "100";
             // 
             // lbAVRSource
             // 
-            this.lbAVRSource.AutoSize = true;
-            this.lbAVRSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAVRSource.ForeColor = System.Drawing.Color.White;
-            this.lbAVRSource.Location = new System.Drawing.Point(16, 219);
-            this.lbAVRSource.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbAVRSource.Name = "lbAVRSource";
-            this.lbAVRSource.Size = new System.Drawing.Size(178, 26);
-            this.lbAVRSource.TabIndex = 83;
-            this.lbAVRSource.Text = "Selected Source:";
+            lbAVRSource.AutoSize = true;
+            lbAVRSource.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbAVRSource.ForeColor = Color.White;
+            lbAVRSource.Location = new Point(11, 175);
+            lbAVRSource.Margin = new Padding(4, 0, 4, 0);
+            lbAVRSource.Name = "lbAVRSource";
+            lbAVRSource.Size = new Size(116, 17);
+            lbAVRSource.TabIndex = 83;
+            lbAVRSource.Text = "Selected Source:";
             // 
             // AVRSource
             // 
-            this.AVRSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AVRSource.ForeColor = System.Drawing.Color.DarkOrange;
-            this.AVRSource.Location = new System.Drawing.Point(195, 219);
-            this.AVRSource.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.AVRSource.Name = "AVRSource";
-            this.AVRSource.Size = new System.Drawing.Size(242, 24);
-            this.AVRSource.TabIndex = 84;
+            AVRSource.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            AVRSource.ForeColor = Color.DarkOrange;
+            AVRSource.Location = new Point(130, 175);
+            AVRSource.Margin = new Padding(4, 0, 4, 0);
+            AVRSource.Name = "AVRSource";
+            AVRSource.Size = new Size(161, 19);
+            AVRSource.TabIndex = 84;
             // 
             // lbAVRSourceAudio
             // 
-            this.lbAVRSourceAudio.AutoSize = true;
-            this.lbAVRSourceAudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAVRSourceAudio.ForeColor = System.Drawing.Color.White;
-            this.lbAVRSourceAudio.Location = new System.Drawing.Point(17, 250);
-            this.lbAVRSourceAudio.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbAVRSourceAudio.Name = "lbAVRSourceAudio";
-            this.lbAVRSourceAudio.Size = new System.Drawing.Size(143, 26);
-            this.lbAVRSourceAudio.TabIndex = 85;
-            this.lbAVRSourceAudio.Text = "SourceAudio:";
+            lbAVRSourceAudio.AutoSize = true;
+            lbAVRSourceAudio.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbAVRSourceAudio.ForeColor = Color.White;
+            lbAVRSourceAudio.Location = new Point(11, 200);
+            lbAVRSourceAudio.Margin = new Padding(4, 0, 4, 0);
+            lbAVRSourceAudio.Name = "lbAVRSourceAudio";
+            lbAVRSourceAudio.Size = new Size(93, 17);
+            lbAVRSourceAudio.TabIndex = 85;
+            lbAVRSourceAudio.Text = "SourceAudio:";
             // 
             // AVRSourceAudio
             // 
-            this.AVRSourceAudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AVRSourceAudio.ForeColor = System.Drawing.Color.Khaki;
-            this.AVRSourceAudio.Location = new System.Drawing.Point(198, 252);
-            this.AVRSourceAudio.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.AVRSourceAudio.Name = "AVRSourceAudio";
-            this.AVRSourceAudio.Size = new System.Drawing.Size(240, 24);
-            this.AVRSourceAudio.TabIndex = 86;
+            AVRSourceAudio.Font = new Font("Microsoft Sans Serif", 6.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AVRSourceAudio.ForeColor = Color.Khaki;
+            AVRSourceAudio.Location = new Point(130, 202);
+            AVRSourceAudio.Margin = new Padding(4, 0, 4, 0);
+            AVRSourceAudio.Name = "AVRSourceAudio";
+            AVRSourceAudio.Size = new Size(160, 19);
+            AVRSourceAudio.TabIndex = 86;
             // 
             // lbAVRSoundMode
             // 
-            this.lbAVRSoundMode.AutoSize = true;
-            this.lbAVRSoundMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAVRSoundMode.ForeColor = System.Drawing.Color.White;
-            this.lbAVRSoundMode.Location = new System.Drawing.Point(18, 281);
-            this.lbAVRSoundMode.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lbAVRSoundMode.Name = "lbAVRSoundMode";
-            this.lbAVRSoundMode.Size = new System.Drawing.Size(135, 26);
-            this.lbAVRSoundMode.TabIndex = 87;
-            this.lbAVRSoundMode.Text = "SoundMode:";
+            lbAVRSoundMode.AutoSize = true;
+            lbAVRSoundMode.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbAVRSoundMode.ForeColor = Color.White;
+            lbAVRSoundMode.Location = new Point(11, 225);
+            lbAVRSoundMode.Margin = new Padding(4, 0, 4, 0);
+            lbAVRSoundMode.Name = "lbAVRSoundMode";
+            lbAVRSoundMode.Size = new Size(88, 17);
+            lbAVRSoundMode.TabIndex = 87;
+            lbAVRSoundMode.Text = "SoundMode:";
             // 
             // AVRSoundMode
             // 
-            this.AVRSoundMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AVRSoundMode.ForeColor = System.Drawing.Color.Khaki;
-            this.AVRSoundMode.Location = new System.Drawing.Point(198, 283);
-            this.AVRSoundMode.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.AVRSoundMode.Name = "AVRSoundMode";
-            this.AVRSoundMode.Size = new System.Drawing.Size(240, 24);
-            this.AVRSoundMode.TabIndex = 89;
+            AVRSoundMode.Font = new Font("Microsoft Sans Serif", 6.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AVRSoundMode.ForeColor = Color.Khaki;
+            AVRSoundMode.Location = new Point(130, 226);
+            AVRSoundMode.Margin = new Padding(4, 0, 4, 0);
+            AVRSoundMode.Name = "AVRSoundMode";
+            AVRSoundMode.Size = new Size(160, 19);
+            AVRSoundMode.TabIndex = 89;
             // 
             // HeosTrackInfoAlbum
             // 
-            this.HeosTrackInfoAlbum.AutoEllipsis = true;
-            this.HeosTrackInfoAlbum.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HeosTrackInfoAlbum.ForeColor = System.Drawing.Color.Khaki;
-            this.HeosTrackInfoAlbum.Location = new System.Drawing.Point(522, 251);
-            this.HeosTrackInfoAlbum.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.HeosTrackInfoAlbum.Name = "HeosTrackInfoAlbum";
-            this.HeosTrackInfoAlbum.Size = new System.Drawing.Size(441, 24);
-            this.HeosTrackInfoAlbum.TabIndex = 88;
+            HeosTrackInfoAlbum.AutoEllipsis = true;
+            HeosTrackInfoAlbum.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            HeosTrackInfoAlbum.ForeColor = Color.Khaki;
+            HeosTrackInfoAlbum.Location = new Point(348, 201);
+            HeosTrackInfoAlbum.Margin = new Padding(4, 0, 4, 0);
+            HeosTrackInfoAlbum.Name = "HeosTrackInfoAlbum";
+            HeosTrackInfoAlbum.Size = new Size(294, 19);
+            HeosTrackInfoAlbum.TabIndex = 88;
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.LightSlateGray;
-            this.tabPage2.Controls.Add(this.btnResetSpeaker);
-            this.tabPage2.Controls.Add(this.lbSpeakerSubMasterShowValue);
-            this.tabPage2.Controls.Add(this.tbSpeakerSubMaster);
-            this.tabPage2.Controls.Add(this.lbSpeakerSubwoofer2ShowValue);
-            this.tabPage2.Controls.Add(this.lbSpeakerSubwoofer1ShowValue);
-            this.tabPage2.Controls.Add(this.lbSpeakerSurroundRShowValue);
-            this.tabPage2.Controls.Add(this.lbSpeakerSurroundLShowValue);
-            this.tabPage2.Controls.Add(this.lbSpeakerFrontRShowValue);
-            this.tabPage2.Controls.Add(this.lbSpeakerCenterShowValue);
-            this.tabPage2.Controls.Add(this.lbSpeakerFrontLShowValue);
-            this.tabPage2.Controls.Add(this.tbSpeakerSubwoofer2);
-            this.tabPage2.Controls.Add(this.tbSpeakerSubwoofer1);
-            this.tabPage2.Controls.Add(this.tbSpeakerSurroundR);
-            this.tabPage2.Controls.Add(this.tbSpeakerSurroundL);
-            this.tabPage2.Controls.Add(this.tbSpeakerFrontR);
-            this.tabPage2.Controls.Add(this.tbSpeakerCenter);
-            this.tabPage2.Controls.Add(this.tbSpeakerFrontL);
-            this.tabPage2.Controls.Add(this.lbSpeakerSubwoofer1and2);
-            this.tabPage2.Controls.Add(this.lbSpeakerSubwoofer2);
-            this.tabPage2.Controls.Add(this.lbSpeakerSubwoofer1);
-            this.tabPage2.Controls.Add(this.lbSpeakerSurroundR);
-            this.tabPage2.Controls.Add(this.lbSpeakerSurroundL);
-            this.tabPage2.Controls.Add(this.lbSpeakerFrontR);
-            this.tabPage2.Controls.Add(this.lbSpeakerCenter);
-            this.tabPage2.Controls.Add(this.lbSpeakerFrontL);
-            this.tabPage2.Location = new System.Drawing.Point(8, 39);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(994, 692);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            tabPage2.BackColor = Color.LightSlateGray;
+            tabPage2.Controls.Add(btnResetSpeaker);
+            tabPage2.Controls.Add(lbSpeakerSubMasterShowValue);
+            tabPage2.Controls.Add(tbSpeakerSubMaster);
+            tabPage2.Controls.Add(lbSpeakerSubwoofer2ShowValue);
+            tabPage2.Controls.Add(lbSpeakerSubwoofer1ShowValue);
+            tabPage2.Controls.Add(lbSpeakerSurroundRShowValue);
+            tabPage2.Controls.Add(lbSpeakerSurroundLShowValue);
+            tabPage2.Controls.Add(lbSpeakerFrontRShowValue);
+            tabPage2.Controls.Add(lbSpeakerCenterShowValue);
+            tabPage2.Controls.Add(lbSpeakerFrontLShowValue);
+            tabPage2.Controls.Add(tbSpeakerSubwoofer2);
+            tabPage2.Controls.Add(tbSpeakerSubwoofer1);
+            tabPage2.Controls.Add(tbSpeakerSurroundR);
+            tabPage2.Controls.Add(tbSpeakerSurroundL);
+            tabPage2.Controls.Add(tbSpeakerFrontR);
+            tabPage2.Controls.Add(tbSpeakerCenter);
+            tabPage2.Controls.Add(tbSpeakerFrontL);
+            tabPage2.Controls.Add(lbSpeakerSubwoofer1and2);
+            tabPage2.Controls.Add(lbSpeakerSubwoofer2);
+            tabPage2.Controls.Add(lbSpeakerSubwoofer1);
+            tabPage2.Controls.Add(lbSpeakerSurroundR);
+            tabPage2.Controls.Add(lbSpeakerSurroundL);
+            tabPage2.Controls.Add(lbSpeakerFrontR);
+            tabPage2.Controls.Add(lbSpeakerCenter);
+            tabPage2.Controls.Add(lbSpeakerFrontL);
+            tabPage2.Location = new Point(4, 29);
+            tabPage2.Margin = new Padding(2);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(2);
+            tabPage2.Size = new Size(665, 558);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "tabPage2";
             // 
             // btnResetSpeaker
             // 
-            this.btnResetSpeaker.BackColor = System.Drawing.Color.DarkGray;
-            this.btnResetSpeaker.Location = new System.Drawing.Point(834, 642);
-            this.btnResetSpeaker.Name = "btnResetSpeaker";
-            this.btnResetSpeaker.Size = new System.Drawing.Size(142, 44);
-            this.btnResetSpeaker.TabIndex = 69;
-            this.btnResetSpeaker.Text = "Reset";
-            this.btnResetSpeaker.UseVisualStyleBackColor = false;
-            this.btnResetSpeaker.Click += new System.EventHandler(this.btnResetSpeaker_Click);
+            btnResetSpeaker.BackColor = Color.DarkGray;
+            btnResetSpeaker.Location = new Point(556, 514);
+            btnResetSpeaker.Margin = new Padding(2);
+            btnResetSpeaker.Name = "btnResetSpeaker";
+            btnResetSpeaker.Size = new Size(95, 35);
+            btnResetSpeaker.TabIndex = 69;
+            btnResetSpeaker.Text = "Reset";
+            btnResetSpeaker.UseVisualStyleBackColor = false;
+            btnResetSpeaker.Click += btnResetSpeaker_Click;
             // 
             // lbSpeakerSubMasterShowValue
             // 
-            this.lbSpeakerSubMasterShowValue.AutoSize = true;
-            this.lbSpeakerSubMasterShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSubMasterShowValue.Location = new System.Drawing.Point(835, 591);
-            this.lbSpeakerSubMasterShowValue.Name = "lbSpeakerSubMasterShowValue";
-            this.lbSpeakerSubMasterShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerSubMasterShowValue.TabIndex = 23;
-            this.lbSpeakerSubMasterShowValue.Text = "0.0 dB";
+            lbSpeakerSubMasterShowValue.AutoSize = true;
+            lbSpeakerSubMasterShowValue.ForeColor = Color.White;
+            lbSpeakerSubMasterShowValue.Location = new Point(568, 465);
+            lbSpeakerSubMasterShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSubMasterShowValue.Name = "lbSpeakerSubMasterShowValue";
+            lbSpeakerSubMasterShowValue.Size = new Size(50, 20);
+            lbSpeakerSubMasterShowValue.TabIndex = 23;
+            lbSpeakerSubMasterShowValue.Text = "0.0 dB";
             // 
             // tbSpeakerSubMaster
             // 
-            this.tbSpeakerSubMaster.AutoSize = false;
-            this.tbSpeakerSubMaster.Location = new System.Drawing.Point(175, 579);
-            this.tbSpeakerSubMaster.Maximum = 62;
-            this.tbSpeakerSubMaster.Minimum = 38;
-            this.tbSpeakerSubMaster.Name = "tbSpeakerSubMaster";
-            this.tbSpeakerSubMaster.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerSubMaster.TabIndex = 22;
-            this.tbSpeakerSubMaster.Value = 50;
-            this.tbSpeakerSubMaster.Scroll += new System.EventHandler(this.tbSpeakerSubMaster_Scroll);
-            this.tbSpeakerSubMaster.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerSubMaster_MouseDown);
-            this.tbSpeakerSubMaster.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerSubMaster_MouseUp);
+            tbSpeakerSubMaster.AutoSize = false;
+            tbSpeakerSubMaster.Location = new Point(128, 463);
+            tbSpeakerSubMaster.Margin = new Padding(2);
+            tbSpeakerSubMaster.Maximum = 62;
+            tbSpeakerSubMaster.Minimum = 38;
+            tbSpeakerSubMaster.Name = "tbSpeakerSubMaster";
+            tbSpeakerSubMaster.Size = new Size(435, 43);
+            tbSpeakerSubMaster.TabIndex = 22;
+            tbSpeakerSubMaster.Value = 50;
+            tbSpeakerSubMaster.Scroll += tbSpeakerSubMaster_Scroll;
+            tbSpeakerSubMaster.MouseDown += tbSpeakerSubMaster_MouseDown;
+            tbSpeakerSubMaster.MouseUp += tbSpeakerSubMaster_MouseUp;
             // 
             // lbSpeakerSubwoofer2ShowValue
             // 
-            this.lbSpeakerSubwoofer2ShowValue.AutoSize = true;
-            this.lbSpeakerSubwoofer2ShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSubwoofer2ShowValue.Location = new System.Drawing.Point(835, 507);
-            this.lbSpeakerSubwoofer2ShowValue.Name = "lbSpeakerSubwoofer2ShowValue";
-            this.lbSpeakerSubwoofer2ShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerSubwoofer2ShowValue.TabIndex = 21;
-            this.lbSpeakerSubwoofer2ShowValue.Text = "0.0 dB";
+            lbSpeakerSubwoofer2ShowValue.AutoSize = true;
+            lbSpeakerSubwoofer2ShowValue.ForeColor = Color.White;
+            lbSpeakerSubwoofer2ShowValue.Location = new Point(568, 399);
+            lbSpeakerSubwoofer2ShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSubwoofer2ShowValue.Name = "lbSpeakerSubwoofer2ShowValue";
+            lbSpeakerSubwoofer2ShowValue.Size = new Size(50, 20);
+            lbSpeakerSubwoofer2ShowValue.TabIndex = 21;
+            lbSpeakerSubwoofer2ShowValue.Text = "0.0 dB";
             // 
             // lbSpeakerSubwoofer1ShowValue
             // 
-            this.lbSpeakerSubwoofer1ShowValue.AutoSize = true;
-            this.lbSpeakerSubwoofer1ShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSubwoofer1ShowValue.Location = new System.Drawing.Point(835, 428);
-            this.lbSpeakerSubwoofer1ShowValue.Name = "lbSpeakerSubwoofer1ShowValue";
-            this.lbSpeakerSubwoofer1ShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerSubwoofer1ShowValue.TabIndex = 20;
-            this.lbSpeakerSubwoofer1ShowValue.Text = "0.0 dB";
+            lbSpeakerSubwoofer1ShowValue.AutoSize = true;
+            lbSpeakerSubwoofer1ShowValue.ForeColor = Color.White;
+            lbSpeakerSubwoofer1ShowValue.Location = new Point(568, 336);
+            lbSpeakerSubwoofer1ShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSubwoofer1ShowValue.Name = "lbSpeakerSubwoofer1ShowValue";
+            lbSpeakerSubwoofer1ShowValue.Size = new Size(50, 20);
+            lbSpeakerSubwoofer1ShowValue.TabIndex = 20;
+            lbSpeakerSubwoofer1ShowValue.Text = "0.0 dB";
             // 
             // lbSpeakerSurroundRShowValue
             // 
-            this.lbSpeakerSurroundRShowValue.AutoSize = true;
-            this.lbSpeakerSurroundRShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSurroundRShowValue.Location = new System.Drawing.Point(835, 349);
-            this.lbSpeakerSurroundRShowValue.Name = "lbSpeakerSurroundRShowValue";
-            this.lbSpeakerSurroundRShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerSurroundRShowValue.TabIndex = 19;
-            this.lbSpeakerSurroundRShowValue.Text = "0.0 dB";
+            lbSpeakerSurroundRShowValue.AutoSize = true;
+            lbSpeakerSurroundRShowValue.ForeColor = Color.White;
+            lbSpeakerSurroundRShowValue.Location = new Point(568, 273);
+            lbSpeakerSurroundRShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSurroundRShowValue.Name = "lbSpeakerSurroundRShowValue";
+            lbSpeakerSurroundRShowValue.Size = new Size(50, 20);
+            lbSpeakerSurroundRShowValue.TabIndex = 19;
+            lbSpeakerSurroundRShowValue.Text = "0.0 dB";
             // 
             // lbSpeakerSurroundLShowValue
             // 
-            this.lbSpeakerSurroundLShowValue.AutoSize = true;
-            this.lbSpeakerSurroundLShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSurroundLShowValue.Location = new System.Drawing.Point(835, 270);
-            this.lbSpeakerSurroundLShowValue.Name = "lbSpeakerSurroundLShowValue";
-            this.lbSpeakerSurroundLShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerSurroundLShowValue.TabIndex = 18;
-            this.lbSpeakerSurroundLShowValue.Text = "0.0 dB";
+            lbSpeakerSurroundLShowValue.AutoSize = true;
+            lbSpeakerSurroundLShowValue.ForeColor = Color.White;
+            lbSpeakerSurroundLShowValue.Location = new Point(568, 210);
+            lbSpeakerSurroundLShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSurroundLShowValue.Name = "lbSpeakerSurroundLShowValue";
+            lbSpeakerSurroundLShowValue.Size = new Size(50, 20);
+            lbSpeakerSurroundLShowValue.TabIndex = 18;
+            lbSpeakerSurroundLShowValue.Text = "0.0 dB";
             // 
             // lbSpeakerFrontRShowValue
             // 
-            this.lbSpeakerFrontRShowValue.AutoSize = true;
-            this.lbSpeakerFrontRShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerFrontRShowValue.Location = new System.Drawing.Point(835, 191);
-            this.lbSpeakerFrontRShowValue.Name = "lbSpeakerFrontRShowValue";
-            this.lbSpeakerFrontRShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerFrontRShowValue.TabIndex = 17;
-            this.lbSpeakerFrontRShowValue.Text = "0.0 dB";
+            lbSpeakerFrontRShowValue.AutoSize = true;
+            lbSpeakerFrontRShowValue.ForeColor = Color.White;
+            lbSpeakerFrontRShowValue.Location = new Point(568, 147);
+            lbSpeakerFrontRShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerFrontRShowValue.Name = "lbSpeakerFrontRShowValue";
+            lbSpeakerFrontRShowValue.Size = new Size(50, 20);
+            lbSpeakerFrontRShowValue.TabIndex = 17;
+            lbSpeakerFrontRShowValue.Text = "0.0 dB";
             // 
             // lbSpeakerCenterShowValue
             // 
-            this.lbSpeakerCenterShowValue.AutoSize = true;
-            this.lbSpeakerCenterShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerCenterShowValue.Location = new System.Drawing.Point(835, 112);
-            this.lbSpeakerCenterShowValue.Name = "lbSpeakerCenterShowValue";
-            this.lbSpeakerCenterShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerCenterShowValue.TabIndex = 16;
-            this.lbSpeakerCenterShowValue.Text = "0.0 dB";
+            lbSpeakerCenterShowValue.AutoSize = true;
+            lbSpeakerCenterShowValue.ForeColor = Color.White;
+            lbSpeakerCenterShowValue.Location = new Point(568, 84);
+            lbSpeakerCenterShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerCenterShowValue.Name = "lbSpeakerCenterShowValue";
+            lbSpeakerCenterShowValue.Size = new Size(50, 20);
+            lbSpeakerCenterShowValue.TabIndex = 16;
+            lbSpeakerCenterShowValue.Text = "0.0 dB";
             // 
             // lbSpeakerFrontLShowValue
             // 
-            this.lbSpeakerFrontLShowValue.AutoSize = true;
-            this.lbSpeakerFrontLShowValue.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerFrontLShowValue.Location = new System.Drawing.Point(835, 32);
-            this.lbSpeakerFrontLShowValue.Name = "lbSpeakerFrontLShowValue";
-            this.lbSpeakerFrontLShowValue.Size = new System.Drawing.Size(74, 25);
-            this.lbSpeakerFrontLShowValue.TabIndex = 15;
-            this.lbSpeakerFrontLShowValue.Text = "0.0 dB";
+            lbSpeakerFrontLShowValue.AutoSize = true;
+            lbSpeakerFrontLShowValue.ForeColor = Color.White;
+            lbSpeakerFrontLShowValue.Location = new Point(568, 20);
+            lbSpeakerFrontLShowValue.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerFrontLShowValue.Name = "lbSpeakerFrontLShowValue";
+            lbSpeakerFrontLShowValue.Size = new Size(50, 20);
+            lbSpeakerFrontLShowValue.TabIndex = 15;
+            lbSpeakerFrontLShowValue.Text = "0.0 dB";
             // 
             // tbSpeakerSubwoofer2
             // 
-            this.tbSpeakerSubwoofer2.AutoSize = false;
-            this.tbSpeakerSubwoofer2.Location = new System.Drawing.Point(175, 498);
-            this.tbSpeakerSubwoofer2.Maximum = 62;
-            this.tbSpeakerSubwoofer2.Minimum = 38;
-            this.tbSpeakerSubwoofer2.Name = "tbSpeakerSubwoofer2";
-            this.tbSpeakerSubwoofer2.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerSubwoofer2.TabIndex = 14;
-            this.tbSpeakerSubwoofer2.Value = 50;
-            this.tbSpeakerSubwoofer2.Scroll += new System.EventHandler(this.tbSpeakerSubwoofer2_Scroll);
-            this.tbSpeakerSubwoofer2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerSubwoofer2_MouseUp);
+            tbSpeakerSubwoofer2.AutoSize = false;
+            tbSpeakerSubwoofer2.Location = new Point(128, 398);
+            tbSpeakerSubwoofer2.Margin = new Padding(2);
+            tbSpeakerSubwoofer2.Maximum = 62;
+            tbSpeakerSubwoofer2.Minimum = 38;
+            tbSpeakerSubwoofer2.Name = "tbSpeakerSubwoofer2";
+            tbSpeakerSubwoofer2.Size = new Size(435, 43);
+            tbSpeakerSubwoofer2.TabIndex = 14;
+            tbSpeakerSubwoofer2.Value = 50;
+            tbSpeakerSubwoofer2.Scroll += tbSpeakerSubwoofer2_Scroll;
+            tbSpeakerSubwoofer2.MouseUp += tbSpeakerSubwoofer2_MouseUp;
             // 
             // tbSpeakerSubwoofer1
             // 
-            this.tbSpeakerSubwoofer1.AutoSize = false;
-            this.tbSpeakerSubwoofer1.Location = new System.Drawing.Point(175, 419);
-            this.tbSpeakerSubwoofer1.Maximum = 62;
-            this.tbSpeakerSubwoofer1.Minimum = 38;
-            this.tbSpeakerSubwoofer1.Name = "tbSpeakerSubwoofer1";
-            this.tbSpeakerSubwoofer1.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerSubwoofer1.TabIndex = 13;
-            this.tbSpeakerSubwoofer1.Value = 50;
-            this.tbSpeakerSubwoofer1.Scroll += new System.EventHandler(this.tbSpeakerSubwoofer1_Scroll);
-            this.tbSpeakerSubwoofer1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerSubwoofer1_MouseUp);
+            tbSpeakerSubwoofer1.AutoSize = false;
+            tbSpeakerSubwoofer1.Location = new Point(128, 335);
+            tbSpeakerSubwoofer1.Margin = new Padding(2);
+            tbSpeakerSubwoofer1.Maximum = 62;
+            tbSpeakerSubwoofer1.Minimum = 38;
+            tbSpeakerSubwoofer1.Name = "tbSpeakerSubwoofer1";
+            tbSpeakerSubwoofer1.Size = new Size(435, 43);
+            tbSpeakerSubwoofer1.TabIndex = 13;
+            tbSpeakerSubwoofer1.Value = 50;
+            tbSpeakerSubwoofer1.Scroll += tbSpeakerSubwoofer1_Scroll;
+            tbSpeakerSubwoofer1.MouseUp += tbSpeakerSubwoofer1_MouseUp;
             // 
             // tbSpeakerSurroundR
             // 
-            this.tbSpeakerSurroundR.AutoSize = false;
-            this.tbSpeakerSurroundR.Location = new System.Drawing.Point(175, 340);
-            this.tbSpeakerSurroundR.Maximum = 62;
-            this.tbSpeakerSurroundR.Minimum = 38;
-            this.tbSpeakerSurroundR.Name = "tbSpeakerSurroundR";
-            this.tbSpeakerSurroundR.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerSurroundR.TabIndex = 12;
-            this.tbSpeakerSurroundR.Value = 50;
-            this.tbSpeakerSurroundR.Scroll += new System.EventHandler(this.tbSpeakerSurroundR_Scroll);
-            this.tbSpeakerSurroundR.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerSurroundR_MouseUp);
+            tbSpeakerSurroundR.AutoSize = false;
+            tbSpeakerSurroundR.Location = new Point(128, 272);
+            tbSpeakerSurroundR.Margin = new Padding(2);
+            tbSpeakerSurroundR.Maximum = 62;
+            tbSpeakerSurroundR.Minimum = 38;
+            tbSpeakerSurroundR.Name = "tbSpeakerSurroundR";
+            tbSpeakerSurroundR.Size = new Size(435, 43);
+            tbSpeakerSurroundR.TabIndex = 12;
+            tbSpeakerSurroundR.Value = 50;
+            tbSpeakerSurroundR.Scroll += tbSpeakerSurroundR_Scroll;
+            tbSpeakerSurroundR.MouseUp += tbSpeakerSurroundR_MouseUp;
             // 
             // tbSpeakerSurroundL
             // 
-            this.tbSpeakerSurroundL.AutoSize = false;
-            this.tbSpeakerSurroundL.Location = new System.Drawing.Point(175, 261);
-            this.tbSpeakerSurroundL.Maximum = 62;
-            this.tbSpeakerSurroundL.Minimum = 38;
-            this.tbSpeakerSurroundL.Name = "tbSpeakerSurroundL";
-            this.tbSpeakerSurroundL.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerSurroundL.TabIndex = 11;
-            this.tbSpeakerSurroundL.Value = 50;
-            this.tbSpeakerSurroundL.Scroll += new System.EventHandler(this.tbSpeakerSurroundL_Scroll);
-            this.tbSpeakerSurroundL.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerSurroundL_MouseUp);
+            tbSpeakerSurroundL.AutoSize = false;
+            tbSpeakerSurroundL.Location = new Point(128, 209);
+            tbSpeakerSurroundL.Margin = new Padding(2);
+            tbSpeakerSurroundL.Maximum = 62;
+            tbSpeakerSurroundL.Minimum = 38;
+            tbSpeakerSurroundL.Name = "tbSpeakerSurroundL";
+            tbSpeakerSurroundL.Size = new Size(435, 43);
+            tbSpeakerSurroundL.TabIndex = 11;
+            tbSpeakerSurroundL.Value = 50;
+            tbSpeakerSurroundL.Scroll += tbSpeakerSurroundL_Scroll;
+            tbSpeakerSurroundL.MouseUp += tbSpeakerSurroundL_MouseUp;
             // 
             // tbSpeakerFrontR
             // 
-            this.tbSpeakerFrontR.AutoSize = false;
-            this.tbSpeakerFrontR.Location = new System.Drawing.Point(175, 182);
-            this.tbSpeakerFrontR.Maximum = 62;
-            this.tbSpeakerFrontR.Minimum = 38;
-            this.tbSpeakerFrontR.Name = "tbSpeakerFrontR";
-            this.tbSpeakerFrontR.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerFrontR.TabIndex = 10;
-            this.tbSpeakerFrontR.Value = 50;
-            this.tbSpeakerFrontR.Scroll += new System.EventHandler(this.tbSpeakerFrontR_Scroll);
-            this.tbSpeakerFrontR.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerFrontR_MouseUp);
+            tbSpeakerFrontR.AutoSize = false;
+            tbSpeakerFrontR.Location = new Point(128, 146);
+            tbSpeakerFrontR.Margin = new Padding(2);
+            tbSpeakerFrontR.Maximum = 62;
+            tbSpeakerFrontR.Minimum = 38;
+            tbSpeakerFrontR.Name = "tbSpeakerFrontR";
+            tbSpeakerFrontR.Size = new Size(435, 43);
+            tbSpeakerFrontR.TabIndex = 10;
+            tbSpeakerFrontR.Value = 50;
+            tbSpeakerFrontR.Scroll += tbSpeakerFrontR_Scroll;
+            tbSpeakerFrontR.MouseUp += tbSpeakerFrontR_MouseUp;
             // 
             // tbSpeakerCenter
             // 
-            this.tbSpeakerCenter.AutoSize = false;
-            this.tbSpeakerCenter.Location = new System.Drawing.Point(175, 103);
-            this.tbSpeakerCenter.Maximum = 62;
-            this.tbSpeakerCenter.Minimum = 38;
-            this.tbSpeakerCenter.Name = "tbSpeakerCenter";
-            this.tbSpeakerCenter.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerCenter.TabIndex = 9;
-            this.tbSpeakerCenter.Value = 50;
-            this.tbSpeakerCenter.Scroll += new System.EventHandler(this.tbSpeakerCenter_Scroll);
-            this.tbSpeakerCenter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerCenter_MouseUp);
+            tbSpeakerCenter.AutoSize = false;
+            tbSpeakerCenter.Location = new Point(128, 82);
+            tbSpeakerCenter.Margin = new Padding(2);
+            tbSpeakerCenter.Maximum = 62;
+            tbSpeakerCenter.Minimum = 38;
+            tbSpeakerCenter.Name = "tbSpeakerCenter";
+            tbSpeakerCenter.Size = new Size(435, 43);
+            tbSpeakerCenter.TabIndex = 9;
+            tbSpeakerCenter.Value = 50;
+            tbSpeakerCenter.Scroll += tbSpeakerCenter_Scroll;
+            tbSpeakerCenter.MouseUp += tbSpeakerCenter_MouseUp;
             // 
             // tbSpeakerFrontL
             // 
-            this.tbSpeakerFrontL.AutoSize = false;
-            this.tbSpeakerFrontL.Location = new System.Drawing.Point(175, 24);
-            this.tbSpeakerFrontL.Maximum = 62;
-            this.tbSpeakerFrontL.Minimum = 38;
-            this.tbSpeakerFrontL.Name = "tbSpeakerFrontL";
-            this.tbSpeakerFrontL.Size = new System.Drawing.Size(652, 54);
-            this.tbSpeakerFrontL.TabIndex = 8;
-            this.tbSpeakerFrontL.Value = 50;
-            this.tbSpeakerFrontL.Scroll += new System.EventHandler(this.tbSpeakerFrontL_Scroll);
-            this.tbSpeakerFrontL.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbSpeakerFrontL_MouseUp);
+            tbSpeakerFrontL.AutoSize = false;
+            tbSpeakerFrontL.Location = new Point(128, 19);
+            tbSpeakerFrontL.Margin = new Padding(2);
+            tbSpeakerFrontL.Maximum = 62;
+            tbSpeakerFrontL.Minimum = 38;
+            tbSpeakerFrontL.Name = "tbSpeakerFrontL";
+            tbSpeakerFrontL.Size = new Size(435, 43);
+            tbSpeakerFrontL.TabIndex = 8;
+            tbSpeakerFrontL.Value = 50;
+            tbSpeakerFrontL.Scroll += tbSpeakerFrontL_Scroll;
+            tbSpeakerFrontL.MouseUp += tbSpeakerFrontL_MouseUp;
             // 
             // lbSpeakerSubwoofer1and2
             // 
-            this.lbSpeakerSubwoofer1and2.AutoSize = true;
-            this.lbSpeakerSubwoofer1and2.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSubwoofer1and2.Location = new System.Drawing.Point(22, 588);
-            this.lbSpeakerSubwoofer1and2.Name = "lbSpeakerSubwoofer1and2";
-            this.lbSpeakerSubwoofer1and2.Size = new System.Drawing.Size(156, 25);
-            this.lbSpeakerSubwoofer1and2.TabIndex = 7;
-            this.lbSpeakerSubwoofer1and2.Text = "Subwoofer 1+2";
+            lbSpeakerSubwoofer1and2.AutoSize = true;
+            lbSpeakerSubwoofer1and2.ForeColor = Color.White;
+            lbSpeakerSubwoofer1and2.Location = new Point(15, 465);
+            lbSpeakerSubwoofer1and2.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSubwoofer1and2.Name = "lbSpeakerSubwoofer1and2";
+            lbSpeakerSubwoofer1and2.Size = new Size(111, 20);
+            lbSpeakerSubwoofer1and2.TabIndex = 7;
+            lbSpeakerSubwoofer1and2.Text = "Subwoofer 1+2";
             // 
             // lbSpeakerSubwoofer2
             // 
-            this.lbSpeakerSubwoofer2.AutoSize = true;
-            this.lbSpeakerSubwoofer2.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSubwoofer2.Location = new System.Drawing.Point(24, 507);
-            this.lbSpeakerSubwoofer2.Name = "lbSpeakerSubwoofer2";
-            this.lbSpeakerSubwoofer2.Size = new System.Drawing.Size(132, 25);
-            this.lbSpeakerSubwoofer2.TabIndex = 6;
-            this.lbSpeakerSubwoofer2.Text = "Subwoofer 2";
+            lbSpeakerSubwoofer2.AutoSize = true;
+            lbSpeakerSubwoofer2.ForeColor = Color.White;
+            lbSpeakerSubwoofer2.Location = new Point(16, 401);
+            lbSpeakerSubwoofer2.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSubwoofer2.Name = "lbSpeakerSubwoofer2";
+            lbSpeakerSubwoofer2.Size = new Size(93, 20);
+            lbSpeakerSubwoofer2.TabIndex = 6;
+            lbSpeakerSubwoofer2.Text = "Subwoofer 2";
             // 
             // lbSpeakerSubwoofer1
             // 
-            this.lbSpeakerSubwoofer1.AutoSize = true;
-            this.lbSpeakerSubwoofer1.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSubwoofer1.Location = new System.Drawing.Point(24, 428);
-            this.lbSpeakerSubwoofer1.Name = "lbSpeakerSubwoofer1";
-            this.lbSpeakerSubwoofer1.Size = new System.Drawing.Size(132, 25);
-            this.lbSpeakerSubwoofer1.TabIndex = 5;
-            this.lbSpeakerSubwoofer1.Text = "Subwoofer 1";
+            lbSpeakerSubwoofer1.AutoSize = true;
+            lbSpeakerSubwoofer1.ForeColor = Color.White;
+            lbSpeakerSubwoofer1.Location = new Point(16, 337);
+            lbSpeakerSubwoofer1.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSubwoofer1.Name = "lbSpeakerSubwoofer1";
+            lbSpeakerSubwoofer1.Size = new Size(93, 20);
+            lbSpeakerSubwoofer1.TabIndex = 5;
+            lbSpeakerSubwoofer1.Text = "Subwoofer 1";
             // 
             // lbSpeakerSurroundR
             // 
-            this.lbSpeakerSurroundR.AutoSize = true;
-            this.lbSpeakerSurroundR.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSurroundR.Location = new System.Drawing.Point(24, 349);
-            this.lbSpeakerSurroundR.Name = "lbSpeakerSurroundR";
-            this.lbSpeakerSurroundR.Size = new System.Drawing.Size(121, 25);
-            this.lbSpeakerSurroundR.TabIndex = 4;
-            this.lbSpeakerSurroundR.Text = "Surround R";
+            lbSpeakerSurroundR.AutoSize = true;
+            lbSpeakerSurroundR.ForeColor = Color.White;
+            lbSpeakerSurroundR.Location = new Point(16, 274);
+            lbSpeakerSurroundR.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSurroundR.Name = "lbSpeakerSurroundR";
+            lbSpeakerSurroundR.Size = new Size(82, 20);
+            lbSpeakerSurroundR.TabIndex = 4;
+            lbSpeakerSurroundR.Text = "Surround R";
             // 
             // lbSpeakerSurroundL
             // 
-            this.lbSpeakerSurroundL.AutoSize = true;
-            this.lbSpeakerSurroundL.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerSurroundL.Location = new System.Drawing.Point(22, 270);
-            this.lbSpeakerSurroundL.Name = "lbSpeakerSurroundL";
-            this.lbSpeakerSurroundL.Size = new System.Drawing.Size(118, 25);
-            this.lbSpeakerSurroundL.TabIndex = 3;
-            this.lbSpeakerSurroundL.Text = "Surround L";
+            lbSpeakerSurroundL.AutoSize = true;
+            lbSpeakerSurroundL.ForeColor = Color.White;
+            lbSpeakerSurroundL.Location = new Point(15, 211);
+            lbSpeakerSurroundL.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerSurroundL.Name = "lbSpeakerSurroundL";
+            lbSpeakerSurroundL.Size = new Size(80, 20);
+            lbSpeakerSurroundL.TabIndex = 3;
+            lbSpeakerSurroundL.Text = "Surround L";
             // 
             // lbSpeakerFrontR
             // 
-            this.lbSpeakerFrontR.AutoSize = true;
-            this.lbSpeakerFrontR.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerFrontR.Location = new System.Drawing.Point(24, 191);
-            this.lbSpeakerFrontR.Name = "lbSpeakerFrontR";
-            this.lbSpeakerFrontR.Size = new System.Drawing.Size(83, 25);
-            this.lbSpeakerFrontR.TabIndex = 2;
-            this.lbSpeakerFrontR.Text = "Front R";
+            lbSpeakerFrontR.AutoSize = true;
+            lbSpeakerFrontR.ForeColor = Color.White;
+            lbSpeakerFrontR.Location = new Point(16, 148);
+            lbSpeakerFrontR.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerFrontR.Name = "lbSpeakerFrontR";
+            lbSpeakerFrontR.Size = new Size(56, 20);
+            lbSpeakerFrontR.TabIndex = 2;
+            lbSpeakerFrontR.Text = "Front R";
             // 
             // lbSpeakerCenter
             // 
-            this.lbSpeakerCenter.AutoSize = true;
-            this.lbSpeakerCenter.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerCenter.Location = new System.Drawing.Point(22, 112);
-            this.lbSpeakerCenter.Name = "lbSpeakerCenter";
-            this.lbSpeakerCenter.Size = new System.Drawing.Size(76, 25);
-            this.lbSpeakerCenter.TabIndex = 1;
-            this.lbSpeakerCenter.Text = "Center";
+            lbSpeakerCenter.AutoSize = true;
+            lbSpeakerCenter.ForeColor = Color.White;
+            lbSpeakerCenter.Location = new Point(15, 85);
+            lbSpeakerCenter.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerCenter.Name = "lbSpeakerCenter";
+            lbSpeakerCenter.Size = new Size(52, 20);
+            lbSpeakerCenter.TabIndex = 1;
+            lbSpeakerCenter.Text = "Center";
             // 
             // lbSpeakerFrontL
             // 
-            this.lbSpeakerFrontL.AutoSize = true;
-            this.lbSpeakerFrontL.ForeColor = System.Drawing.Color.White;
-            this.lbSpeakerFrontL.Location = new System.Drawing.Point(22, 33);
-            this.lbSpeakerFrontL.Name = "lbSpeakerFrontL";
-            this.lbSpeakerFrontL.Size = new System.Drawing.Size(80, 25);
-            this.lbSpeakerFrontL.TabIndex = 0;
-            this.lbSpeakerFrontL.Text = "Front L";
+            lbSpeakerFrontL.AutoSize = true;
+            lbSpeakerFrontL.ForeColor = Color.White;
+            lbSpeakerFrontL.Location = new Point(15, 21);
+            lbSpeakerFrontL.Margin = new Padding(2, 0, 2, 0);
+            lbSpeakerFrontL.Name = "lbSpeakerFrontL";
+            lbSpeakerFrontL.Size = new Size(54, 20);
+            lbSpeakerFrontL.TabIndex = 0;
+            lbSpeakerFrontL.Text = "Front L";
             // 
             // pnlTabOverlay
             // 
-            this.pnlTabOverlay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlTabOverlay.Location = new System.Drawing.Point(-2, 101);
-            this.pnlTabOverlay.Name = "pnlTabOverlay";
-            this.pnlTabOverlay.Size = new System.Drawing.Size(993, 47);
-            this.pnlTabOverlay.TabIndex = 70;
+            pnlTabOverlay.BorderStyle = BorderStyle.FixedSingle;
+            pnlTabOverlay.Location = new Point(-1, 81);
+            pnlTabOverlay.Margin = new Padding(2, 0, 2, 0);
+            pnlTabOverlay.Name = "pnlTabOverlay";
+            pnlTabOverlay.Size = new Size(663, 38);
+            pnlTabOverlay.TabIndex = 70;
             // 
             // lblTabMain
             // 
-            this.lblTabMain.BackColor = System.Drawing.Color.SteelBlue;
-            this.lblTabMain.Enabled = false;
-            this.lblTabMain.ForeColor = System.Drawing.Color.White;
-            this.lblTabMain.Location = new System.Drawing.Point(2, 109);
-            this.lblTabMain.Name = "lblTabMain";
-            this.lblTabMain.Size = new System.Drawing.Size(100, 38);
-            this.lblTabMain.TabIndex = 71;
-            this.lblTabMain.Text = "Main";
-            this.lblTabMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblTabMain.Click += new System.EventHandler(this.lblTabMain_Click);
+            lblTabMain.BackColor = Color.SteelBlue;
+            lblTabMain.Enabled = false;
+            lblTabMain.ForeColor = Color.White;
+            lblTabMain.Location = new Point(1, 87);
+            lblTabMain.Margin = new Padding(2, 0, 2, 0);
+            lblTabMain.Name = "lblTabMain";
+            lblTabMain.Size = new Size(67, 30);
+            lblTabMain.TabIndex = 71;
+            lblTabMain.Text = "Main";
+            lblTabMain.TextAlign = ContentAlignment.MiddleCenter;
+            lblTabMain.Click += lblTabMain_Click;
             // 
             // lblTabSpeaker
             // 
-            this.lblTabSpeaker.BackColor = System.Drawing.Color.Gray;
-            this.lblTabSpeaker.Enabled = false;
-            this.lblTabSpeaker.ForeColor = System.Drawing.Color.White;
-            this.lblTabSpeaker.Location = new System.Drawing.Point(104, 109);
-            this.lblTabSpeaker.Name = "lblTabSpeaker";
-            this.lblTabSpeaker.Size = new System.Drawing.Size(100, 38);
-            this.lblTabSpeaker.TabIndex = 72;
-            this.lblTabSpeaker.Text = "Speaker";
-            this.lblTabSpeaker.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblTabSpeaker.Click += new System.EventHandler(this.lblTabSpeaker_Click);
+            lblTabSpeaker.BackColor = Color.Gray;
+            lblTabSpeaker.Enabled = false;
+            lblTabSpeaker.ForeColor = Color.White;
+            lblTabSpeaker.Location = new Point(69, 87);
+            lblTabSpeaker.Margin = new Padding(2, 0, 2, 0);
+            lblTabSpeaker.Name = "lblTabSpeaker";
+            lblTabSpeaker.Size = new Size(67, 30);
+            lblTabSpeaker.TabIndex = 72;
+            lblTabSpeaker.Text = "Speaker";
+            lblTabSpeaker.TextAlign = ContentAlignment.MiddleCenter;
+            lblTabSpeaker.Click += lblTabSpeaker_Click;
             // 
             // lbBottomOverlay
             // 
-            this.lbBottomOverlay.Location = new System.Drawing.Point(-2, 836);
-            this.lbBottomOverlay.Name = "lbBottomOverlay";
-            this.lbBottomOverlay.Size = new System.Drawing.Size(1004, 5);
-            this.lbBottomOverlay.TabIndex = 73;
+            lbBottomOverlay.Location = new Point(-1, 669);
+            lbBottomOverlay.Margin = new Padding(2, 0, 2, 0);
+            lbBottomOverlay.Name = "lbBottomOverlay";
+            lbBottomOverlay.Size = new Size(669, 4);
+            lbBottomOverlay.TabIndex = 73;
             // 
             // HorizontalLine
             // 
-            this.HorizontalLine.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.HorizontalLine.Location = new System.Drawing.Point(2, 100);
-            this.HorizontalLine.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.HorizontalLine.Name = "HorizontalLine";
-            this.HorizontalLine.Size = new System.Drawing.Size(1000, 1);
-            this.HorizontalLine.TabIndex = 9;
+            HorizontalLine.BackColor = Color.DarkSlateGray;
+            HorizontalLine.Location = new Point(1, 80);
+            HorizontalLine.Margin = new Padding(4, 0, 4, 0);
+            HorizontalLine.Name = "HorizontalLine";
+            HorizontalLine.Size = new Size(667, 1);
+            HorizontalLine.TabIndex = 9;
             // 
             // AVRControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightSlateGray;
-            this.ClientSize = new System.Drawing.Size(988, 951);
-            this.Controls.Add(this.lbBottomOverlay);
-            this.Controls.Add(this.lblTabSpeaker);
-            this.Controls.Add(this.lblTabMain);
-            this.Controls.Add(this.pnlTabOverlay);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.btnInstall);
-            this.Controls.Add(this.cbSysTray);
-            this.Controls.Add(this.lbConnectStatus);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.tbIP);
-            this.Controls.Add(this.lblIP);
-            this.Controls.Add(this.HorizontalLine);
-            this.Controls.Add(this.CopyrightNote);
-            this.Controls.Add(this.InfoNote);
-            this.Controls.Add(this.PowerToggle);
-            this.Controls.Add(this.LabelPowerToggle);
-            this.Controls.Add(this.LogoPicture);
-            this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = global::AVRControl.Properties.Resources.AVRControl;
-            this.MaximizeBox = false;
-            this.Name = "AVRControl";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AVRControl";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Activated += new System.EventHandler(this.AVRControl_Activated);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.AVRControl_Load);
-            this.Resize += new System.EventHandler(this.AVRControl_Resize);
-            this.cmsTray.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPicture)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.pnlProgressBack.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbAlbumArt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatOne)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayRepeatAll)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayShuffle)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayBack)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlaySkip)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnHeosPlayPause)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnToggleMute)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnVolDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnVolUp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SliderVolume)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSubMaster)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSubwoofer2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSubwoofer1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSurroundR)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerSurroundL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerFrontR)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerCenter)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSpeakerFrontL)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightSlateGray;
+            ClientSize = new Size(659, 761);
+            Controls.Add(lbBottomOverlay);
+            Controls.Add(lblTabSpeaker);
+            Controls.Add(lblTabMain);
+            Controls.Add(pnlTabOverlay);
+            Controls.Add(tabControl1);
+            Controls.Add(btnInstall);
+            Controls.Add(cbSysTray);
+            Controls.Add(lbConnectStatus);
+            Controls.Add(btnSave);
+            Controls.Add(tbIP);
+            Controls.Add(lblIP);
+            Controls.Add(HorizontalLine);
+            Controls.Add(CopyrightNote);
+            Controls.Add(InfoNote);
+            Controls.Add(PowerToggle);
+            Controls.Add(LabelPowerToggle);
+            Controls.Add(LogoPicture);
+            DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2);
+            MaximizeBox = false;
+            Name = "AVRControl";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "AVRControl";
+            WindowState = FormWindowState.Minimized;
+            Activated += AVRControl_Activated;
+            FormClosing += MainForm_FormClosing;
+            Load += AVRControl_Load;
+            Resize += AVRControl_Resize;
+            cmsTray.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)LogoPicture).EndInit();
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            pnlProgressBack.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbAlbumArt).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayRepeatOne).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayRepeatAll).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayShuffle).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayBack).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlaySkip).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnHeosPlayPause).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnToggleMute).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnVolDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnVolUp).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SliderVolume).EndInit();
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSubMaster).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSurroundR).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerSurroundL).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontR).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerCenter).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontL).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

@@ -64,7 +64,7 @@ namespace AVRControl
 
             _appIcon = (Icon)Properties.Resources.AVRControl.Clone();
             this.Icon = _appIcon;
-            this.Text = $"AVRControl v{Application.ProductVersion}";
+            this.Text = $"AVRControl v{typeof(Program).Assembly.GetName().Version}";
 
             this.notifyIcon1.Icon = _appIcon;
             this.notifyIcon1.Text = this.Text;
@@ -509,7 +509,7 @@ namespace AVRControl
                         currentConfigPath = targetCfg;
 
                         ConfigManager.SaveValue(currentConfigPath, "IP", tbIP.Text);
-                        ConfigManager.SaveValue(currentConfigPath, "Systray", cbSysTray.Checked.ToString());
+                        ConfigManager.SaveValue(currentConfigPath, "Systray", "TRUE");
                     }
 
                     using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, true))

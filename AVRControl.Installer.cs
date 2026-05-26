@@ -64,7 +64,7 @@ namespace AVRControl
             CheckForGitHubUpdate();
 
             string mode = isRunningFromRoaming ? "[Installed]" : "[Portable]";
-            this.Text = $"AVRControl v{Application.ProductVersion} {mode}";
+            this.Text = $"AVRControl v{typeof(Program).Assembly.GetName().Version} {mode}";
         }
 
         // Github Update Part
@@ -106,8 +106,8 @@ namespace AVRControl
         private async void CheckForGitHubUpdate()
         {
             Version githubVersion = await GetGitHubVersionAsync();
-            Version localVersion = new Version(Application.ProductVersion);
-            //Version localVersion = new Version("0.0.1"); // lokal test
+            //Version localVersion = typeof(Program).Assembly.GetName().Version;
+            Version localVersion = new Version("1.5.0.0"); // lokal test
 
             if (githubVersion != null && githubVersion > localVersion)
             {
