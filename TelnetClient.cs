@@ -27,25 +27,25 @@ using System.Xml.Linq;
 
 public class AsyncTelnetClient
 {
-    private TcpClient _client;
-    private NetworkStream _stream;
+    private TcpClient? _client = null!;
+    private NetworkStream? _stream = null!;
     private bool _shouldReconnect = false;
     private bool _isConnecting = false;
     private DateTime _lastResponseTime = DateTime.UtcNow;
     public bool Initialized { get; private set; } = false;
 
-    private CancellationTokenSource _cts;
+    private CancellationTokenSource? _cts;
 
-    private string _IP;
+    private string _IP = null!;
 
     public int ConnectedPort { get; private set; }
 
     public bool DoStatusUpdates { get; set; }
 
-    public event Action<string> DataReceived;
-    public event Action<string> ErrorOccurred;
-    public event Action<string> StatusChanged;
-   
+    public event Action<string>? DataReceived;
+    public event Action<string>? ErrorOccurred;
+    public event Action<string>? StatusChanged;
+
     // XML Reader Part
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public async Task<string> ReadXMLDeviceInfoAsync()
@@ -64,7 +64,7 @@ public class AsyncTelnetClient
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(liteXmlString);
 
-                var rawvalue = xmlDoc.DocumentElement.SelectSingleNode("//InputFuncSelect")?.InnerText;
+                var rawvalue = xmlDoc.DocumentElement?.SelectSingleNode("//InputFuncSelect")?.InnerText;
                 if (string.IsNullOrEmpty(rawvalue)) return "HEOS";
 
                 if (rawvalue == "NET") return "HEOS";

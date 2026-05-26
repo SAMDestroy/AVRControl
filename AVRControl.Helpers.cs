@@ -24,7 +24,7 @@ namespace AVRControl
 {
     public partial class AVRControl : Form
     {
-        private void timerProgress_Tick(object sender, EventArgs e)
+        private void timerProgress_Tick(object? sender, EventArgs e)
         {
             if (!IsAVROn) { return; }
 

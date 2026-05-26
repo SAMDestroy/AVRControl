@@ -28,9 +28,11 @@ namespace AVRControl
 
         private string roamingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AVRControl", "AVRControl.exe");
         private bool isRunningFromRoaming = false;
-        private string currentConfigPath;
+        private string currentConfigPath = string.Empty;
 
-        private readonly string config = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\AVRControl.cfg";
+        private static readonly HttpClient _httpClient = new HttpClient();
+
+        private readonly string config = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AVRControl.cfg");
         private bool _muted = false;
         private int CurVol = 10;
         private bool IsAVROn = false;
@@ -129,8 +131,8 @@ namespace AVRControl
 
             try
             {
-                string savedIP = ConfigManager.GetValue(currentConfigPath, "IP");
-                string savedTray = ConfigManager.GetValue(currentConfigPath, "Systray");
+                string? savedIP = ConfigManager.GetValue(currentConfigPath, "IP");
+                string? savedTray = ConfigManager.GetValue(currentConfigPath, "Systray");
 
                 if (savedIP != null)
                 {
@@ -473,7 +475,7 @@ namespace AVRControl
         }
         private void btnInstall_Click(object sender, EventArgs e)
         {
-            string targetDir = Path.GetDirectoryName(roamingPath);
+            string? targetDir = Path.GetDirectoryName(roamingPath);
             string registryPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
 
             try
@@ -498,12 +500,15 @@ namespace AVRControl
                         return;
                     }
 
-                    if (!Directory.Exists(targetDir))
-                        Directory.CreateDirectory(targetDir);
+                    if (!string.IsNullOrEmpty(targetDir))
+                    {
+                        if (!Directory.Exists(targetDir))
+                            Directory.CreateDirectory(targetDir);
+                    }
 
                     System.IO.File.Copy(Application.ExecutablePath, roamingPath, true);
 
-                    string targetCfg = Path.Combine(targetDir, "AVRControl.cfg");
+                    string targetCfg = Path.Combine(targetDir!, "AVRControl.cfg");
                     if (!System.IO.File.Exists(targetCfg))
                     {
                         currentConfigPath = targetCfg;
@@ -512,7 +517,7 @@ namespace AVRControl
                         ConfigManager.SaveValue(currentConfigPath, "Systray", "TRUE");
                     }
 
-                    using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, true))
+                    using (RegistryKey? key = Registry.CurrentUser.OpenSubKey(registryPath, true))
                     {
                         if (key != null) key.SetValue("AVRControl", $"\"{roamingPath}\"");
                     }
@@ -525,7 +530,7 @@ namespace AVRControl
                 }
                 else if (btnInstall.Text == "Uninstall")
                 {
-                    using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, true))
+                    using (RegistryKey? key = Registry.CurrentUser.OpenSubKey(registryPath, true))
                     {
                         if (key != null) key.DeleteValue("AVRControl", false);
                     }

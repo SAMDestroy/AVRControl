@@ -26,12 +26,12 @@ namespace AVRControl
         {
             if (isRunningFromRoaming)
             {
-                return Path.Combine(Path.GetDirectoryName(roamingPath), "AVRControl.cfg");
+                return Path.Combine(Path.GetDirectoryName(roamingPath)!, "AVRControl.cfg");
             }
             return Path.Combine(Application.StartupPath, "AVRControl.cfg");
         }
 
-        public static string GetValue(string configPath, string key)
+        public static string? GetValue(string configPath, string key)
         {
             if (!File.Exists(configPath)) return null;
 
@@ -48,7 +48,7 @@ namespace AVRControl
 
         public static void SaveValue(string configPath, string key, string value)
         {
-            string dir = Path.GetDirectoryName(configPath);
+            string? dir = Path.GetDirectoryName(configPath);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 

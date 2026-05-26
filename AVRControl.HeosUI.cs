@@ -31,16 +31,15 @@ namespace AVRControl
 
             try
             {
-                using (var client = new System.Net.WebClient())
+                // Daten herunterladen
+                byte[] imageBytes = await _httpClient.GetByteArrayAsync(url);
+
+                using (var ms = new System.IO.MemoryStream(imageBytes))
                 {
-                    byte[] imageBytes = await client.DownloadDataTaskAsync(url);
-                    using (var ms = new System.IO.MemoryStream(imageBytes))
-                    {
-                        this.Invoke((MethodInvoker)delegate {
-                            pbAlbumArt.Image = Image.FromStream(ms);
-                            pbAlbumArt.SizeMode = PictureBoxSizeMode.Zoom;
-                        });
-                    }
+                    // Da wir 'await' nutzen, springt .NET automatisch zurück in den UI-Thread.
+                    // Ein 'this.Invoke' ist hier meistens gar nicht mehr nötig!
+                    pbAlbumArt.Image = Image.FromStream(ms);
+                    pbAlbumArt.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
             catch (Exception ex)

@@ -34,7 +34,7 @@ namespace AVRControl
 
             isRunningFromRoaming = Application.ExecutablePath.Equals(roamingPath, StringComparison.OrdinalIgnoreCase);
 
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, false))
+            using (RegistryKey? key = Registry.CurrentUser.OpenSubKey(registryPath, false))
             {
                 if (key != null)
                 {
@@ -69,7 +69,7 @@ namespace AVRControl
 
         // Github Update Part
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private async Task<Version> GetGitHubVersionAsync()
+        private async Task<Version?> GetGitHubVersionAsync()
         {
             string url = "https://api.github.com/repos/SAMDestroy/AVRControl/releases/latest";
 
@@ -105,7 +105,7 @@ namespace AVRControl
         }
         private async void CheckForGitHubUpdate()
         {
-            Version githubVersion = await GetGitHubVersionAsync();
+            Version? githubVersion = await GetGitHubVersionAsync();
             //Version localVersion = typeof(Program).Assembly.GetName().Version;
             Version localVersion = new Version("1.5.0.0"); // lokal test
 
