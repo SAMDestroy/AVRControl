@@ -11,7 +11,7 @@
 		<ApplicationIcon>AVRControl.ico</ApplicationIcon>
 		<Deterministic>true</Deterministic>
 
-		<Version>1.5.2</Version>
+		<Version>1.5.3</Version>
 		<Authors>SAMDestroy</Authors>
 		<Company>SAMDestroy</Company>
 		<Product>AVRControl</Product>
