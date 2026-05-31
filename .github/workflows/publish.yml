@@ -1,0 +1,101 @@
+name: AVRControl Auto Release
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check-version-and-release:
+    runs-on: windows-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      is_new: ${{ steps.check_tag.outputs.is_new }}
+      is_draft: ${{ steps.check_trigger.outputs.is_draft }}
+    
+    steps:
+    - name: Code auschecken
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Versionsnummer aus .csproj auslesen
+      id: get_version
+      shell: pwsh
+      run: |
+        [xml]$csproj = Get-Content AVRControl.csproj
+        $version = $csproj.Project.PropertyGroup.Version
+        echo "version=$version" >> $env:GITHUB_OUTPUT
+
+    - name: Prüfen ob manueller Test oder echter Push
+      id: check_trigger
+      run: |
+        if ("${{ github.event_name }}" -eq "workflow_dispatch") {
+          echo "is_draft=true" >> $env:GITHUB_OUTPUT
+        } else {
+          echo "is_draft=false" >> $env:GITHUB_OUTPUT
+        }
+
+    - name: Prüfen ob Version bereits existiert
+      id: check_tag
+      shell: pwsh
+      run: |
+        $tag = "v${{ steps.get_version.outputs.version }}"
+        $exists = git tag -l $tag
+        # Wenn es ein manueller Testlauf ist, erzwingen wir das Weitermachen
+        if ($exists -and "${{ github.event_name }}" -ne "workflow_dispatch") {
+          echo "is_new=false" >> $env:GITHUB_OUTPUT
+        } else {
+          echo "is_new=true" >> $env:GITHUB_OUTPUT
+        }
+
+    - name: GitHub Release erstellen (Echt oder Draft)
+      if: steps.check_tag.outputs.is_new == 'true'
+      id: create_release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ steps.get_version.outputs.version }}
+        name: Release v${{ steps.get_version.outputs.version }}
+        draft: ${{ steps.check_trigger.outputs.is_draft }}
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-upload:
+    needs: check-version-and-release
+    if: needs.check-version-and-release.outputs.is_new == 'true'
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        profile: [Win-Arm64-Standalone, Win-x64-Dependent, Win-x64-Standalone]
+
+    steps:
+    - name: Code auschecken
+      uses: actions/checkout@v4
+
+    - name: .NET 10 SDK bereitstellen
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.x'
+
+    - name: Single EXE via Profil bauen
+      run: dotnet publish AVRControl.csproj -c Release /p:PublishProfile=${{ matrix.profile }}
+
+    - name: Dateien formatiert zippen
+      shell: pwsh
+      run: |
+        # Erstellt den sauberen Namen: AVRControl-v1.5.1.0-ProfilName.zip
+        $zipName = "AVRControl-v${{ needs.check-version-and-release.outputs.version }}-${{ matrix.profile }}.zip"
+        Compress-Archive -Path "**/bin/Release/net9.0-windows/publish/*" -DestinationPath "$zipName"
+
+    - name: ZIP-Archiv an das Release anhängen
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ needs.check-version-and-release.outputs.version }}
+        files: AVRControl-v${{ needs.check-version-and-release.outputs.version }}-${{ matrix.profile }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
