@@ -105,7 +105,7 @@ jobs:
         $changelog = ""
         if (Test-Path "README.md") {
           $readme = Get-Content "README.md" -Raw
-          if ($readme -match "(?s)---(.*)") {
+          if ($readme -match "(?s)<hr>(.*)") {
             $changelog = $Matches[1].Trim()
           }
         }
