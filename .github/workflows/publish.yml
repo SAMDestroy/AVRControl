@@ -6,26 +6,24 @@ env:
 on:
   push:
     branches: [ master ]
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  check-version-and-release:
+  check-version:
     runs-on: windows-latest
     outputs:
       version: ${{ steps.get_version.outputs.version }}
       is_new: ${{ steps.check_tag.outputs.is_new }}
-      is_draft: ${{ steps.check_trigger.outputs.is_draft }}
     
     steps:
-    - name: Code auschecken
+    - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    - name: Versionsnummer aus .csproj auslesen
+    - name: Read version from csproj
       id: get_version
       shell: pwsh
       run: |
@@ -33,43 +31,22 @@ jobs:
         $version = $csproj.Project.PropertyGroup.Version
         echo "version=$version" >> $env:GITHUB_OUTPUT
 
-    - name: Prüfen ob manueller Test oder echter Push
-      id: check_trigger
-      run: |
-        if ("${{ github.event_name }}" -eq "workflow_dispatch") {
-          echo "is_draft=true" >> $env:GITHUB_OUTPUT
-        } else {
-          echo "is_draft=false" >> $env:GITHUB_OUTPUT
-        }
-
-    - name: Prüfen ob Version bereits existiert
+    - name: Check if version exists
       id: check_tag
       shell: pwsh
       run: |
         $tag = "v${{ steps.get_version.outputs.version }}"
         $exists = git tag -l $tag
-        # Wenn es ein manueller Testlauf ist, erzwingen wir das Weitermachen
-        if ($exists -and "${{ github.event_name }}" -ne "workflow_dispatch") {
+        if ($exists) {
           echo "is_new=false" >> $env:GITHUB_OUTPUT
+          echo "Version $tag already exists. Skipping build."
         } else {
           echo "is_new=true" >> $env:GITHUB_OUTPUT
         }
 
-    - name: GitHub Release erstellen (Echt oder Draft)
-      if: steps.check_tag.outputs.is_new == 'true'
-      id: create_release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: v${{ steps.get_version.outputs.version }}
-        name: Release v${{ steps.get_version.outputs.version }}
-        draft: ${{ steps.check_trigger.outputs.is_draft }}
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  build-and-upload:
-    needs: check-version-and-release
-    if: needs.check-version-and-release.outputs.is_new == 'true'
+  build-and-release:
+    needs: check-version
+    if: needs.check-version.outputs.is_new == 'true'
     runs-on: windows-latest
     
     strategy:
@@ -77,28 +54,73 @@ jobs:
         profile: [Win-Arm64-Standalone, Win-x64-Dependent, Win-x64-Standalone]
 
     steps:
-    - name: Code auschecken
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: .NET 10 SDK bereitstellen
+    - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.x'
+        dotnet-version: '10.x'
 
-    - name: Single EXE via Profil bauen
+    - name: Publish single EXE via profile
       run: dotnet publish AVRControl.csproj -c Release /p:PublishProfile=${{ matrix.profile }}
 
-    - name: Dateien formatiert zippen
+    - name: Zip release files
       shell: pwsh
       run: |
-        # Erstellt den sauberen Namen: AVRControl-v1.5.1.0-ProfilName.zip
-        $zipName = "AVRControl-v${{ needs.check-version-and-release.outputs.version }}-${{ matrix.profile }}.zip"
-        Compress-Archive -Path "**/bin/Release/net9.0-windows/publish/*" -DestinationPath "$zipName"
+        $zipName = "AVRControl-v${{ needs.check-version.outputs.version }}-${{ matrix.profile }}.zip"
+        Compress-Archive -Path "**/bin/Release/net10.0-windows7.0/publish/*" -DestinationPath "$zipName"
 
-    - name: ZIP-Archiv an das Release anhängen
+    - name: Compile dynamic release description
+      id: build_notes
+      shell: pwsh
+      run: |
+        $v = "${{ needs.check-version.outputs.version }}"
+        
+        $header = @'
+        📦 Which version should I download?
+        To make it easy for everyone, I provide three different versions of AVRControl. Choose the one that fits your system:
+
+        1. Standalone:
+        File: AVRControl-vVERSION-Win-x64-Standalone.zip
+        Who is it for? Everyone who wants to "just run it".
+        Pros: No need to install any .NET runtimes. It contains everything needed to run out of the box.
+        Cons: Larger download size (~60 MB).
+
+        2. Small / Lightweight:
+        File: AVRControl-vVERSION-Win-x64-Dependent.zip
+        Who is it for? Users who already have .NET 10 installed or want a tiny download.
+        Requirement:
+        You must have the [.NET 10 Desktop Runtime](https://microsoft.com) installed on your PC.
+        Pros: Ultra-small file size (< 1 MB).
+
+        3. ARM64 Native (For modern Tablets & Mobile PCs):
+        File: AVRControl-vVERSION-Win-Arm64-Standalone.zip
+        Who is it for? Users with ARM-based Windows devices (e.g., Surface Pro 11, Snapdragon X Elite laptops).
+        Pros: Runs natively on ARM hardware for best performance and battery life. No emulation needed.
+        '@
+
+        $header = $header.Replace("VERSION", $v)
+
+        $changelog = ""
+        if (Test-Path "README.md") {
+          $readme = Get-Content "README.md" -Raw
+          if ($readme -match "(?s)---(.*)") {
+            $changelog = $Matches[1].Trim()
+          }
+        }
+
+        $fullBody = $header + "`n`n" + $changelog
+        $fullBody | Out-File -FilePath "release_notes.txt" -Encoding utf8
+
+    - name: Create GitHub Release and upload ZIP
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v${{ needs.check-version-and-release.outputs.version }}
-        files: AVRControl-v${{ needs.check-version-and-release.outputs.version }}-${{ matrix.profile }}.zip
+        tag_name: v${{ needs.check-version.outputs.version }}
+        name: Release v${{ needs.check-version.outputs.version }}
+        body_path: release_notes.txt
+        draft: false
+        prerelease: false
+        files: AVRControl-v${{ needs.check-version.outputs.version }}-${{ matrix.profile }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace AVRControl
 {
-    public partial class AVRControl : Form
+    public partial class AVRControl
     {
         private void AVRControlsToggle(bool enabled)
         {

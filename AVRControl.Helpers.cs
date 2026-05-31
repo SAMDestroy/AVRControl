@@ -22,7 +22,7 @@ using System.Xml.Linq;
 
 namespace AVRControl
 {
-    public partial class AVRControl : Form
+    public partial class AVRControl
     {
         private void timerProgress_Tick(object? sender, EventArgs e)
         {

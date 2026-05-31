@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net9.0-windows</TargetFramework>
+		<TargetFramework>net10.0-windows7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -11,7 +11,7 @@
 		<ApplicationIcon>AVRControl.ico</ApplicationIcon>
 		<Deterministic>true</Deterministic>
 
-		<Version>1.5.1</Version>
+		<Version>1.5.2</Version>
 		<Authors>SAMDestroy</Authors>
 		<Company>SAMDestroy</Company>
 		<Product>AVRControl</Product>
@@ -21,12 +21,10 @@
 		<ComVisible>false</ComVisible>
 		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<EmbeddedResource Update="Properties\Resources.resx">
-			<CustomToolNamespace>Properties</CustomToolNamespace>
-		</EmbeddedResource>
+		<Compile Update="AVRControl.*.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="AVRControl.cs" />
 	</ItemGroup>
-
-
 </Project>

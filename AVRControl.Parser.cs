@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace AVRControl
 {
-    public partial class AVRControl : Form
+    public partial class AVRControl
     {
         // AVR Telnet Status Loop
         private void OnStatusReceived(string data)

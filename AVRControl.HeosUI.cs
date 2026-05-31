@@ -19,7 +19,7 @@ using System.Drawing;
 
 namespace AVRControl
 {
-    public partial class AVRControl : Form
+    public partial class AVRControl
     {
         private async Task LoadAlbumArtAsync(string url)
         {

@@ -21,7 +21,7 @@ using System.Windows.Forms;
 
 namespace AVRControl
 {
-    public partial class AVRControl : Form
+    public partial class AVRControl
     {
         private void RefreshInstallState()
         {
@@ -106,8 +106,8 @@ namespace AVRControl
         private async void CheckForGitHubUpdate()
         {
             Version? githubVersion = await GetGitHubVersionAsync();
-            //Version localVersion = typeof(Program).Assembly.GetName().Version;
-            Version localVersion = new Version("1.5.0.0"); // lokal test
+            Version? localVersion = typeof(Program).Assembly.GetName().Version;
+            //Version localVersion = new Version("1.5.0.0"); // lokal test
 
             if (githubVersion != null && githubVersion > localVersion)
             {

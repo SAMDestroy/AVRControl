@@ -33,8 +33,8 @@ No installation required.
 <hr>
 Changelog
 
-🚀 **AVRControl v1.5.1.0 – The .NET 9 Modernization Update**
-* This major update marks the transition to **.NET 9**, bringing significant performance gains and a completely overhauled deployment system.
+🚀 **AVRControl v1.5.2.0 – The .NET 10 Upgrade**
+* This major update marks the transition to **.NET 10**, bringing significant performance gains and a completely overhauled deployment system.
 * Beyond the "Self-Healing UI," modernized app’s DNA to ensure it runs natively and flawlessly on the latest Windows hardware.
 
 ✨ **New Features**
@@ -42,13 +42,13 @@ Changelog
 No more emulation – just pure, efficient performance.
 * **Universal Deployment Options:** Two ways to run AVRControl:
 * **Standalone (Zero-Install):** Everything included. Runs even if .NET is not installed on your PC.
-* **Lightweight (Framework-Dependent):** A tiny, ultra-optimized executable for users who already have the .NET 9 Runtime.
+* **Lightweight (Framework-Dependent):** A tiny, ultra-optimized executable for users who already have the .NET 10 Runtime.
 * **Self-Healing UI Architecture:** The playback interface now features "Instant-Recovery" logic. If the app wakes up from standby, it actively heals the timeline and metadata within milliseconds of reconnection.
 Persistent Service Guardian: Correctly maintains source metadata (Spotify/TuneIn) instead of allowing the AVR to overwrite them with a generic "HEOS" label.
 
 🛠️ **Technical Improvements**
 
-**.NET 9 SDK Migration:**
+**.NET 10 SDK Migration:**
 * Fully migrated to the modern SDK-style project system.
 * Removed legacy AssemblyInfo.cs dependencies and centralized all metadata, resulting in a cleaner, faster-compiling codebase.
 
@@ -68,7 +68,7 @@ Persistent Service Guardian: Correctly maintains source metadata (Spotify/TuneIn
 
 **Developer Note:**
 
-* v1.5.1.0 is not just an update; it's a foundation for the future. By moving to .NET 9 and adopting a native 64-bit/ARM64 architecture,
+* v1.5.2.0 is not just an update; it's a foundation for the future. By moving to .NET 10 and adopting a native 64-bit/ARM64 architecture,
 * AVRControl is now faster and more reliable than ever. Whether you're on a high-end workstation or a mobile ARM tablet, your AVR control remains rock solid.
 
 **License**
