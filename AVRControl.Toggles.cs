@@ -12,10 +12,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace AVRControl
 {
     public partial class AVRControl
@@ -38,6 +34,7 @@ namespace AVRControl
             this.PowerToggle.Enabled = true;
             this.lblTabMain.Enabled = enabled;
             this.lblTabSpeaker.Enabled = enabled;
+            this.lblTabModes.Enabled = enabled;
 
             if (!enabled)
             {
@@ -47,9 +44,11 @@ namespace AVRControl
 
                     lblTabMain.BackColor = Color.SteelBlue; // Aktiv
                     lblTabSpeaker.BackColor = Color.Gray;   // Inaktiv
+                    lblTabModes.BackColor = Color.Gray;   // Inaktiv
                 }
 
                 this.AVRSource.Text = "STANDBY";
+                this.lblCurrentSource.Text = "STANDBY";
                 this.AVRSourceAudio.Text = "";
                 this.AVRSoundMode.Text = "";
                 this.ShowVolume.Text = "OFF";
@@ -73,6 +72,7 @@ namespace AVRControl
                 this.PowerToggle.FlatAppearance.CheckedBackColor = Color.Green;
                 this.PowerToggle.Text = "ON";
                 this.AVRSource.Text = "ON";
+                this.lblCurrentSource.Text = "ON";
 
                 this.SliderVolume.Value = CurVol;
                 this.ShowVolume.Text = "Vol: " + CurVol.ToString();
@@ -155,6 +155,5 @@ namespace AVRControl
                 this.btnHeosPlayRepeatOne.BackColor = System.Drawing.Color.DarkGray;
             }
         }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -13,33 +13,27 @@ GNU General Public License for more details.
 */
 
 using Microsoft.Win32;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace AVRControl
 {
     public partial class AVRControl : Form
     {
-        private Icon _appIcon;
+        private readonly Icon _appIcon;
 
-        private string roamingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AVRControl", "AVRControl.exe");
+        private readonly string roamingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AVRControl", "AVRControl.exe");
         private bool isRunningFromRoaming = false;
         private string currentConfigPath = string.Empty;
 
-        private static readonly HttpClient _httpClient = new HttpClient();
+        private static readonly HttpClient _httpClient = new();
 
         private readonly string config = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AVRControl.cfg");
         private bool _muted = false;
         private int CurVol = 10;
         private bool IsAVROn = false;
         private bool isScrolling = false;
-        private System.Windows.Forms.Timer timerProgress;
+        private readonly System.Windows.Forms.Timer timerProgress;
         private int _localCurPos = 0;
-        private int _maxDuration = 0;        
+        private int _maxDuration = 0;
         private bool _songChangePending = false;
 
         private string _lastHeosService = "";
@@ -55,9 +49,9 @@ namespace AVRControl
         private int _deltaSub2 = 0;
         private bool _masterMoving = false;
 
-        private AsyncTelnetClient _telnet;
+        private readonly AsyncTelnetClient _telnet;
 
-        private AsyncTelnetClient _heosTelnet;
+        private readonly AsyncTelnetClient _heosTelnet;
         private string _activePid = "";
 
         public AVRControl()
@@ -80,13 +74,12 @@ namespace AVRControl
             _heosTelnet = new AsyncTelnetClient();
             _heosTelnet.DataReceived += OnHeosDataReceived;
 
-            timerProgress = new System.Windows.Forms.Timer();
-            timerProgress.Interval = 100;
+            timerProgress = new System.Windows.Forms.Timer
+            {
+                Interval = 100
+            };
             timerProgress.Tick += timerProgress_Tick;
         }
-        // Form Init Part
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///
         protected override void SetVisibleCore(bool value)
         {
             if (!this.IsHandleCreated && value && cbSysTray.Checked)
@@ -102,7 +95,7 @@ namespace AVRControl
             {
                 this.ShowInTaskbar = false;
 
-                if (this.Icon != null) this.Icon.Dispose();
+                this.Icon?.Dispose();
                 this.Icon = (Icon)_appIcon.Clone();
 
                 this.ShowInTaskbar = true;
@@ -179,12 +172,39 @@ namespace AVRControl
                 System.Diagnostics.Debug.WriteLine("Fehler in LoadDevice: " + ex.Message);
             }
         }
-        // Form Init Part END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void UpdateTabButtonVisuals(Label activeLabel)
+        {
+            lblTabMain.BackColor = Color.Gray;
+            lblTabSpeaker.BackColor = Color.Gray;
+            lblTabModes.BackColor = Color.Gray;
 
-      
-        // Control Events Part
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            activeLabel.BackColor = Color.SteelBlue;
+        }
+        private async void rbAudioMode_Click(object sender, EventArgs e)
+        {
+            RadioButton clickedButton = (RadioButton)sender;
+
+            var audioModeBoxes = new List<GroupBox> { grpStandardModes, grpPuristModes, grpDspModes };
+
+            foreach (GroupBox box in audioModeBoxes)
+            {
+                foreach (Control subControl in box.Controls)
+                {
+                    if (subControl is RadioButton rb && rb != clickedButton)
+                    {
+                        rb.Checked = false;
+                    }
+                }
+            }
+
+            clickedButton.Checked = true;
+
+            if (_telnet.Initialized && clickedButton.Tag != null)
+            {
+                string telnetCmd = clickedButton.Tag.ToString()!;
+                await _telnet.SendAsync($"MS{telnetCmd}\r");
+            }
+        }
         private void BtnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbIP.Text))
@@ -209,7 +229,7 @@ namespace AVRControl
         }
         private async void BtnVolUp_Click(object sender, EventArgs e)
         {
-            await _telnet.SendAsync("MV"+ (CurVol+1));
+            await _telnet.SendAsync("MV" + (CurVol + 1));
             _muted = false;
         }
         private void BtnVolUp_MouseDown(object sender, EventArgs e)
@@ -223,12 +243,12 @@ namespace AVRControl
             this.btnVolUp.BackColor = System.Drawing.Color.Transparent;
         }
         private void BtnVolUp_MouseEnter(object sender, EventArgs e)
-        {            
+        {
             this.btnVolUp.BackColor = System.Drawing.Color.Gray;
         }
         private async void BtnVolDown_Click(object sender, EventArgs e)
         {
-            await _telnet.SendAsync("MV"+(CurVol-1));
+            await _telnet.SendAsync("MV" + (CurVol - 1));
             _muted = false;
         }
         private void BtnVolDown_MouseDown(object sender, EventArgs e)
@@ -261,7 +281,7 @@ namespace AVRControl
         {
             isScrolling = false;
             _ = _telnet.SendAsync("MV?");
-        }       
+        }
         private async void PowerToggle_Click(object sender, EventArgs e)
         {
             if (!IsAVROn)
@@ -270,7 +290,7 @@ namespace AVRControl
             }
             else
                 await _telnet.SendAsync("ZMOFF");
-        }       
+        }
         private async void BtnToggleMute_Click(object sender, EventArgs e)
         {
             this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -311,9 +331,9 @@ namespace AVRControl
         {
             if (_heosTelnet != null && _heosTelnet.IsConnected() && !string.IsNullOrEmpty(_activePid))
             {
-                string cmd = "";
+                string cmd;
                 if (!IsHeosPlayPause)
-                {                    
+                {
                     IsHeosPlayPause = true;
                     cmd = $"heos://player/set_play_state?pid={_activePid}&state=pause";
                 }
@@ -519,7 +539,7 @@ namespace AVRControl
 
                     using (RegistryKey? key = Registry.CurrentUser.OpenSubKey(registryPath, true))
                     {
-                        if (key != null) key.SetValue("AVRControl", $"\"{roamingPath}\"");
+                        key?.SetValue("AVRControl", $"\"{roamingPath}\"");
                     }
 
                     string msg = (btnInstall.Text == "Update") ? "Update successfully!" : "Installation successfully!";
@@ -532,7 +552,7 @@ namespace AVRControl
                 {
                     using (RegistryKey? key = Registry.CurrentUser.OpenSubKey(registryPath, true))
                     {
-                        if (key != null) key.DeleteValue("AVRControl", false);
+                        key?.DeleteValue("AVRControl", false);
                     }
 
                     if (!isRunningFromRoaming && System.IO.File.Exists(roamingPath))
@@ -549,11 +569,6 @@ namespace AVRControl
                 MessageBox.Show("Error while installing: " + ex.Message, "Error");
             }
         }
-        // Control Events END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // Form Events Part
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AVRControl_Resize(object sender, EventArgs e)
         {
             if (cbSysTray.Checked && this.WindowState == FormWindowState.Minimized)
@@ -574,8 +589,7 @@ namespace AVRControl
             _telnet.Stop();
             _heosTelnet.Stop();
 
-            if (notifyIcon1 != null)
-                notifyIcon1.Dispose();
+            notifyIcon1?.Dispose();
 
             SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }
@@ -594,20 +608,17 @@ namespace AVRControl
             }
             else
             {
-                if (this.Icon != null) this.Icon.Dispose();
+                this.Icon?.Dispose();
                 this.Icon = (Icon)_appIcon.Clone();
 
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
                 this.Activate();
             }
-        }        
+        }
         private void cbSysTray_CheckedChanged(object sender, EventArgs e)
         {
-            if (notifyIcon1 != null)
-            {
-                notifyIcon1.Visible = cbSysTray.Checked;
-            }
+            notifyIcon1?.Visible = cbSysTray.Checked;
 
             if (!cbSysTray.Focused)
                 return;
@@ -659,23 +670,20 @@ namespace AVRControl
         private async void lblTabSpeaker_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 1;
-
-            lblTabMain.BackColor = Color.Gray;    // Inaktiv
-            lblTabSpeaker.BackColor = Color.SteelBlue; // Aktiv
+            UpdateTabButtonVisuals(lblTabSpeaker);
 
             if (_telnet.Initialized)
             {
                 await _telnet.SendAsync("CV?\r");
             }
-           
+
             this.ActiveControl = null;
         }
         private void lblTabMain_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 0;
 
-            lblTabMain.BackColor = Color.SteelBlue;    // Aktiv
-            lblTabSpeaker.BackColor = Color.Gray; // Inaktiv
+            UpdateTabButtonVisuals(lblTabMain);
 
             this.ActiveControl = null;
         }
@@ -730,7 +738,7 @@ namespace AVRControl
 
             _ = _telnet.SendAsync("CV?\r");
 
-            isScrolling = false;           
+            isScrolling = false;
         }
         private async void tbSpeakerCenter_Scroll(object sender, EventArgs e)
         {
@@ -825,7 +833,7 @@ namespace AVRControl
             if ((DateTime.Now - _lastSpeakerSend).TotalMilliseconds > 50)
             {
                 _lastSpeakerSend = DateTime.Now;
-                
+
                 await _telnet.SendAsync($"CVSW {tbSpeakerSubwoofer1.Value}\r");
             }
         }
@@ -936,7 +944,7 @@ namespace AVRControl
             this.lbSpeakerSurroundRShowValue.Text = "0.0 dB";
             this.lbSpeakerSubMasterShowValue.Text = "0.0 dB";
 
-            string[] commands = { "CVFL", "CVFR", "CVC", "CVSW", "CVSW2", "CVSL", "CVSR" };
+            string[] commands = ["CVFL", "CVFR", "CVC", "CVSW", "CVSW2", "CVSL", "CVSR"];
             int neutralValue = 50;
 
             try
@@ -957,7 +965,18 @@ namespace AVRControl
                 isScrolling = false;
             }
         }
-        // Form Events END ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private async void lblTabModes_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 2;
+            UpdateTabButtonVisuals(lblTabModes);
+
+            if (_telnet.Initialized)
+            {
+                await _telnet.SendAsync("MS?\r");
+            }
+
+            this.ActiveControl = null;
+        }
     }
 }

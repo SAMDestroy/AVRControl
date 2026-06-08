@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net10.0-windows7.0</TargetFramework>
@@ -10,21 +9,30 @@
 		<AssemblyName>AVRControl</AssemblyName>
 		<ApplicationIcon>AVRControl.ico</ApplicationIcon>
 		<Deterministic>true</Deterministic>
-
-		<Version>1.5.3</Version>
+		<Version>1.6.0.0</Version>
 		<Authors>SAMDestroy</Authors>
 		<Company>SAMDestroy</Company>
 		<Product>AVRControl</Product>
 		<Description>Control your Denon or Marantz AVR via Telnet</Description>
 		<Copyright>Copyright © 2026 SAMDestroy</Copyright>
-
 		<ComVisible>false</ComVisible>
 		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Update="AVRControl.*.cs">
-			<SubType>Code</SubType>
+			<DependentUpon>AVRControl.cs</DependentUpon>
 		</Compile>
-		<Compile Update="AVRControl.cs" />
+		<Compile Update="AVRControl.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<EmbeddedResource Update="AVRControl.resx">
+			<DependentUpon>AVRControl.Designer.cs</DependentUpon>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <EditorConfigFiles Remove="C:\Users\octal\source\repos\AVRControl\.editorconfig" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="C:\Users\octal\source\repos\AVRControl\.editorconfig" />
 	</ItemGroup>
 </Project>

@@ -12,12 +12,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-
 namespace AVRControl
 {
     public static class ConfigManager
@@ -30,7 +24,6 @@ namespace AVRControl
             }
             return Path.Combine(Application.StartupPath, "AVRControl.cfg");
         }
-
         public static string? GetValue(string configPath, string key)
         {
             if (!File.Exists(configPath)) return null;
@@ -40,12 +33,11 @@ namespace AVRControl
             {
                 if (line.StartsWith(key + ":", StringComparison.OrdinalIgnoreCase))
                 {
-                    return line.Substring(key.Length + 1).Trim();
+                    return line[(key.Length + 1)..].Trim();
                 }
             }
             return null;
         }
-
         public static void SaveValue(string configPath, string key, string value)
         {
             string? dir = Path.GetDirectoryName(configPath);
@@ -53,8 +45,8 @@ namespace AVRControl
                 Directory.CreateDirectory(dir);
 
             List<string> lines = File.Exists(configPath)
-                ? File.ReadAllLines(configPath).ToList()
-                : new List<string>();
+                ? [.. File.ReadAllLines(configPath)]
+                : [];
 
             bool found = false;
             for (int i = 0; i < lines.Count; i++)
@@ -71,7 +63,5 @@ namespace AVRControl
 
             File.WriteAllLines(configPath, lines);
         }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

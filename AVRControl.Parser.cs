@@ -12,11 +12,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
-using System;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-
 namespace AVRControl
 {
     public partial class AVRControl
@@ -61,7 +56,7 @@ namespace AVRControl
                 return;
             }
 
-           //  Console.WriteLine($"NORMALDATA: {data}");
+            //  Console.WriteLine($"NORMALDATA: {data}");
 
             if (data.StartsWith("MVMAX")) // We dont need it
             {
@@ -93,7 +88,7 @@ namespace AVRControl
                 await _telnet.SendAsync("MS?");
 
                 AVRControlsToggle(true);
-            }           
+            }
 
             if (IsAVROn)
             {
@@ -122,11 +117,13 @@ namespace AVRControl
                             this.AVRSource.Text == "HEOS" || string.IsNullOrEmpty(this.AVRSource.Text))
                         {
                             this.AVRSource.Text = "HEOS";
+                            this.lblCurrentSource.Text = "HEOS";
                         }
 
                         if (!string.IsNullOrEmpty(_lastHeosService))
                         {
                             this.AVRSource.Text = _lastHeosService;
+                            this.lblCurrentSource.Text = _lastHeosService;
                         }
 
                         if (!_heosTelnet.IsConnected())
@@ -148,6 +145,7 @@ namespace AVRControl
                         _lastHeosService = "";
 
                         this.AVRSource.Text = xmlSource;
+                        this.lblCurrentSource.Text = xmlSource;
                         this.lbConnectStatus.Text = "Connected!";
 
                         StopHeosTimeline();
@@ -162,12 +160,20 @@ namespace AVRControl
 
                 else if (data.StartsWith("SYSDA"))
                 {
-                    this.AVRSourceAudio.Text = data.Substring(6, data.Length - 6);
+                    string modeText = data[6..];
+                    this.AVRSourceAudio.Text = modeText;
+                    this.lblCurrentSourceAudio.Text = modeText;
                 }
                 else if (data.StartsWith("MS"))
                 {
-                    this.AVRSoundMode.Text = data.Substring(2, data.Length - 2);
+                    string modeText = data[2..].Trim();
+
+                    this.AVRSoundMode.Text = modeText;
+                    this.lblCurrentAudioMode.Text = modeText;
+
+                    SyncAudioModeRadioButtons(modeText);
                 }
+
                 else if (data.Contains("MUON"))
                 {
                     _muted = true;
@@ -195,7 +201,7 @@ namespace AVRControl
 
                 else if (data.Contains("CV") && !isScrolling && !_masterMoving)
                 {
-                    string[] lines = data.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] lines = data.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (string line in lines)
                     {
@@ -242,7 +248,7 @@ namespace AVRControl
                     this.lbHeosAVRID_Data.Text = neuePid;
                     this.lbHeosAVRName_Data.Text = AVRName;
                     this.lbHeosAVRVersion_Data.Text = AVRVersion;
-                    this.lbHeosAVRNetType_Data.Text = char.ToUpper(AVRNetwork[0]) + AVRNetwork.Substring(1);
+                    this.lbHeosAVRNetType_Data.Text = char.ToUpper(AVRNetwork[0]) + AVRNetwork[1..];
 
                     _activePid = neuePid;
                     //Console.WriteLine("PID dauerhaft gespeichert: " + _activePid);
@@ -340,6 +346,5 @@ namespace AVRControl
                 return;
             }
         }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -12,18 +12,87 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
-using System;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-
-
 namespace AVRControl
 {
     public partial class AVRControl
     {
+        private void SyncAudioModeRadioButtons(string modeText)
+        {
+            RadioButton? targetButton = null;
+
+            switch (modeText)
+            {
+                case "STEREO": targetButton = rbModeStereo; break;
+                case "M CH STEREO":
+                case "MULTI CH STEREO": targetButton = rbModeMultiChStereo; break;
+                case "DOLBY AUDIO-DSUR":
+                case "DOLBY DIGITAL":
+                case "DOLBY SURROUND": targetButton = rbModeDolby; break;
+
+                case "DOLBY AUDIO-TRUEHD+DSUR":
+                case "DOLBY AUDIO-TRUE HD+DSUR":
+                case "DOLBY TRUEHD+DSUR":
+                case "TRUEHD+DSUR": targetButton = rbModeTrueHd; break;
+
+                case "DOLBY AUDIO-DD+DSUR":
+                case "DOLBY DIGITAL PLUS":
+                case "DOLBY D+ +DSUR":
+                case "DOLBY D+ +NEURAL:X":
+                case "DOLBY D+": targetButton = rbModeDolbyDigitalPlus; break;
+
+                case "DOLBY ATMOS":
+                case "DOLBY AUDIO-TRUEHD":
+                case "DOLBY TRUEHD":
+                case "TRUEHD": targetButton = rbModeAtmos; break;
+
+                case "DTS HD MSTR":
+                case "DTS SURROUND": targetButton = rbModeDtsHd; break;
+
+                case "NEURAL:X":
+                case "DTS NEURAL:X": targetButton = rbModeDtsx; break;
+
+                case "DTS:X":
+                case "DTS:X MSTR": targetButton = rbModeDtsxNative; break;
+
+                case "AURO-3D":
+                case "AURO3D": targetButton = rbModeAuro3d; break;
+                case "GAME": targetButton = rbModeGame; break;
+                case "MULTI CH IN": targetButton = rbModeMultiChIn; break;
+                case "DIRECT": targetButton = rbModeDirect; break;
+                case "PURE DIRECT": targetButton = rbModePureDirect; break;
+                case "MONO": targetButton = rbModeMono; break;
+                case "JAZZ CLUB": targetButton = rbModeJazzClub; break;
+                case "ROCK ARENA": targetButton = rbModeRockArena; break;
+                case "MATRIX": targetButton = rbModeMatrix; break;
+                case "VIRTUAL": targetButton = rbModeVirtual; break;
+                default: break;
+            }
+
+            if (targetButton != null && !targetButton.Checked)
+            {
+                grpStandardModes.SuspendLayout();
+                grpPuristModes.SuspendLayout();
+                grpDspModes.SuspendLayout();
+
+                var audioModeBoxes = new List<GroupBox> { grpStandardModes, grpPuristModes, grpDspModes };
+                foreach (GroupBox box in audioModeBoxes)
+                {
+                    foreach (Control ctrl in box.Controls)
+                    {
+                        if (ctrl is RadioButton rb && rb != targetButton && rb.Checked)
+                        {
+                            rb.Checked = false;
+                        }
+                    }
+                }
+
+                targetButton.Checked = true;
+
+                grpStandardModes.ResumeLayout();
+                grpPuristModes.ResumeLayout();
+                grpDspModes.ResumeLayout();
+            }
+        }
         private void timerProgress_Tick(object? sender, EventArgs e)
         {
             if (!IsAVROn) { return; }
@@ -62,13 +131,14 @@ namespace AVRControl
 
             if (this.IsHandleCreated)
             {
-                this.Invoke((MethodInvoker)delegate {
+                this.Invoke((MethodInvoker)delegate
+                {
                     pnlProgressBar.Width = 0;
                     lblTime.Text = "00:00 / 00:00";
                 });
             }
         }
-        private string ExtractJsonValue(string data, string key)
+        private static string ExtractJsonValue(string data, string key)
         {
             if (string.IsNullOrEmpty(data) || string.IsNullOrEmpty(key)) return "";
 
@@ -85,7 +155,7 @@ namespace AVRControl
                     start = colonIdx + 1;
                     while (start < data.Length && (data[start] == ' ' || data[start] == '\"')) start++;
 
-                    end = data.IndexOfAny(new char[] { '\"', ',', '}', '&' }, start);
+                    end = data.IndexOfAny(['\"', ',', '}', '&'], start);
                 }
             }
 
@@ -96,20 +166,20 @@ namespace AVRControl
                 if (msgIdx != -1)
                 {
                     start = msgIdx + patternMsg.Length;
-                    end = data.IndexOfAny(new char[] { '&', '\"', '}', ' ' }, start);
+                    end = data.IndexOfAny(['&', '\"', '}', ' '], start);
                 }
             }
 
             if (start != -1)
             {
                 if (end == -1) end = data.Length;
-                string result = data.Substring(start, end - start).Trim();
+                string result = data[start..end].Trim();
                 return result.Replace("\"", "");
             }
 
             return "";
         }
-        private string FormatTime(int ms)
+        private static string FormatTime(int ms)
         {
             TimeSpan t = TimeSpan.FromMilliseconds(ms);
             return string.Format("{0:D2}:{1:D2}", t.Minutes + (t.Hours * 60), t.Seconds);
@@ -124,7 +194,7 @@ namespace AVRControl
             else if (data.Contains("CVSL")) { tbSpeakerSurroundL.Value = val; lbSpeakerSurroundLShowValue.Text = GetDBString(val); }
             else if (data.Contains("CVSR")) { tbSpeakerSurroundR.Value = val; lbSpeakerSurroundRShowValue.Text = GetDBString(val); }
         }
-        private string GetDBString(int value)
+        private static string GetDBString(int value)
         {
             double db = (value - 50) / 2.0;
 
@@ -134,6 +204,5 @@ namespace AVRControl
 
             return sign + db.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture) + " dB";
         }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

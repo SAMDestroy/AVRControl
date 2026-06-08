@@ -12,16 +12,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
-using System;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace AVRControl
 {
     static class Program
     {
-        private static Mutex mutex = new Mutex(true, "{AVRControl-9B2E-4D1C-8F1A}");
+        private static Mutex mutex = new(true, "{AVRControl-9B2E-4D1C-8F1A}");
 
         [DllImport("shell32.dll", SetLastError = true)]
         static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);

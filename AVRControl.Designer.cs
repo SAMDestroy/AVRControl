@@ -82,7 +82,7 @@ namespace AVRControl
             btnInstall = new Button();
             LogoPicture = new PictureBox();
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
+            tabMain = new TabPage();
             pnlProgressBack = new Panel();
             pnlProgressBar = new Panel();
             lbHeosAVRNetType_Data = new System.Windows.Forms.Label();
@@ -141,7 +141,7 @@ namespace AVRControl
             lbAVRSoundMode = new System.Windows.Forms.Label();
             AVRSoundMode = new System.Windows.Forms.Label();
             HeosTrackInfoAlbum = new System.Windows.Forms.Label();
-            tabPage2 = new TabPage();
+            tabSpeaker = new TabPage();
             btnResetSpeaker = new Button();
             lbSpeakerSubMasterShowValue = new System.Windows.Forms.Label();
             tbSpeakerSubMaster = new TrackBar();
@@ -167,15 +167,45 @@ namespace AVRControl
             lbSpeakerFrontR = new System.Windows.Forms.Label();
             lbSpeakerCenter = new System.Windows.Forms.Label();
             lbSpeakerFrontL = new System.Windows.Forms.Label();
+            tabModes = new TabPage();
+            label4 = new System.Windows.Forms.Label();
+            lblCurrentSource = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
+            lblCurrentSourceAudio = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            grpDspModes = new GroupBox();
+            rbModeVirtual = new RadioButton();
+            rbModeMatrix = new RadioButton();
+            rbModeRockArena = new RadioButton();
+            rbModeJazzClub = new RadioButton();
+            lblCurrentAudioMode = new System.Windows.Forms.Label();
+            grpPuristModes = new GroupBox();
+            rbModeMultiChIn = new RadioButton();
+            rbModeGame = new RadioButton();
+            rbModeMono = new RadioButton();
+            rbModePureDirect = new RadioButton();
+            rbModeDirect = new RadioButton();
+            rbModeStereo = new RadioButton();
+            rbModeMultiChStereo = new RadioButton();
+            grpStandardModes = new GroupBox();
+            rbModeDolbyDigitalPlus = new RadioButton();
+            rbModeDtsxNative = new RadioButton();
+            rbModeDtsHd = new RadioButton();
+            rbModeAtmos = new RadioButton();
+            rbModeTrueHd = new RadioButton();
+            rbModeAuro3d = new RadioButton();
+            rbModeDtsx = new RadioButton();
+            rbModeDolby = new RadioButton();
             pnlTabOverlay = new System.Windows.Forms.Label();
             lblTabMain = new System.Windows.Forms.Label();
             lblTabSpeaker = new System.Windows.Forms.Label();
             lbBottomOverlay = new System.Windows.Forms.Label();
             HorizontalLine = new System.Windows.Forms.Label();
+            lblTabModes = new System.Windows.Forms.Label();
             cmsTray.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LogoPicture).BeginInit();
             tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
+            tabMain.SuspendLayout();
             pnlProgressBack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbAlbumArt).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnHeosPlayRepeatOne).BeginInit();
@@ -188,7 +218,7 @@ namespace AVRControl
             ((System.ComponentModel.ISupportInitialize)btnVolDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnVolUp).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SliderVolume).BeginInit();
-            tabPage2.SuspendLayout();
+            tabSpeaker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerSubMaster).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer1).BeginInit();
@@ -197,6 +227,10 @@ namespace AVRControl
             ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontR).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerCenter).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontL).BeginInit();
+            tabModes.SuspendLayout();
+            grpDspModes.SuspendLayout();
+            grpPuristModes.SuspendLayout();
+            grpStandardModes.SuspendLayout();
             SuspendLayout();
             // 
             // CopyrightNote
@@ -380,8 +414,9 @@ namespace AVRControl
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabMain);
+            tabControl1.Controls.Add(tabSpeaker);
+            tabControl1.Controls.Add(tabModes);
             tabControl1.Location = new Point(-5, 84);
             tabControl1.Margin = new Padding(2);
             tabControl1.Name = "tabControl1";
@@ -389,73 +424,73 @@ namespace AVRControl
             tabControl1.Size = new Size(673, 591);
             tabControl1.TabIndex = 69;
             // 
-            // tabPage1
+            // tabMain
             // 
-            tabPage1.BackColor = Color.LightSlateGray;
-            tabPage1.Controls.Add(pnlProgressBack);
-            tabPage1.Controls.Add(lbHeosAVRNetType_Data);
-            tabPage1.Controls.Add(lbHeosAVRID_Data);
-            tabPage1.Controls.Add(lbHeosAVRVersion_Data);
-            tabPage1.Controls.Add(lbHeosAVRName_Data);
-            tabPage1.Controls.Add(lbHeosAVRNetType);
-            tabPage1.Controls.Add(lbHeosAVRID);
-            tabPage1.Controls.Add(lbHeosAVRVersion);
-            tabPage1.Controls.Add(lbHeosAVRName);
-            tabPage1.Controls.Add(lblTime);
-            tabPage1.Controls.Add(lbAlbumCover);
-            tabPage1.Controls.Add(pbAlbumArt);
-            tabPage1.Controls.Add(label9);
-            tabPage1.Controls.Add(lbHeosPlayRepeatOne);
-            tabPage1.Controls.Add(btnHeosPlayRepeatOne);
-            tabPage1.Controls.Add(lbHeosPlayRepeatAll);
-            tabPage1.Controls.Add(btnHeosPlayRepeatAll);
-            tabPage1.Controls.Add(lbHeosPlayShuffle);
-            tabPage1.Controls.Add(lbHeosPlaySkip);
-            tabPage1.Controls.Add(lbHeosPlayBack);
-            tabPage1.Controls.Add(lbHeosPlayPause);
-            tabPage1.Controls.Add(btnHeosPlayShuffle);
-            tabPage1.Controls.Add(btnHeosPlayBack);
-            tabPage1.Controls.Add(btnHeosPlaySkip);
-            tabPage1.Controls.Add(btnHeosPlayPause);
-            tabPage1.Controls.Add(lbHeosSong);
-            tabPage1.Controls.Add(lbHeosAlbum);
-            tabPage1.Controls.Add(lbHeosArtist);
-            tabPage1.Controls.Add(HeosTrackInfoArtist);
-            tabPage1.Controls.Add(HeosTrackInfoSong);
-            tabPage1.Controls.Add(label2);
-            tabPage1.Controls.Add(lbUp);
-            tabPage1.Controls.Add(lbMute);
-            tabPage1.Controls.Add(lbDown);
-            tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(btnToggleMute);
-            tabPage1.Controls.Add(btnVolDown);
-            tabPage1.Controls.Add(btnVolUp);
-            tabPage1.Controls.Add(SliderVolume);
-            tabPage1.Controls.Add(ShowVolume);
-            tabPage1.Controls.Add(lbVol10);
-            tabPage1.Controls.Add(lbVol20);
-            tabPage1.Controls.Add(lbVol30);
-            tabPage1.Controls.Add(lbVol40);
-            tabPage1.Controls.Add(lbVol50);
-            tabPage1.Controls.Add(lbVol60);
-            tabPage1.Controls.Add(lbVol70);
-            tabPage1.Controls.Add(lbVol80);
-            tabPage1.Controls.Add(lbVol90);
-            tabPage1.Controls.Add(lbVol100);
-            tabPage1.Controls.Add(lbAVRSource);
-            tabPage1.Controls.Add(AVRSource);
-            tabPage1.Controls.Add(lbAVRSourceAudio);
-            tabPage1.Controls.Add(AVRSourceAudio);
-            tabPage1.Controls.Add(lbAVRSoundMode);
-            tabPage1.Controls.Add(AVRSoundMode);
-            tabPage1.Controls.Add(HeosTrackInfoAlbum);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Margin = new Padding(2);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(2);
-            tabPage1.Size = new Size(665, 558);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Main";
+            tabMain.BackColor = Color.LightSlateGray;
+            tabMain.Controls.Add(pnlProgressBack);
+            tabMain.Controls.Add(lbHeosAVRNetType_Data);
+            tabMain.Controls.Add(lbHeosAVRID_Data);
+            tabMain.Controls.Add(lbHeosAVRVersion_Data);
+            tabMain.Controls.Add(lbHeosAVRName_Data);
+            tabMain.Controls.Add(lbHeosAVRNetType);
+            tabMain.Controls.Add(lbHeosAVRID);
+            tabMain.Controls.Add(lbHeosAVRVersion);
+            tabMain.Controls.Add(lbHeosAVRName);
+            tabMain.Controls.Add(lblTime);
+            tabMain.Controls.Add(lbAlbumCover);
+            tabMain.Controls.Add(pbAlbumArt);
+            tabMain.Controls.Add(label9);
+            tabMain.Controls.Add(lbHeosPlayRepeatOne);
+            tabMain.Controls.Add(btnHeosPlayRepeatOne);
+            tabMain.Controls.Add(lbHeosPlayRepeatAll);
+            tabMain.Controls.Add(btnHeosPlayRepeatAll);
+            tabMain.Controls.Add(lbHeosPlayShuffle);
+            tabMain.Controls.Add(lbHeosPlaySkip);
+            tabMain.Controls.Add(lbHeosPlayBack);
+            tabMain.Controls.Add(lbHeosPlayPause);
+            tabMain.Controls.Add(btnHeosPlayShuffle);
+            tabMain.Controls.Add(btnHeosPlayBack);
+            tabMain.Controls.Add(btnHeosPlaySkip);
+            tabMain.Controls.Add(btnHeosPlayPause);
+            tabMain.Controls.Add(lbHeosSong);
+            tabMain.Controls.Add(lbHeosAlbum);
+            tabMain.Controls.Add(lbHeosArtist);
+            tabMain.Controls.Add(HeosTrackInfoArtist);
+            tabMain.Controls.Add(HeosTrackInfoSong);
+            tabMain.Controls.Add(label2);
+            tabMain.Controls.Add(lbUp);
+            tabMain.Controls.Add(lbMute);
+            tabMain.Controls.Add(lbDown);
+            tabMain.Controls.Add(label1);
+            tabMain.Controls.Add(btnToggleMute);
+            tabMain.Controls.Add(btnVolDown);
+            tabMain.Controls.Add(btnVolUp);
+            tabMain.Controls.Add(SliderVolume);
+            tabMain.Controls.Add(ShowVolume);
+            tabMain.Controls.Add(lbVol10);
+            tabMain.Controls.Add(lbVol20);
+            tabMain.Controls.Add(lbVol30);
+            tabMain.Controls.Add(lbVol40);
+            tabMain.Controls.Add(lbVol50);
+            tabMain.Controls.Add(lbVol60);
+            tabMain.Controls.Add(lbVol70);
+            tabMain.Controls.Add(lbVol80);
+            tabMain.Controls.Add(lbVol90);
+            tabMain.Controls.Add(lbVol100);
+            tabMain.Controls.Add(lbAVRSource);
+            tabMain.Controls.Add(AVRSource);
+            tabMain.Controls.Add(lbAVRSourceAudio);
+            tabMain.Controls.Add(AVRSourceAudio);
+            tabMain.Controls.Add(lbAVRSoundMode);
+            tabMain.Controls.Add(AVRSoundMode);
+            tabMain.Controls.Add(HeosTrackInfoAlbum);
+            tabMain.Location = new Point(4, 29);
+            tabMain.Margin = new Padding(2);
+            tabMain.Name = "tabMain";
+            tabMain.Padding = new Padding(2);
+            tabMain.Size = new Size(665, 558);
+            tabMain.TabIndex = 0;
+            tabMain.Text = "Main";
             // 
             // pnlProgressBack
             // 
@@ -1182,41 +1217,41 @@ namespace AVRControl
             HeosTrackInfoAlbum.Size = new Size(294, 19);
             HeosTrackInfoAlbum.TabIndex = 88;
             // 
-            // tabPage2
+            // tabSpeaker
             // 
-            tabPage2.BackColor = Color.LightSlateGray;
-            tabPage2.Controls.Add(btnResetSpeaker);
-            tabPage2.Controls.Add(lbSpeakerSubMasterShowValue);
-            tabPage2.Controls.Add(tbSpeakerSubMaster);
-            tabPage2.Controls.Add(lbSpeakerSubwoofer2ShowValue);
-            tabPage2.Controls.Add(lbSpeakerSubwoofer1ShowValue);
-            tabPage2.Controls.Add(lbSpeakerSurroundRShowValue);
-            tabPage2.Controls.Add(lbSpeakerSurroundLShowValue);
-            tabPage2.Controls.Add(lbSpeakerFrontRShowValue);
-            tabPage2.Controls.Add(lbSpeakerCenterShowValue);
-            tabPage2.Controls.Add(lbSpeakerFrontLShowValue);
-            tabPage2.Controls.Add(tbSpeakerSubwoofer2);
-            tabPage2.Controls.Add(tbSpeakerSubwoofer1);
-            tabPage2.Controls.Add(tbSpeakerSurroundR);
-            tabPage2.Controls.Add(tbSpeakerSurroundL);
-            tabPage2.Controls.Add(tbSpeakerFrontR);
-            tabPage2.Controls.Add(tbSpeakerCenter);
-            tabPage2.Controls.Add(tbSpeakerFrontL);
-            tabPage2.Controls.Add(lbSpeakerSubwoofer1and2);
-            tabPage2.Controls.Add(lbSpeakerSubwoofer2);
-            tabPage2.Controls.Add(lbSpeakerSubwoofer1);
-            tabPage2.Controls.Add(lbSpeakerSurroundR);
-            tabPage2.Controls.Add(lbSpeakerSurroundL);
-            tabPage2.Controls.Add(lbSpeakerFrontR);
-            tabPage2.Controls.Add(lbSpeakerCenter);
-            tabPage2.Controls.Add(lbSpeakerFrontL);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Margin = new Padding(2);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(2);
-            tabPage2.Size = new Size(665, 558);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
+            tabSpeaker.BackColor = Color.LightSlateGray;
+            tabSpeaker.Controls.Add(btnResetSpeaker);
+            tabSpeaker.Controls.Add(lbSpeakerSubMasterShowValue);
+            tabSpeaker.Controls.Add(tbSpeakerSubMaster);
+            tabSpeaker.Controls.Add(lbSpeakerSubwoofer2ShowValue);
+            tabSpeaker.Controls.Add(lbSpeakerSubwoofer1ShowValue);
+            tabSpeaker.Controls.Add(lbSpeakerSurroundRShowValue);
+            tabSpeaker.Controls.Add(lbSpeakerSurroundLShowValue);
+            tabSpeaker.Controls.Add(lbSpeakerFrontRShowValue);
+            tabSpeaker.Controls.Add(lbSpeakerCenterShowValue);
+            tabSpeaker.Controls.Add(lbSpeakerFrontLShowValue);
+            tabSpeaker.Controls.Add(tbSpeakerSubwoofer2);
+            tabSpeaker.Controls.Add(tbSpeakerSubwoofer1);
+            tabSpeaker.Controls.Add(tbSpeakerSurroundR);
+            tabSpeaker.Controls.Add(tbSpeakerSurroundL);
+            tabSpeaker.Controls.Add(tbSpeakerFrontR);
+            tabSpeaker.Controls.Add(tbSpeakerCenter);
+            tabSpeaker.Controls.Add(tbSpeakerFrontL);
+            tabSpeaker.Controls.Add(lbSpeakerSubwoofer1and2);
+            tabSpeaker.Controls.Add(lbSpeakerSubwoofer2);
+            tabSpeaker.Controls.Add(lbSpeakerSubwoofer1);
+            tabSpeaker.Controls.Add(lbSpeakerSurroundR);
+            tabSpeaker.Controls.Add(lbSpeakerSurroundL);
+            tabSpeaker.Controls.Add(lbSpeakerFrontR);
+            tabSpeaker.Controls.Add(lbSpeakerCenter);
+            tabSpeaker.Controls.Add(lbSpeakerFrontL);
+            tabSpeaker.Location = new Point(4, 29);
+            tabSpeaker.Margin = new Padding(2);
+            tabSpeaker.Name = "tabSpeaker";
+            tabSpeaker.Padding = new Padding(2);
+            tabSpeaker.Size = new Size(665, 558);
+            tabSpeaker.TabIndex = 1;
+            tabSpeaker.Text = "Speaker";
             // 
             // btnResetSpeaker
             // 
@@ -1519,6 +1554,422 @@ namespace AVRControl
             lbSpeakerFrontL.TabIndex = 0;
             lbSpeakerFrontL.Text = "Front L";
             // 
+            // tabModes
+            // 
+            tabModes.BackColor = Color.LightSlateGray;
+            tabModes.Controls.Add(label4);
+            tabModes.Controls.Add(lblCurrentSource);
+            tabModes.Controls.Add(label6);
+            tabModes.Controls.Add(lblCurrentSourceAudio);
+            tabModes.Controls.Add(label3);
+            tabModes.Controls.Add(grpDspModes);
+            tabModes.Controls.Add(lblCurrentAudioMode);
+            tabModes.Controls.Add(grpPuristModes);
+            tabModes.Controls.Add(grpStandardModes);
+            tabModes.Location = new Point(4, 29);
+            tabModes.Name = "tabModes";
+            tabModes.Size = new Size(665, 558);
+            tabModes.TabIndex = 2;
+            tabModes.Text = "Modes";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(339, 372);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(116, 17);
+            label4.TabIndex = 89;
+            label4.Text = "Selected Source:";
+            // 
+            // lblCurrentSource
+            // 
+            lblCurrentSource.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Bold);
+            lblCurrentSource.ForeColor = Color.DarkOrange;
+            lblCurrentSource.Location = new Point(458, 372);
+            lblCurrentSource.Margin = new Padding(4, 0, 4, 0);
+            lblCurrentSource.Name = "lblCurrentSource";
+            lblCurrentSource.Size = new Size(161, 19);
+            lblCurrentSource.TabIndex = 90;
+            lblCurrentSource.Text = "loading ...";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(339, 405);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(93, 17);
+            label6.TabIndex = 91;
+            label6.Text = "SourceAudio:";
+            // 
+            // lblCurrentSourceAudio
+            // 
+            lblCurrentSourceAudio.Font = new Font("Microsoft Sans Serif", 8F);
+            lblCurrentSourceAudio.ForeColor = Color.Khaki;
+            lblCurrentSourceAudio.Location = new Point(433, 405);
+            lblCurrentSourceAudio.Margin = new Padding(4, 0, 4, 0);
+            lblCurrentSourceAudio.Name = "lblCurrentSourceAudio";
+            lblCurrentSourceAudio.Size = new Size(160, 19);
+            lblCurrentSourceAudio.TabIndex = 92;
+            lblCurrentSourceAudio.Text = "loading ...";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(339, 439);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(88, 17);
+            label3.TabIndex = 88;
+            label3.Text = "SoundMode:";
+            // 
+            // grpDspModes
+            // 
+            grpDspModes.Controls.Add(rbModeVirtual);
+            grpDspModes.Controls.Add(rbModeMatrix);
+            grpDspModes.Controls.Add(rbModeRockArena);
+            grpDspModes.Controls.Add(rbModeJazzClub);
+            grpDspModes.ForeColor = Color.Khaki;
+            grpDspModes.Location = new Point(20, 354);
+            grpDspModes.Name = "grpDspModes";
+            grpDspModes.Size = new Size(300, 180);
+            grpDspModes.TabIndex = 3;
+            grpDspModes.TabStop = false;
+            grpDspModes.Text = "DSP Modes";
+            // 
+            // rbModeVirtual
+            // 
+            rbModeVirtual.AutoSize = true;
+            rbModeVirtual.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeVirtual.ForeColor = Color.White;
+            rbModeVirtual.Location = new Point(23, 140);
+            rbModeVirtual.Name = "rbModeVirtual";
+            rbModeVirtual.Size = new Size(69, 21);
+            rbModeVirtual.TabIndex = 3;
+            rbModeVirtual.TabStop = true;
+            rbModeVirtual.Tag = "VIRTUAL";
+            rbModeVirtual.Text = "Virtual";
+            rbModeVirtual.UseVisualStyleBackColor = true;
+            rbModeVirtual.Click += rbAudioMode_Click;
+            // 
+            // rbModeMatrix
+            // 
+            rbModeMatrix.AutoSize = true;
+            rbModeMatrix.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeMatrix.ForeColor = Color.White;
+            rbModeMatrix.Location = new Point(23, 105);
+            rbModeMatrix.Name = "rbModeMatrix";
+            rbModeMatrix.Size = new Size(66, 21);
+            rbModeMatrix.TabIndex = 2;
+            rbModeMatrix.TabStop = true;
+            rbModeMatrix.Tag = "MATRIX";
+            rbModeMatrix.Text = "Matrix";
+            rbModeMatrix.UseVisualStyleBackColor = true;
+            rbModeMatrix.Click += rbAudioMode_Click;
+            // 
+            // rbModeRockArena
+            // 
+            rbModeRockArena.AutoSize = true;
+            rbModeRockArena.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeRockArena.ForeColor = Color.White;
+            rbModeRockArena.Location = new Point(23, 70);
+            rbModeRockArena.Name = "rbModeRockArena";
+            rbModeRockArena.Size = new Size(103, 21);
+            rbModeRockArena.TabIndex = 1;
+            rbModeRockArena.TabStop = true;
+            rbModeRockArena.Tag = "ROCK ARENA";
+            rbModeRockArena.Text = "Rock Arena";
+            rbModeRockArena.UseVisualStyleBackColor = true;
+            rbModeRockArena.Click += rbAudioMode_Click;
+            // 
+            // rbModeJazzClub
+            // 
+            rbModeJazzClub.AutoSize = true;
+            rbModeJazzClub.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeJazzClub.ForeColor = Color.White;
+            rbModeJazzClub.Location = new Point(23, 35);
+            rbModeJazzClub.Name = "rbModeJazzClub";
+            rbModeJazzClub.Size = new Size(90, 21);
+            rbModeJazzClub.TabIndex = 0;
+            rbModeJazzClub.TabStop = true;
+            rbModeJazzClub.Tag = "JAZZ CLUB";
+            rbModeJazzClub.Text = "Jazz Club";
+            rbModeJazzClub.UseVisualStyleBackColor = true;
+            rbModeJazzClub.Click += rbAudioMode_Click;
+            // 
+            // lblCurrentAudioMode
+            // 
+            lblCurrentAudioMode.AutoSize = true;
+            lblCurrentAudioMode.Font = new Font("Microsoft Sans Serif", 8F);
+            lblCurrentAudioMode.ForeColor = Color.Khaki;
+            lblCurrentAudioMode.Location = new Point(433, 439);
+            lblCurrentAudioMode.Name = "lblCurrentAudioMode";
+            lblCurrentAudioMode.Size = new Size(70, 17);
+            lblCurrentAudioMode.TabIndex = 2;
+            lblCurrentAudioMode.Text = "loading ...";
+            // 
+            // grpPuristModes
+            // 
+            grpPuristModes.Controls.Add(rbModeMultiChIn);
+            grpPuristModes.Controls.Add(rbModeGame);
+            grpPuristModes.Controls.Add(rbModeMono);
+            grpPuristModes.Controls.Add(rbModePureDirect);
+            grpPuristModes.Controls.Add(rbModeDirect);
+            grpPuristModes.Controls.Add(rbModeStereo);
+            grpPuristModes.Controls.Add(rbModeMultiChStereo);
+            grpPuristModes.ForeColor = Color.Khaki;
+            grpPuristModes.Location = new Point(339, 25);
+            grpPuristModes.Name = "grpPuristModes";
+            grpPuristModes.Size = new Size(300, 320);
+            grpPuristModes.TabIndex = 1;
+            grpPuristModes.TabStop = false;
+            grpPuristModes.Text = "Pure and Direct";
+            // 
+            // rbModeMultiChIn
+            // 
+            rbModeMultiChIn.AutoSize = true;
+            rbModeMultiChIn.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeMultiChIn.ForeColor = Color.White;
+            rbModeMultiChIn.Location = new Point(17, 104);
+            rbModeMultiChIn.Name = "rbModeMultiChIn";
+            rbModeMultiChIn.Size = new Size(94, 21);
+            rbModeMultiChIn.TabIndex = 4;
+            rbModeMultiChIn.TabStop = true;
+            rbModeMultiChIn.Tag = "MULTI CH IN";
+            rbModeMultiChIn.Text = "Multi Ch In";
+            rbModeMultiChIn.UseVisualStyleBackColor = true;
+            rbModeMultiChIn.Click += rbAudioMode_Click;
+            // 
+            // rbModeGame
+            // 
+            rbModeGame.AutoSize = true;
+            rbModeGame.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeGame.ForeColor = Color.White;
+            rbModeGame.Location = new Point(17, 239);
+            rbModeGame.Name = "rbModeGame";
+            rbModeGame.Size = new Size(129, 21);
+            rbModeGame.TabIndex = 3;
+            rbModeGame.TabStop = true;
+            rbModeGame.Tag = "GAME";
+            rbModeGame.Text = "Standard Game";
+            rbModeGame.UseVisualStyleBackColor = true;
+            rbModeGame.Click += rbAudioMode_Click;
+            // 
+            // rbModeMono
+            // 
+            rbModeMono.AutoSize = true;
+            rbModeMono.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeMono.ForeColor = Color.White;
+            rbModeMono.Location = new Point(17, 204);
+            rbModeMono.Name = "rbModeMono";
+            rbModeMono.Size = new Size(64, 21);
+            rbModeMono.TabIndex = 2;
+            rbModeMono.TabStop = true;
+            rbModeMono.Tag = "MONO";
+            rbModeMono.Text = "Mono";
+            rbModeMono.UseVisualStyleBackColor = true;
+            rbModeMono.Click += rbAudioMode_Click;
+            // 
+            // rbModePureDirect
+            // 
+            rbModePureDirect.AutoSize = true;
+            rbModePureDirect.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModePureDirect.ForeColor = Color.White;
+            rbModePureDirect.Location = new Point(17, 69);
+            rbModePureDirect.Name = "rbModePureDirect";
+            rbModePureDirect.Size = new Size(100, 21);
+            rbModePureDirect.TabIndex = 1;
+            rbModePureDirect.TabStop = true;
+            rbModePureDirect.Tag = "PURE DIRECT";
+            rbModePureDirect.Text = "Pure Direct";
+            rbModePureDirect.UseVisualStyleBackColor = true;
+            rbModePureDirect.Click += rbAudioMode_Click;
+            // 
+            // rbModeDirect
+            // 
+            rbModeDirect.AutoSize = true;
+            rbModeDirect.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeDirect.ForeColor = Color.White;
+            rbModeDirect.Location = new Point(17, 34);
+            rbModeDirect.Name = "rbModeDirect";
+            rbModeDirect.Size = new Size(66, 21);
+            rbModeDirect.TabIndex = 0;
+            rbModeDirect.TabStop = true;
+            rbModeDirect.Tag = "DIRECT";
+            rbModeDirect.Text = "Direct";
+            rbModeDirect.UseVisualStyleBackColor = true;
+            rbModeDirect.Click += rbAudioMode_Click;
+            // 
+            // rbModeStereo
+            // 
+            rbModeStereo.AutoSize = true;
+            rbModeStereo.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeStereo.ForeColor = Color.White;
+            rbModeStereo.Location = new Point(17, 170);
+            rbModeStereo.Name = "rbModeStereo";
+            rbModeStereo.Size = new Size(71, 21);
+            rbModeStereo.TabIndex = 0;
+            rbModeStereo.TabStop = true;
+            rbModeStereo.Tag = "STEREO";
+            rbModeStereo.Text = "Stereo";
+            rbModeStereo.UseVisualStyleBackColor = true;
+            rbModeStereo.Click += rbAudioMode_Click;
+            // 
+            // rbModeMultiChStereo
+            // 
+            rbModeMultiChStereo.AutoSize = true;
+            rbModeMultiChStereo.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeMultiChStereo.ForeColor = Color.White;
+            rbModeMultiChStereo.Location = new Point(17, 136);
+            rbModeMultiChStereo.Name = "rbModeMultiChStereo";
+            rbModeMultiChStereo.Size = new Size(125, 21);
+            rbModeMultiChStereo.TabIndex = 1;
+            rbModeMultiChStereo.TabStop = true;
+            rbModeMultiChStereo.Tag = "M CH STEREO";
+            rbModeMultiChStereo.Text = "Multi Ch Stereo";
+            rbModeMultiChStereo.UseVisualStyleBackColor = true;
+            rbModeMultiChStereo.Click += rbAudioMode_Click;
+            // 
+            // grpStandardModes
+            // 
+            grpStandardModes.Controls.Add(rbModeDolbyDigitalPlus);
+            grpStandardModes.Controls.Add(rbModeDtsxNative);
+            grpStandardModes.Controls.Add(rbModeDtsHd);
+            grpStandardModes.Controls.Add(rbModeAtmos);
+            grpStandardModes.Controls.Add(rbModeTrueHd);
+            grpStandardModes.Controls.Add(rbModeAuro3d);
+            grpStandardModes.Controls.Add(rbModeDtsx);
+            grpStandardModes.Controls.Add(rbModeDolby);
+            grpStandardModes.ForeColor = Color.Khaki;
+            grpStandardModes.Location = new Point(20, 25);
+            grpStandardModes.Name = "grpStandardModes";
+            grpStandardModes.Size = new Size(300, 320);
+            grpStandardModes.TabIndex = 0;
+            grpStandardModes.TabStop = false;
+            grpStandardModes.Text = "Standard and Upmixer";
+            // 
+            // rbModeDolbyDigitalPlus
+            // 
+            rbModeDolbyDigitalPlus.AutoSize = true;
+            rbModeDolbyDigitalPlus.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeDolbyDigitalPlus.ForeColor = Color.White;
+            rbModeDolbyDigitalPlus.Location = new Point(20, 104);
+            rbModeDolbyDigitalPlus.Name = "rbModeDolbyDigitalPlus";
+            rbModeDolbyDigitalPlus.Size = new Size(191, 21);
+            rbModeDolbyDigitalPlus.TabIndex = 9;
+            rbModeDolbyDigitalPlus.TabStop = true;
+            rbModeDolbyDigitalPlus.Tag = "DOLBY DIGITAL";
+            rbModeDolbyDigitalPlus.Text = "Dolby Digital Plus / +DSur";
+            rbModeDolbyDigitalPlus.UseVisualStyleBackColor = true;
+            // 
+            // rbModeDtsxNative
+            // 
+            rbModeDtsxNative.AutoSize = true;
+            rbModeDtsxNative.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeDtsxNative.ForeColor = Color.White;
+            rbModeDtsxNative.Location = new Point(20, 237);
+            rbModeDtsxNative.Name = "rbModeDtsxNative";
+            rbModeDtsxNative.Size = new Size(70, 21);
+            rbModeDtsxNative.TabIndex = 8;
+            rbModeDtsxNative.TabStop = true;
+            rbModeDtsxNative.Tag = "DTS SURROUND";
+            rbModeDtsxNative.Text = "DTS:X";
+            rbModeDtsxNative.UseVisualStyleBackColor = true;
+            // 
+            // rbModeDtsHd
+            // 
+            rbModeDtsHd.AutoSize = true;
+            rbModeDtsHd.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeDtsHd.ForeColor = Color.White;
+            rbModeDtsHd.Location = new Point(20, 204);
+            rbModeDtsHd.Name = "rbModeDtsHd";
+            rbModeDtsHd.Size = new Size(169, 21);
+            rbModeDtsHd.TabIndex = 7;
+            rbModeDtsHd.TabStop = true;
+            rbModeDtsHd.Tag = "DTS SURROUND";
+            rbModeDtsHd.Text = "DTS-HD Master Audio";
+            rbModeDtsHd.UseVisualStyleBackColor = true;
+            // 
+            // rbModeAtmos
+            // 
+            rbModeAtmos.AutoSize = true;
+            rbModeAtmos.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeAtmos.ForeColor = Color.White;
+            rbModeAtmos.Location = new Point(20, 136);
+            rbModeAtmos.Name = "rbModeAtmos";
+            rbModeAtmos.Size = new Size(170, 21);
+            rbModeAtmos.TabIndex = 6;
+            rbModeAtmos.TabStop = true;
+            rbModeAtmos.Tag = "DOLBY DIGITAL";
+            rbModeAtmos.Text = "Dolby Atmos / TrueHD";
+            rbModeAtmos.UseVisualStyleBackColor = true;
+            // 
+            // rbModeTrueHd
+            // 
+            rbModeTrueHd.AutoSize = true;
+            rbModeTrueHd.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeTrueHd.ForeColor = Color.White;
+            rbModeTrueHd.Location = new Point(20, 68);
+            rbModeTrueHd.Name = "rbModeTrueHd";
+            rbModeTrueHd.Size = new Size(167, 21);
+            rbModeTrueHd.TabIndex = 5;
+            rbModeTrueHd.TabStop = true;
+            rbModeTrueHd.Tag = "DOLBY DIGITAL";
+            rbModeTrueHd.Text = "Dolby TrueHD + DSur";
+            rbModeTrueHd.UseVisualStyleBackColor = true;
+            // 
+            // rbModeAuro3d
+            // 
+            rbModeAuro3d.AutoSize = true;
+            rbModeAuro3d.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeAuro3d.ForeColor = Color.White;
+            rbModeAuro3d.Location = new Point(20, 170);
+            rbModeAuro3d.Name = "rbModeAuro3d";
+            rbModeAuro3d.Size = new Size(82, 21);
+            rbModeAuro3d.TabIndex = 4;
+            rbModeAuro3d.TabStop = true;
+            rbModeAuro3d.Tag = "AURO3D";
+            rbModeAuro3d.Text = "Auro-3D";
+            rbModeAuro3d.UseVisualStyleBackColor = true;
+            rbModeAuro3d.Click += rbAudioMode_Click;
+            // 
+            // rbModeDtsx
+            // 
+            rbModeDtsx.AutoSize = true;
+            rbModeDtsx.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeDtsx.ForeColor = Color.White;
+            rbModeDtsx.Location = new Point(20, 271);
+            rbModeDtsx.Name = "rbModeDtsx";
+            rbModeDtsx.Size = new Size(116, 21);
+            rbModeDtsx.TabIndex = 3;
+            rbModeDtsx.TabStop = true;
+            rbModeDtsx.Tag = "DTS SURROUND";
+            rbModeDtsx.Text = "DTS Neural:X";
+            rbModeDtsx.UseVisualStyleBackColor = true;
+            rbModeDtsx.Click += rbAudioMode_Click;
+            // 
+            // rbModeDolby
+            // 
+            rbModeDolby.AutoSize = true;
+            rbModeDolby.Font = new Font("Microsoft Sans Serif", 7.875F);
+            rbModeDolby.ForeColor = Color.White;
+            rbModeDolby.Location = new Point(20, 34);
+            rbModeDolby.Name = "rbModeDolby";
+            rbModeDolby.Size = new Size(128, 21);
+            rbModeDolby.TabIndex = 2;
+            rbModeDolby.TabStop = true;
+            rbModeDolby.Tag = "DOLBY DIGITAL";
+            rbModeDolby.Text = "Dolby Surround";
+            rbModeDolby.UseVisualStyleBackColor = true;
+            rbModeDolby.Click += rbAudioMode_Click;
+            // 
             // pnlTabOverlay
             // 
             pnlTabOverlay.BorderStyle = BorderStyle.FixedSingle;
@@ -1531,9 +1982,10 @@ namespace AVRControl
             // lblTabMain
             // 
             lblTabMain.BackColor = Color.SteelBlue;
+            lblTabMain.BorderStyle = BorderStyle.FixedSingle;
             lblTabMain.Enabled = false;
             lblTabMain.ForeColor = Color.White;
-            lblTabMain.Location = new Point(1, 87);
+            lblTabMain.Location = new Point(1, 89);
             lblTabMain.Margin = new Padding(2, 0, 2, 0);
             lblTabMain.Name = "lblTabMain";
             lblTabMain.Size = new Size(67, 30);
@@ -1545,9 +1997,10 @@ namespace AVRControl
             // lblTabSpeaker
             // 
             lblTabSpeaker.BackColor = Color.Gray;
+            lblTabSpeaker.BorderStyle = BorderStyle.FixedSingle;
             lblTabSpeaker.Enabled = false;
             lblTabSpeaker.ForeColor = Color.White;
-            lblTabSpeaker.Location = new Point(69, 87);
+            lblTabSpeaker.Location = new Point(67, 89);
             lblTabSpeaker.Margin = new Padding(2, 0, 2, 0);
             lblTabSpeaker.Name = "lblTabSpeaker";
             lblTabSpeaker.Size = new Size(67, 30);
@@ -1573,6 +2026,21 @@ namespace AVRControl
             HorizontalLine.Size = new Size(667, 1);
             HorizontalLine.TabIndex = 9;
             // 
+            // lblTabModes
+            // 
+            lblTabModes.BackColor = Color.Gray;
+            lblTabModes.BorderStyle = BorderStyle.FixedSingle;
+            lblTabModes.Enabled = false;
+            lblTabModes.ForeColor = Color.White;
+            lblTabModes.Location = new Point(133, 89);
+            lblTabModes.Margin = new Padding(2, 0, 2, 0);
+            lblTabModes.Name = "lblTabModes";
+            lblTabModes.Size = new Size(67, 30);
+            lblTabModes.TabIndex = 74;
+            lblTabModes.Text = "Modes";
+            lblTabModes.TextAlign = ContentAlignment.MiddleCenter;
+            lblTabModes.Click += lblTabModes_Click;
+            // 
             // AVRControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1581,6 +2049,7 @@ namespace AVRControl
             ClientSize = new Size(659, 761);
             Controls.Add(lbBottomOverlay);
             Controls.Add(lblTabSpeaker);
+            Controls.Add(lblTabModes);
             Controls.Add(lblTabMain);
             Controls.Add(pnlTabOverlay);
             Controls.Add(tabControl1);
@@ -1612,8 +2081,8 @@ namespace AVRControl
             cmsTray.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)LogoPicture).EndInit();
             tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            tabMain.ResumeLayout(false);
+            tabMain.PerformLayout();
             pnlProgressBack.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbAlbumArt).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnHeosPlayRepeatOne).EndInit();
@@ -1626,8 +2095,8 @@ namespace AVRControl
             ((System.ComponentModel.ISupportInitialize)btnVolDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnVolUp).EndInit();
             ((System.ComponentModel.ISupportInitialize)SliderVolume).EndInit();
-            tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
+            tabSpeaker.ResumeLayout(false);
+            tabSpeaker.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerSubMaster).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer2).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerSubwoofer1).EndInit();
@@ -1636,6 +2105,14 @@ namespace AVRControl
             ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontR).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerCenter).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbSpeakerFrontL).EndInit();
+            tabModes.ResumeLayout(false);
+            tabModes.PerformLayout();
+            grpDspModes.ResumeLayout(false);
+            grpDspModes.PerformLayout();
+            grpPuristModes.ResumeLayout(false);
+            grpPuristModes.PerformLayout();
+            grpStandardModes.ResumeLayout(false);
+            grpStandardModes.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
 
@@ -1659,7 +2136,7 @@ namespace AVRControl
         private ToolStripMenuItem gitHubPageToolStripMenuItem1;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem toolStripMenuItemShowHide;
-        private TabPage tabPage1;
+        private TabPage tabMain;
         public System.Windows.Forms.Label lbHeosAVRNetType_Data;
         public System.Windows.Forms.Label lbHeosAVRID_Data;
         public System.Windows.Forms.Label lbHeosAVRVersion_Data;
@@ -1716,7 +2193,7 @@ namespace AVRControl
         private System.Windows.Forms.Label lbAVRSoundMode;
         private System.Windows.Forms.Label AVRSoundMode;
         public System.Windows.Forms.Label HeosTrackInfoAlbum;
-        private TabPage tabPage2;
+        private TabPage tabSpeaker;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label pnlTabOverlay;
         private System.Windows.Forms.Label lblTabMain;
@@ -1750,6 +2227,36 @@ namespace AVRControl
         private Button btnResetSpeaker;
         private Panel pnlProgressBack;
         private Panel pnlProgressBar;
+        private TabPage tabModes;
+        private System.Windows.Forms.Label lblTabModes;
+        private GroupBox grpStandardModes;
+        private GroupBox grpPuristModes;
+        private System.Windows.Forms.Label lblCurrentAudioMode;
+        private RadioButton rbModeStereo;
+        private RadioButton rbModeDtsx;
+        private RadioButton rbModeDolby;
+        private RadioButton rbModeMultiChStereo;
+        private RadioButton rbModePureDirect;
+        private RadioButton rbModeDirect;
+        private GroupBox grpDspModes;
+        private RadioButton rbModeJazzClub;
+        private RadioButton rbModeVirtual;
+        private RadioButton rbModeMatrix;
+        private RadioButton rbModeRockArena;
+        private RadioButton rbModeMono;
+        private RadioButton rbModeAuro3d;
+        private RadioButton rbModeMultiChIn;
+        private RadioButton rbModeGame;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblCurrentSource;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblCurrentSourceAudio;
+        private RadioButton rbModeTrueHd;
+        private RadioButton rbModeAtmos;
+        private RadioButton rbModeDtsHd;
+        private RadioButton rbModeDolbyDigitalPlus;
+        private RadioButton rbModeDtsxNative;
     }
 }
 

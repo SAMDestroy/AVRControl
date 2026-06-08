@@ -12,11 +12,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
-using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Drawing;
-
 namespace AVRControl
 {
     public partial class AVRControl
@@ -31,16 +26,11 @@ namespace AVRControl
 
             try
             {
-                // Daten herunterladen
                 byte[] imageBytes = await _httpClient.GetByteArrayAsync(url);
 
-                using (var ms = new System.IO.MemoryStream(imageBytes))
-                {
-                    // Da wir 'await' nutzen, springt .NET automatisch zurück in den UI-Thread.
-                    // Ein 'this.Invoke' ist hier meistens gar nicht mehr nötig!
-                    pbAlbumArt.Image = Image.FromStream(ms);
-                    pbAlbumArt.SizeMode = PictureBoxSizeMode.Zoom;
-                }
+                using var ms = new System.IO.MemoryStream(imageBytes);
+                pbAlbumArt.Image = Image.FromStream(ms);
+                pbAlbumArt.SizeMode = PictureBoxSizeMode.Zoom;
             }
             catch (Exception ex)
             {
@@ -60,8 +50,7 @@ namespace AVRControl
                 string curPosStr = ExtractJsonValue(json, "cur_pos");
                 string durationStr = ExtractJsonValue(json, "duration");
 
-                int sid = 0;
-                int.TryParse(sidStr, out sid);
+                int.TryParse(sidStr, out int sid);
 
                 if (!timerProgress.Enabled && state != "pause")
                 {
@@ -101,7 +90,8 @@ namespace AVRControl
                 }
 
                 _lastHeosService = serviceName;
-                this.AVRSource.Text = _lastHeosService;                
+                this.AVRSource.Text = _lastHeosService;
+                this.lblCurrentSource.Text = _lastHeosService;
                 this.HeosTrackInfoArtist.Text = artist;
                 this.HeosTrackInfoAlbum.Text = album;
                 this.HeosTrackInfoSong.Text = song;
@@ -158,6 +148,5 @@ namespace AVRControl
             string command = $"heos://player/get_now_playing_media?pid={_activePid}";
             await _heosTelnet.SendAsync(command);
         }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

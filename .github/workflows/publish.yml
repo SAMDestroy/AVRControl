@@ -69,7 +69,7 @@ jobs:
       shell: pwsh
       run: |
         $zipName = "AVRControl-v${{ needs.check-version.outputs.version }}-${{ matrix.profile }}.zip"
-        Compress-Archive -Path "bin/Release/net10.0-windows7.0/publish/*" -DestinationPath "$zipName"
+        Compress-Archive -Path "bin/Release/net10.0-windows7.0/publish/*/*.exe" -DestinationPath "$zipName"
 
     - name: Compile dynamic release description
       id: build_notes
@@ -91,7 +91,7 @@ jobs:
         File: AVRControl-vVERSION-Win-x64-Dependent.zip
         Who is it for? Users who already have .NET 10 installed or want a tiny download.
         Requirement:
-        You must have the [.NET 10 Desktop Runtime](https://microsoft.com) installed on your PC.
+        You must have the [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) installed on your PC.
         Pros: Ultra-small file size (< 1 MB).
 
         3. ARM64 Native (For modern Tablets & Mobile PCs):

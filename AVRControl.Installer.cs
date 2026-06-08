@@ -13,11 +13,6 @@ GNU General Public License for more details.
 */
 
 using Microsoft.Win32;
-using System;
-using System.Drawing;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace AVRControl
 {
@@ -66,33 +61,28 @@ namespace AVRControl
             string mode = isRunningFromRoaming ? "[Installed]" : "[Portable]";
             this.Text = $"AVRControl v{typeof(Program).Assembly.GetName().Version} {mode}";
         }
-
-        // Github Update Part
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private async Task<Version?> GetGitHubVersionAsync()
+        private static async Task<Version?> GetGitHubVersionAsync()
         {
             string url = "https://api.github.com/repos/SAMDestroy/AVRControl/releases/latest";
 
             try
             {
-                using (HttpClient client = new HttpClient())
+                using HttpClient client = new();
+                client.DefaultRequestHeaders.Add("User-Agent", "AVRControl-App");
+
+                string json = await client.GetStringAsync(url);
+                string searchPattern = "\"tag_name\":\"";
+                int startIndex = json.IndexOf(searchPattern);
+
+                if (startIndex != -1)
                 {
-                    client.DefaultRequestHeaders.Add("User-Agent", "AVRControl-App");
+                    startIndex += searchPattern.Length;
+                    int endIndex = json.IndexOf("\"", startIndex);
 
-                    string json = await client.GetStringAsync(url);
-                    string searchPattern = "\"tag_name\":\"";
-                    int startIndex = json.IndexOf(searchPattern);
-
-                    if (startIndex != -1)
+                    if (endIndex != -1)
                     {
-                        startIndex += searchPattern.Length;
-                        int endIndex = json.IndexOf("\"", startIndex);
-
-                        if (endIndex != -1)
-                        {
-                            string tagName = json.Substring(startIndex, endIndex - startIndex);
-                            return new Version(tagName.Replace("v", ""));
-                        }
+                        string tagName = json[startIndex..endIndex];
+                        return new Version(tagName.Replace("v", ""));
                     }
                 }
             }
@@ -115,6 +105,5 @@ namespace AVRControl
                 btnInstall.BackColor = Color.Gold;
             }
         }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -12,18 +12,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
-using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Linq;
 
 public class AsyncTelnetClient
 {
@@ -46,8 +38,6 @@ public class AsyncTelnetClient
     public event Action<string>? ErrorOccurred;
     public event Action<string>? StatusChanged;
 
-    // XML Reader Part
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public async Task<string> ReadXMLDeviceInfoAsync()
     {
         string urlLite = $"http://{_IP}:8080/goform/formMainZone_MainZoneXmlStatusLite.xml";
@@ -55,58 +45,49 @@ public class AsyncTelnetClient
 
         try
         {
-            using (HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(2) })
-            {
-                var responseLite = await client.GetAsync(urlLite);
-                if (!responseLite.IsSuccessStatusCode) return "HEOS";
+            using HttpClient client = new() { Timeout = TimeSpan.FromSeconds(2) };
+            var responseLite = await client.GetAsync(urlLite);
+            if (!responseLite.IsSuccessStatusCode) return "HEOS";
 
-                string liteXmlString = await responseLite.Content.ReadAsStringAsync();
-                var xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(liteXmlString);
+            string liteXmlString = await responseLite.Content.ReadAsStringAsync();
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(liteXmlString);
 
-                var rawvalue = xmlDoc.DocumentElement?.SelectSingleNode("//InputFuncSelect")?.InnerText;
-                if (string.IsNullOrEmpty(rawvalue)) return "HEOS";
+            var rawvalue = xmlDoc.DocumentElement?.SelectSingleNode("//InputFuncSelect")?.InnerText;
+            if (string.IsNullOrEmpty(rawvalue)) return "HEOS";
 
-                if (rawvalue == "NET") return "HEOS";
-                if (rawvalue == "TV") return "TV Audio";
+            if (rawvalue == "NET") return "HEOS";
+            if (rawvalue == "TV") return "TV Audio";
+            if (rawvalue == "MPLAY") return "Media Player";
 
-                string xmlPayload = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<tx>\n<cmd id=\"1\">GetRenameSource</cmd>\n</tx>";
-                var content = new StringContent(xmlPayload, Encoding.UTF8, "text/xml");
+            string xmlPayload = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<tx>\n<cmd id=\"1\">GetRenameSource</cmd>\n</tx>";
+            var content = new StringContent(xmlPayload, Encoding.UTF8, "text/xml");
 
-                var responseCommand = await client.PostAsync(urlCommand, content);
-                if (!responseCommand.IsSuccessStatusCode) return rawvalue;
+            var responseCommand = await client.PostAsync(urlCommand, content);
+            if (!responseCommand.IsSuccessStatusCode) return rawvalue;
 
-                string commandResponse = await responseCommand.Content.ReadAsStringAsync();
+            string commandResponse = await responseCommand.Content.ReadAsStringAsync();
 
-                var doc = System.Xml.Linq.XDocument.Parse(commandResponse);
-                var friendlyName = doc.Descendants("list")
-                    .Where(x => x.Element("name")?.Value == rawvalue)
-                    .Select(x => x.Element("rename")?.Value)
-                    .FirstOrDefault();
+            var doc = System.Xml.Linq.XDocument.Parse(commandResponse);
+            var friendlyName = doc.Descendants("list")
+                .Where(x => x.Element("name")?.Value == rawvalue)
+                .Select(x => x.Element("rename")?.Value)
+                .FirstOrDefault();
 
-                return friendlyName ?? rawvalue;
-            }
+            return friendlyName ?? rawvalue;
         }
         catch
         {
             return "HEOS";
         }
     }
-    // XML Reader END ////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    // Connector Part
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public bool IsHostOnline(string ipAddress)
     {
         try
         {
-            using (Ping ping = new Ping())
-            {
-                PingReply reply = ping.Send(ipAddress, 2000);
-                return (reply.Status == IPStatus.Success);
-            }
+            using Ping ping = new();
+            PingReply reply = ping.Send(ipAddress, 2000);
+            return (reply.Status == IPStatus.Success);
         }
         catch
         {
@@ -115,22 +96,20 @@ public class AsyncTelnetClient
     }
     public bool IsPortOpen(string host, int port, int timeoutMilliseconds = 2000)
     {
-        using (TcpClient tcpClient = new TcpClient())
+        using TcpClient tcpClient = new();
+        try
         {
-            try
-            {
-                var result = tcpClient.BeginConnect(host, port, null, null);
-                var success = result.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+            var result = tcpClient.BeginConnect(host, port, null, null);
+            var success = result.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
 
-                if (!success) return false;
+            if (!success) return false;
 
-                tcpClient.EndConnect(result);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            tcpClient.EndConnect(result);
+            return true;
+        }
+        catch
+        {
+            return false;
         }
     }
     public async Task StartAsync(string hostname, int port)
@@ -327,7 +306,7 @@ public class AsyncTelnetClient
                 _lastResponseTime = DateTime.UtcNow;
 
                 string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                string[] messages = receivedData.Split(new[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] messages = receivedData.Split(["\r", "\n"], StringSplitOptions.RemoveEmptyEntries);
                 foreach (var msg in messages)
                 {
                     DataReceived?.Invoke(msg);
