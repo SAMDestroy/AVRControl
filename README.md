@@ -34,33 +34,38 @@ No installation required.
 <hr>
 Changelog
 
-🚀 **AVRControl v1.6.0.0 – The Advanced Audio Matrix Release**
-* This release introduces a completely redesigned **Audio Modes Matrix**, giving you full, real-time command over 16 distinct sound formats of your Denon/Marantz AVR.
-* The entire system has been heavily refined to ensure absolute, instant synchronization between what you see on your monitor and what your receiver is actually doing.
+🚀 **AVRControl v1.7.0.0 – Dynamic Feedback Update**
+* This release introduces a dynamic system tray notification system providing immediate visual feedback for network communication and device status.
+* Further optimizations have been applied to the communication protocol and internal resource management to reduce overhead.
 
 ✨ **New Features**
 
-* **Advanced Audio Modes Matrix:** A beautiful, newly integrated tab page splitting 16 dedicated audio modes into clean, logical categories (Standard/Upmixers, Purist Modes, and DSP Environments). 
-* **Real-Time Format Synchronization:** The active selection snaps into place instantly, reflecting the AVR's true state. If you switch inputs or formats, the app follows immediately.
-* **Flicker-Free UI Rendering:** Re-engineered how the user interface redraws itself. Changing modes or receiving heavy background status updates now happens completely silently and without visual flickering.
-* **Expanded Audio Format Coverage:** Full native UI support for cinema and streaming audio formats, including Dolby TrueHD + DSur, Dolby Atmos, DTS-HD Master Audio, native DTS:X, and streaming-centric Dolby Digital Plus (`DD+DSUR`).
+* **Dynamic Tray Activity Indicators:** Implementation of a color-coded notification system within the system tray icon. A visual indicator (dot) signals active data transmission (Send/Receive), status changes, or connection errors.
+* **Context-Aware Visual States:**
+	* **LimeGreen:** Command transmission (Outgoing).
+	* **DeepSkyBlue:** Data reception/confirmation (Incoming).
+	* **Orange:** Status or track information change (HEOS/System).
+	* **Red:** Persistent connection error or Watchdog timeout.
+* **Automatic Echo Suppression:** Integrated logic to suppress redundant visual "flickering" caused by immediate command-response cycles.
 
 🛠️ **Technical Improvements**
 
-* **Modernized Network Stack:** Fully overhauled the background update-check and XML parsing engines to run completely non-blocking, ensuring a lighter network footprint and smoother app performance.
-* **High-DPI Display Precision:** Enabled advanced screen scaling, ensuring that the interface and fonts remain sharp on high-resolution displays.
-* **Small Repository:** Completely purged obsolete legacy dependencies and old configuration files from the backend, leaving a significantly lighter and cleaner application footprint.
+* **Optimized XML Queries:** Reduced the frequency and volume of XML device information requests to minimize network traffic and receiver processing load.
+* **High-Resolution Icon Rendering:** Tray indicators are now dynamically rendered at runtime from 128x128 32-bit master assets, ensuring crisp visual clarity across different Windows scaling factors (DPI).
+* **Refined Audio Mode Mappings:** Minor adjustments to the internal sound mode logic for improved compatibility with varying AVR firmware versions.
+* **UI/Cosmetic Adjustments:** Refined alignment of control elements and minor color corrections for better interface consistency.
 
 🐛 **Bugfixes**
 
-* **Fixed:** Resolved a synchronization bug where forcing incompatible audio modes could leave the app out of sync with the physical receiver.
-* **Fixed:** Extended the text normalization engine to prevent complex audio stream names from dropping selection points.
-* **Fixed:** Eliminated redundant interface redraws to keep background resource usage near zero percent during long movie or music sessions.
+* **Fixed:** Resolved several minor logic bugs within the Telnet parser and UI event handlers.
+* **Fixed:** Improved thread-safe handling of background updates to prevent occasional UI synchronization issues.
+* **Fixed:** Eliminated potential GDI object leaks during rapid icon state transitions.
 
 **Developer Note:**
 
-* v1.6.0.0, focused heavily on bridging the real-time feedback of the AVR with the Windows Forms interface. While optimizing for the cutting-edge **.NET 10 SDK**, intentionally chose to halt automatic Roslyn code refactoring beyond essential cleanups. Modern compiler suggestions frequently advocate for highly abstracted, compressed syntax rules (such as range indices `data[2..]` or advanced inline shortcuts) that heavily degrade immediate human code readability. 
-* Initially attempted to clear every single code analysis message, but ultimately drew the line to protect the project's clarity. To preserve AVRControl as a deeply transparent, easily maintainable, and community-friendly open-source project, explicit readability was prioritized over purely academic compiler micro-optimizations. Code should be clean, but above all, it must remain human-readable.
+* Version 1.7.0.0 focuses on granular resource management and real-time feedback. The dynamic tray icon system was implemented using a **GDI+ Icon Factory pattern**, generating variants of the master resource in RAM during initialization to avoid disk I/O and CPU spikes during runtime. 
+* To ensure long-term stability, specific **Win32 API (user32.dll)** calls were integrated to explicitly manage icon handles (DestroyIcon), preventing GDI handle exhaustion common in high-frequency UI updates.
+* Leveraging the **.NET 10 SDK**, adopted modern C# 12/13 features like **Collection Expressions []** and strict **Nullable Reference Type** handling. This ensures a modern, type-safe codebase while maintaining the project's philosophy of explicit, readable, and maintainable open-source code over excessive abstraction.
 
 **License**
 

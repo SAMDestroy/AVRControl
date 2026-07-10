@@ -122,8 +122,6 @@ namespace AVRControl
             btnToggleMute = new PictureBox();
             btnVolDown = new PictureBox();
             btnVolUp = new PictureBox();
-            SliderVolume = new TrackBar();
-            ShowVolume = new System.Windows.Forms.Label();
             lbVol10 = new System.Windows.Forms.Label();
             lbVol20 = new System.Windows.Forms.Label();
             lbVol30 = new System.Windows.Forms.Label();
@@ -141,6 +139,8 @@ namespace AVRControl
             lbAVRSoundMode = new System.Windows.Forms.Label();
             AVRSoundMode = new System.Windows.Forms.Label();
             HeosTrackInfoAlbum = new System.Windows.Forms.Label();
+            SliderVolume = new TrackBar();
+            ShowVolume = new System.Windows.Forms.Label();
             tabSpeaker = new TabPage();
             btnResetSpeaker = new Button();
             lbSpeakerSubMasterShowValue = new System.Windows.Forms.Label();
@@ -465,8 +465,6 @@ namespace AVRControl
             tabMain.Controls.Add(btnToggleMute);
             tabMain.Controls.Add(btnVolDown);
             tabMain.Controls.Add(btnVolUp);
-            tabMain.Controls.Add(SliderVolume);
-            tabMain.Controls.Add(ShowVolume);
             tabMain.Controls.Add(lbVol10);
             tabMain.Controls.Add(lbVol20);
             tabMain.Controls.Add(lbVol30);
@@ -484,6 +482,8 @@ namespace AVRControl
             tabMain.Controls.Add(lbAVRSoundMode);
             tabMain.Controls.Add(AVRSoundMode);
             tabMain.Controls.Add(HeosTrackInfoAlbum);
+            tabMain.Controls.Add(SliderVolume);
+            tabMain.Controls.Add(ShowVolume);
             tabMain.Location = new Point(4, 29);
             tabMain.Margin = new Padding(2);
             tabMain.Name = "tabMain";
@@ -514,53 +514,49 @@ namespace AVRControl
             // 
             // lbHeosAVRNetType_Data
             // 
-            lbHeosAVRNetType_Data.AutoSize = true;
             lbHeosAVRNetType_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosAVRNetType_Data.ForeColor = Color.Khaki;
-            lbHeosAVRNetType_Data.Location = new Point(81, 501);
+            lbHeosAVRNetType_Data.Location = new Point(92, 499);
             lbHeosAVRNetType_Data.Margin = new Padding(4, 0, 4, 0);
             lbHeosAVRNetType_Data.Name = "lbHeosAVRNetType_Data";
-            lbHeosAVRNetType_Data.Size = new Size(0, 15);
+            lbHeosAVRNetType_Data.Size = new Size(170, 15);
             lbHeosAVRNetType_Data.TabIndex = 123;
             // 
             // lbHeosAVRID_Data
             // 
-            lbHeosAVRID_Data.AutoSize = true;
             lbHeosAVRID_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosAVRID_Data.ForeColor = Color.Khaki;
-            lbHeosAVRID_Data.Location = new Point(81, 473);
+            lbHeosAVRID_Data.Location = new Point(92, 473);
             lbHeosAVRID_Data.Margin = new Padding(4, 0, 4, 0);
             lbHeosAVRID_Data.Name = "lbHeosAVRID_Data";
-            lbHeosAVRID_Data.Size = new Size(0, 15);
+            lbHeosAVRID_Data.Size = new Size(170, 15);
             lbHeosAVRID_Data.TabIndex = 122;
             // 
             // lbHeosAVRVersion_Data
             // 
-            lbHeosAVRVersion_Data.AutoSize = true;
             lbHeosAVRVersion_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosAVRVersion_Data.ForeColor = Color.Khaki;
-            lbHeosAVRVersion_Data.Location = new Point(81, 446);
+            lbHeosAVRVersion_Data.Location = new Point(92, 447);
             lbHeosAVRVersion_Data.Margin = new Padding(4, 0, 4, 0);
             lbHeosAVRVersion_Data.Name = "lbHeosAVRVersion_Data";
-            lbHeosAVRVersion_Data.Size = new Size(0, 15);
+            lbHeosAVRVersion_Data.Size = new Size(170, 15);
             lbHeosAVRVersion_Data.TabIndex = 121;
             // 
             // lbHeosAVRName_Data
             // 
-            lbHeosAVRName_Data.AutoSize = true;
             lbHeosAVRName_Data.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosAVRName_Data.ForeColor = Color.Khaki;
-            lbHeosAVRName_Data.Location = new Point(81, 421);
+            lbHeosAVRName_Data.Location = new Point(92, 421);
             lbHeosAVRName_Data.Margin = new Padding(4, 0, 4, 0);
             lbHeosAVRName_Data.Name = "lbHeosAVRName_Data";
-            lbHeosAVRName_Data.Size = new Size(0, 15);
+            lbHeosAVRName_Data.Size = new Size(170, 15);
             lbHeosAVRName_Data.TabIndex = 120;
             // 
             // lbHeosAVRNetType
             // 
             lbHeosAVRNetType.AutoSize = true;
             lbHeosAVRNetType.ForeColor = Color.White;
-            lbHeosAVRNetType.Location = new Point(15, 497);
+            lbHeosAVRNetType.Location = new Point(15, 496);
             lbHeosAVRNetType.Margin = new Padding(2, 0, 2, 0);
             lbHeosAVRNetType.Name = "lbHeosAVRNetType";
             lbHeosAVRNetType.Size = new Size(67, 20);
@@ -582,7 +578,7 @@ namespace AVRControl
             // 
             lbHeosAVRVersion.AutoSize = true;
             lbHeosAVRVersion.ForeColor = Color.White;
-            lbHeosAVRVersion.Location = new Point(15, 443);
+            lbHeosAVRVersion.Location = new Point(15, 444);
             lbHeosAVRVersion.Margin = new Padding(2, 0, 2, 0);
             lbHeosAVRVersion.Name = "lbHeosAVRVersion";
             lbHeosAVRVersion.Size = new Size(60, 20);
@@ -645,7 +641,7 @@ namespace AVRControl
             lbHeosPlayRepeatOne.AutoSize = true;
             lbHeosPlayRepeatOne.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosPlayRepeatOne.ForeColor = Color.White;
-            lbHeosPlayRepeatOne.Location = new Point(530, 324);
+            lbHeosPlayRepeatOne.Location = new Point(537, 325);
             lbHeosPlayRepeatOne.Margin = new Padding(4, 0, 4, 0);
             lbHeosPlayRepeatOne.Name = "lbHeosPlayRepeatOne";
             lbHeosPlayRepeatOne.Size = new Size(85, 17);
@@ -658,7 +654,7 @@ namespace AVRControl
             btnHeosPlayRepeatOne.BackgroundImage = (Image)resources.GetObject("btnHeosPlayRepeatOne.BackgroundImage");
             btnHeosPlayRepeatOne.BackgroundImageLayout = ImageLayout.Center;
             btnHeosPlayRepeatOne.BorderStyle = BorderStyle.FixedSingle;
-            btnHeosPlayRepeatOne.Location = new Point(545, 275);
+            btnHeosPlayRepeatOne.Location = new Point(552, 276);
             btnHeosPlayRepeatOne.Margin = new Padding(4, 5, 4, 5);
             btnHeosPlayRepeatOne.Name = "btnHeosPlayRepeatOne";
             btnHeosPlayRepeatOne.Size = new Size(49, 43);
@@ -676,7 +672,7 @@ namespace AVRControl
             lbHeosPlayRepeatAll.AutoSize = true;
             lbHeosPlayRepeatAll.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosPlayRepeatAll.ForeColor = Color.White;
-            lbHeosPlayRepeatAll.Location = new Point(432, 324);
+            lbHeosPlayRepeatAll.Location = new Point(441, 325);
             lbHeosPlayRepeatAll.Margin = new Padding(4, 0, 4, 0);
             lbHeosPlayRepeatAll.Name = "lbHeosPlayRepeatAll";
             lbHeosPlayRepeatAll.Size = new Size(73, 17);
@@ -689,7 +685,7 @@ namespace AVRControl
             btnHeosPlayRepeatAll.BackgroundImage = (Image)resources.GetObject("btnHeosPlayRepeatAll.BackgroundImage");
             btnHeosPlayRepeatAll.BackgroundImageLayout = ImageLayout.Center;
             btnHeosPlayRepeatAll.BorderStyle = BorderStyle.FixedSingle;
-            btnHeosPlayRepeatAll.Location = new Point(445, 275);
+            btnHeosPlayRepeatAll.Location = new Point(452, 276);
             btnHeosPlayRepeatAll.Margin = new Padding(4, 5, 4, 5);
             btnHeosPlayRepeatAll.Name = "btnHeosPlayRepeatAll";
             btnHeosPlayRepeatAll.Size = new Size(49, 43);
@@ -707,7 +703,7 @@ namespace AVRControl
             lbHeosPlayShuffle.AutoSize = true;
             lbHeosPlayShuffle.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosPlayShuffle.ForeColor = Color.White;
-            lbHeosPlayShuffle.Location = new Point(342, 324);
+            lbHeosPlayShuffle.Location = new Point(352, 325);
             lbHeosPlayShuffle.Margin = new Padding(4, 0, 4, 0);
             lbHeosPlayShuffle.Name = "lbHeosPlayShuffle";
             lbHeosPlayShuffle.Size = new Size(52, 17);
@@ -719,7 +715,7 @@ namespace AVRControl
             lbHeosPlaySkip.AutoSize = true;
             lbHeosPlaySkip.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosPlaySkip.ForeColor = Color.White;
-            lbHeosPlaySkip.Location = new Point(250, 324);
+            lbHeosPlaySkip.Location = new Point(260, 325);
             lbHeosPlaySkip.Margin = new Padding(4, 0, 4, 0);
             lbHeosPlaySkip.Name = "lbHeosPlaySkip";
             lbHeosPlaySkip.Size = new Size(35, 17);
@@ -731,7 +727,7 @@ namespace AVRControl
             lbHeosPlayBack.AutoSize = true;
             lbHeosPlayBack.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosPlayBack.ForeColor = Color.White;
-            lbHeosPlayBack.Location = new Point(147, 324);
+            lbHeosPlayBack.Location = new Point(158, 325);
             lbHeosPlayBack.Margin = new Padding(4, 0, 4, 0);
             lbHeosPlayBack.Name = "lbHeosPlayBack";
             lbHeosPlayBack.Size = new Size(39, 17);
@@ -743,7 +739,7 @@ namespace AVRControl
             lbHeosPlayPause.AutoSize = true;
             lbHeosPlayPause.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosPlayPause.ForeColor = Color.White;
-            lbHeosPlayPause.Location = new Point(25, 324);
+            lbHeosPlayPause.Location = new Point(35, 325);
             lbHeosPlayPause.Margin = new Padding(4, 0, 4, 0);
             lbHeosPlayPause.Name = "lbHeosPlayPause";
             lbHeosPlayPause.Size = new Size(79, 17);
@@ -756,7 +752,7 @@ namespace AVRControl
             btnHeosPlayShuffle.BackgroundImage = (Image)resources.GetObject("btnHeosPlayShuffle.BackgroundImage");
             btnHeosPlayShuffle.BackgroundImageLayout = ImageLayout.Center;
             btnHeosPlayShuffle.BorderStyle = BorderStyle.FixedSingle;
-            btnHeosPlayShuffle.Location = new Point(344, 275);
+            btnHeosPlayShuffle.Location = new Point(352, 276);
             btnHeosPlayShuffle.Margin = new Padding(4, 5, 4, 5);
             btnHeosPlayShuffle.Name = "btnHeosPlayShuffle";
             btnHeosPlayShuffle.Size = new Size(49, 43);
@@ -775,7 +771,7 @@ namespace AVRControl
             btnHeosPlayBack.BackgroundImage = (Image)resources.GetObject("btnHeosPlayBack.BackgroundImage");
             btnHeosPlayBack.BackgroundImageLayout = ImageLayout.Center;
             btnHeosPlayBack.BorderStyle = BorderStyle.FixedSingle;
-            btnHeosPlayBack.Location = new Point(143, 275);
+            btnHeosPlayBack.Location = new Point(152, 276);
             btnHeosPlayBack.Margin = new Padding(4, 5, 4, 5);
             btnHeosPlayBack.Name = "btnHeosPlayBack";
             btnHeosPlayBack.Size = new Size(49, 43);
@@ -794,7 +790,7 @@ namespace AVRControl
             btnHeosPlaySkip.BackgroundImage = (Image)resources.GetObject("btnHeosPlaySkip.BackgroundImage");
             btnHeosPlaySkip.BackgroundImageLayout = ImageLayout.Center;
             btnHeosPlaySkip.BorderStyle = BorderStyle.FixedSingle;
-            btnHeosPlaySkip.Location = new Point(243, 275);
+            btnHeosPlaySkip.Location = new Point(252, 276);
             btnHeosPlaySkip.Margin = new Padding(4, 5, 4, 5);
             btnHeosPlaySkip.Name = "btnHeosPlaySkip";
             btnHeosPlaySkip.Size = new Size(49, 43);
@@ -813,7 +809,7 @@ namespace AVRControl
             btnHeosPlayPause.BackgroundImage = (Image)resources.GetObject("btnHeosPlayPause.BackgroundImage");
             btnHeosPlayPause.BackgroundImageLayout = ImageLayout.Center;
             btnHeosPlayPause.BorderStyle = BorderStyle.FixedSingle;
-            btnHeosPlayPause.Location = new Point(42, 275);
+            btnHeosPlayPause.Location = new Point(51, 276);
             btnHeosPlayPause.Margin = new Padding(4, 5, 4, 5);
             btnHeosPlayPause.Name = "btnHeosPlayPause";
             btnHeosPlayPause.Size = new Size(49, 43);
@@ -843,7 +839,7 @@ namespace AVRControl
             lbHeosAlbum.AutoSize = true;
             lbHeosAlbum.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosAlbum.ForeColor = Color.White;
-            lbHeosAlbum.Location = new Point(295, 199);
+            lbHeosAlbum.Location = new Point(295, 200);
             lbHeosAlbum.Margin = new Padding(4, 0, 4, 0);
             lbHeosAlbum.Name = "lbHeosAlbum";
             lbHeosAlbum.Size = new Size(51, 17);
@@ -855,7 +851,7 @@ namespace AVRControl
             lbHeosArtist.AutoSize = true;
             lbHeosArtist.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbHeosArtist.ForeColor = Color.White;
-            lbHeosArtist.Location = new Point(295, 173);
+            lbHeosArtist.Location = new Point(295, 175);
             lbHeosArtist.Margin = new Padding(4, 0, 4, 0);
             lbHeosArtist.Name = "lbHeosArtist";
             lbHeosArtist.Size = new Size(44, 17);
@@ -867,7 +863,7 @@ namespace AVRControl
             HeosTrackInfoArtist.AutoEllipsis = true;
             HeosTrackInfoArtist.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             HeosTrackInfoArtist.ForeColor = Color.Khaki;
-            HeosTrackInfoArtist.Location = new Point(348, 173);
+            HeosTrackInfoArtist.Location = new Point(348, 175);
             HeosTrackInfoArtist.Margin = new Padding(4, 0, 4, 0);
             HeosTrackInfoArtist.Name = "HeosTrackInfoArtist";
             HeosTrackInfoArtist.Size = new Size(294, 19);
@@ -878,10 +874,10 @@ namespace AVRControl
             HeosTrackInfoSong.AutoEllipsis = true;
             HeosTrackInfoSong.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             HeosTrackInfoSong.ForeColor = Color.Khaki;
-            HeosTrackInfoSong.Location = new Point(348, 226);
+            HeosTrackInfoSong.Location = new Point(348, 225);
             HeosTrackInfoSong.Margin = new Padding(4, 0, 4, 0);
             HeosTrackInfoSong.Name = "HeosTrackInfoSong";
-            HeosTrackInfoSong.Size = new Size(293, 19);
+            HeosTrackInfoSong.Size = new Size(294, 19);
             HeosTrackInfoSong.TabIndex = 94;
             // 
             // label2
@@ -897,7 +893,7 @@ namespace AVRControl
             // 
             lbUp.AutoSize = true;
             lbUp.ForeColor = Color.White;
-            lbUp.Location = new Point(575, 58);
+            lbUp.Location = new Point(575, 62);
             lbUp.Margin = new Padding(2, 0, 2, 0);
             lbUp.Name = "lbUp";
             lbUp.Size = new Size(28, 20);
@@ -908,7 +904,7 @@ namespace AVRControl
             // 
             lbMute.AutoSize = true;
             lbMute.ForeColor = Color.White;
-            lbMute.Location = new Point(291, 58);
+            lbMute.Location = new Point(291, 62);
             lbMute.Margin = new Padding(2, 0, 2, 0);
             lbMute.Name = "lbMute";
             lbMute.Size = new Size(43, 20);
@@ -919,7 +915,7 @@ namespace AVRControl
             // 
             lbDown.AutoSize = true;
             lbDown.ForeColor = Color.White;
-            lbDown.Location = new Point(10, 58);
+            lbDown.Location = new Point(10, 62);
             lbDown.Margin = new Padding(2, 0, 2, 0);
             lbDown.Name = "lbDown";
             lbDown.Size = new Size(48, 20);
@@ -941,7 +937,7 @@ namespace AVRControl
             btnToggleMute.BackgroundImage = (Image)resources.GetObject("btnToggleMute.BackgroundImage");
             btnToggleMute.BackgroundImageLayout = ImageLayout.Center;
             btnToggleMute.BorderStyle = BorderStyle.FixedSingle;
-            btnToggleMute.Location = new Point(287, 12);
+            btnToggleMute.Location = new Point(287, 16);
             btnToggleMute.Margin = new Padding(4, 5, 4, 5);
             btnToggleMute.Name = "btnToggleMute";
             btnToggleMute.Size = new Size(49, 43);
@@ -959,7 +955,7 @@ namespace AVRControl
             btnVolDown.BackgroundImage = (Image)resources.GetObject("btnVolDown.BackgroundImage");
             btnVolDown.BackgroundImageLayout = ImageLayout.Center;
             btnVolDown.BorderStyle = BorderStyle.FixedSingle;
-            btnVolDown.Location = new Point(6, 12);
+            btnVolDown.Location = new Point(8, 16);
             btnVolDown.Margin = new Padding(4, 5, 4, 5);
             btnVolDown.Name = "btnVolDown";
             btnVolDown.Size = new Size(49, 43);
@@ -978,7 +974,7 @@ namespace AVRControl
             btnVolUp.BackgroundImage = (Image)resources.GetObject("btnVolUp.BackgroundImage");
             btnVolUp.BackgroundImageLayout = ImageLayout.Center;
             btnVolUp.BorderStyle = BorderStyle.FixedSingle;
-            btnVolUp.Location = new Point(563, 12);
+            btnVolUp.Location = new Point(563, 16);
             btnVolUp.Margin = new Padding(4, 5, 4, 5);
             btnVolUp.Name = "btnVolUp";
             btnVolUp.Size = new Size(49, 43);
@@ -991,41 +987,12 @@ namespace AVRControl
             btnVolUp.MouseLeave += BtnVolUp_MouseLeave;
             btnVolUp.MouseUp += BtnVolUp_MouseUp;
             // 
-            // SliderVolume
-            // 
-            SliderVolume.AutoSize = false;
-            SliderVolume.Enabled = false;
-            SliderVolume.Location = new Point(14, 80);
-            SliderVolume.Margin = new Padding(16, 18, 16, 0);
-            SliderVolume.Maximum = 100;
-            SliderVolume.MaximumSize = new Size(587, 77);
-            SliderVolume.Minimum = 10;
-            SliderVolume.Name = "SliderVolume";
-            SliderVolume.Size = new Size(587, 46);
-            SliderVolume.SmallChange = 2;
-            SliderVolume.TabIndex = 68;
-            SliderVolume.Text = "SliderVolume";
-            SliderVolume.TickFrequency = 5;
-            SliderVolume.Value = 10;
-            SliderVolume.Scroll += SliderVolume_Scroll;
-            SliderVolume.MouseUp += SliderVolume_MouseUp;
-            // 
-            // ShowVolume
-            // 
-            ShowVolume.ForeColor = Color.White;
-            ShowVolume.Location = new Point(597, 81);
-            ShowVolume.Margin = new Padding(4, 0, 4, 0);
-            ShowVolume.Name = "ShowVolume";
-            ShowVolume.Size = new Size(53, 22);
-            ShowVolume.TabIndex = 69;
-            ShowVolume.Text = "Vol: 10";
-            // 
             // lbVol10
             // 
             lbVol10.AutoSize = true;
             lbVol10.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol10.ForeColor = Color.DeepSkyBlue;
-            lbVol10.Location = new Point(21, 125);
+            lbVol10.Location = new Point(21, 127);
             lbVol10.Margin = new Padding(4, 0, 4, 0);
             lbVol10.Name = "lbVol10";
             lbVol10.Size = new Size(21, 15);
@@ -1037,7 +1004,7 @@ namespace AVRControl
             lbVol20.AutoSize = true;
             lbVol20.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol20.ForeColor = Color.MediumTurquoise;
-            lbVol20.Location = new Point(82, 125);
+            lbVol20.Location = new Point(82, 127);
             lbVol20.Margin = new Padding(4, 0, 4, 0);
             lbVol20.Name = "lbVol20";
             lbVol20.Size = new Size(21, 15);
@@ -1049,7 +1016,7 @@ namespace AVRControl
             lbVol30.AutoSize = true;
             lbVol30.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol30.ForeColor = Color.PaleGreen;
-            lbVol30.Location = new Point(144, 125);
+            lbVol30.Location = new Point(144, 127);
             lbVol30.Margin = new Padding(4, 0, 4, 0);
             lbVol30.Name = "lbVol30";
             lbVol30.Size = new Size(21, 15);
@@ -1061,7 +1028,7 @@ namespace AVRControl
             lbVol40.AutoSize = true;
             lbVol40.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol40.ForeColor = Color.GreenYellow;
-            lbVol40.Location = new Point(205, 125);
+            lbVol40.Location = new Point(205, 127);
             lbVol40.Margin = new Padding(4, 0, 4, 0);
             lbVol40.Name = "lbVol40";
             lbVol40.Size = new Size(21, 15);
@@ -1073,7 +1040,7 @@ namespace AVRControl
             lbVol50.AutoSize = true;
             lbVol50.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbVol50.ForeColor = Color.Beige;
-            lbVol50.Location = new Point(266, 125);
+            lbVol50.Location = new Point(266, 127);
             lbVol50.Margin = new Padding(4, 0, 4, 0);
             lbVol50.Name = "lbVol50";
             lbVol50.Size = new Size(23, 15);
@@ -1085,7 +1052,7 @@ namespace AVRControl
             lbVol60.AutoSize = true;
             lbVol60.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol60.ForeColor = Color.PaleGoldenrod;
-            lbVol60.Location = new Point(328, 125);
+            lbVol60.Location = new Point(328, 127);
             lbVol60.Margin = new Padding(4, 0, 4, 0);
             lbVol60.Name = "lbVol60";
             lbVol60.Size = new Size(21, 15);
@@ -1097,7 +1064,7 @@ namespace AVRControl
             lbVol70.AutoSize = true;
             lbVol70.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol70.ForeColor = Color.Khaki;
-            lbVol70.Location = new Point(389, 125);
+            lbVol70.Location = new Point(389, 127);
             lbVol70.Margin = new Padding(4, 0, 4, 0);
             lbVol70.Name = "lbVol70";
             lbVol70.Size = new Size(21, 15);
@@ -1109,7 +1076,7 @@ namespace AVRControl
             lbVol80.AutoSize = true;
             lbVol80.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol80.ForeColor = Color.SandyBrown;
-            lbVol80.Location = new Point(450, 125);
+            lbVol80.Location = new Point(450, 127);
             lbVol80.Margin = new Padding(4, 0, 4, 0);
             lbVol80.Name = "lbVol80";
             lbVol80.Size = new Size(21, 15);
@@ -1121,7 +1088,7 @@ namespace AVRControl
             lbVol90.AutoSize = true;
             lbVol90.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol90.ForeColor = Color.DarkOrange;
-            lbVol90.Location = new Point(512, 125);
+            lbVol90.Location = new Point(512, 127);
             lbVol90.Margin = new Padding(4, 0, 4, 0);
             lbVol90.Name = "lbVol90";
             lbVol90.Size = new Size(21, 15);
@@ -1133,7 +1100,7 @@ namespace AVRControl
             lbVol100.AutoSize = true;
             lbVol100.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVol100.ForeColor = Color.OrangeRed;
-            lbVol100.Location = new Point(570, 125);
+            lbVol100.Location = new Point(570, 127);
             lbVol100.Margin = new Padding(4, 0, 4, 0);
             lbVol100.Name = "lbVol100";
             lbVol100.Size = new Size(28, 15);
@@ -1159,7 +1126,7 @@ namespace AVRControl
             AVRSource.Location = new Point(130, 175);
             AVRSource.Margin = new Padding(4, 0, 4, 0);
             AVRSource.Name = "AVRSource";
-            AVRSource.Size = new Size(161, 19);
+            AVRSource.Size = new Size(160, 19);
             AVRSource.TabIndex = 84;
             // 
             // lbAVRSourceAudio
@@ -1178,7 +1145,7 @@ namespace AVRControl
             // 
             AVRSourceAudio.Font = new Font("Microsoft Sans Serif", 6.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
             AVRSourceAudio.ForeColor = Color.Khaki;
-            AVRSourceAudio.Location = new Point(130, 202);
+            AVRSourceAudio.Location = new Point(130, 200);
             AVRSourceAudio.Margin = new Padding(4, 0, 4, 0);
             AVRSourceAudio.Name = "AVRSourceAudio";
             AVRSourceAudio.Size = new Size(160, 19);
@@ -1200,7 +1167,7 @@ namespace AVRControl
             // 
             AVRSoundMode.Font = new Font("Microsoft Sans Serif", 6.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
             AVRSoundMode.ForeColor = Color.Khaki;
-            AVRSoundMode.Location = new Point(130, 226);
+            AVRSoundMode.Location = new Point(130, 225);
             AVRSoundMode.Margin = new Padding(4, 0, 4, 0);
             AVRSoundMode.Name = "AVRSoundMode";
             AVRSoundMode.Size = new Size(160, 19);
@@ -1211,11 +1178,40 @@ namespace AVRControl
             HeosTrackInfoAlbum.AutoEllipsis = true;
             HeosTrackInfoAlbum.Font = new Font("Microsoft Sans Serif", 7F, FontStyle.Regular, GraphicsUnit.Point, 0);
             HeosTrackInfoAlbum.ForeColor = Color.Khaki;
-            HeosTrackInfoAlbum.Location = new Point(348, 201);
+            HeosTrackInfoAlbum.Location = new Point(348, 200);
             HeosTrackInfoAlbum.Margin = new Padding(4, 0, 4, 0);
             HeosTrackInfoAlbum.Name = "HeosTrackInfoAlbum";
             HeosTrackInfoAlbum.Size = new Size(294, 19);
             HeosTrackInfoAlbum.TabIndex = 88;
+            // 
+            // SliderVolume
+            // 
+            SliderVolume.AutoSize = false;
+            SliderVolume.Enabled = false;
+            SliderVolume.Location = new Point(14, 90);
+            SliderVolume.Margin = new Padding(16, 18, 16, 0);
+            SliderVolume.Maximum = 100;
+            SliderVolume.MaximumSize = new Size(587, 77);
+            SliderVolume.Minimum = 10;
+            SliderVolume.Name = "SliderVolume";
+            SliderVolume.Size = new Size(587, 46);
+            SliderVolume.SmallChange = 2;
+            SliderVolume.TabIndex = 68;
+            SliderVolume.Text = "SliderVolume";
+            SliderVolume.TickFrequency = 5;
+            SliderVolume.Value = 10;
+            SliderVolume.Scroll += SliderVolume_Scroll;
+            SliderVolume.MouseUp += SliderVolume_MouseUp;
+            // 
+            // ShowVolume
+            // 
+            ShowVolume.ForeColor = Color.White;
+            ShowVolume.Location = new Point(597, 91);
+            ShowVolume.Margin = new Padding(4, 0, 4, 0);
+            ShowVolume.Name = "ShowVolume";
+            ShowVolume.Size = new Size(53, 22);
+            ShowVolume.TabIndex = 69;
+            ShowVolume.Text = "Vol: 10";
             // 
             // tabSpeaker
             // 
@@ -1932,11 +1928,11 @@ namespace AVRControl
             rbModeAuro3d.ForeColor = Color.White;
             rbModeAuro3d.Location = new Point(20, 170);
             rbModeAuro3d.Name = "rbModeAuro3d";
-            rbModeAuro3d.Size = new Size(82, 21);
+            rbModeAuro3d.Size = new Size(111, 21);
             rbModeAuro3d.TabIndex = 4;
             rbModeAuro3d.TabStop = true;
             rbModeAuro3d.Tag = "AURO3D";
-            rbModeAuro3d.Text = "Auro-3D";
+            rbModeAuro3d.Text = "Auro 2D / 3D";
             rbModeAuro3d.UseVisualStyleBackColor = true;
             rbModeAuro3d.Click += rbAudioMode_Click;
             // 

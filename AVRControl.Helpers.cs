@@ -12,10 +12,86 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 */
 
+using System.Drawing.Drawing2D;
+
 namespace AVRControl
 {
     public partial class AVRControl
     {
+        private void PrepareIcons()
+        {
+            var colorMap = new Dictionary<IndicatorType, Color>
+            {
+                { IndicatorType.Send, Color.LimeGreen },
+                { IndicatorType.Receive, Color.Yellow },
+                { IndicatorType.Status, Color.Orange },
+                { IndicatorType.Error, Color.Red }
+            };
+
+            int size = 128;
+            int dotSize = size / 3;
+            int offset = (size - dotSize) / 2;
+
+            foreach (var entry in colorMap)
+            {
+                using Bitmap bmp = new(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                    g.DrawIcon(_appIcon, 0, 0);
+
+                    using (SolidBrush brush = new(entry.Value))
+                    {
+                        g.FillEllipse(brush, offset, offset, dotSize, dotSize);
+                    }
+
+                    using Pen pen = new(Color.FromArgb(100, 0, 0, 0), 2);
+                    g.DrawEllipse(pen, offset, offset, dotSize, dotSize);
+                }
+
+                IntPtr hIcon = bmp.GetHicon();
+                _indicatorIcons[entry.Key] = (Icon)Icon.FromHandle(hIcon).Clone();
+                DestroyIcon(hIcon);
+            }
+
+            _iconResetTimer = new System.Windows.Forms.Timer { Interval = 200 };
+            _iconResetTimer.Tick += (s, e) =>
+            {
+                _iconResetTimer.Stop();
+                if (notifyIcon1.Visible) notifyIcon1.Icon = _appIcon;
+            };
+        }
+        public void FlashIcon(IndicatorType type)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(() => FlashIcon(type)));
+                return;
+            }
+
+            if (!notifyIcon1.Visible) return;
+
+            if (type == IndicatorType.Send)
+            {
+                _blockReceiveUntil = DateTime.Now.AddMilliseconds(600);
+            }
+            else if (type == IndicatorType.Receive)
+            {
+                if (DateTime.Now < _blockReceiveUntil) return;
+            }
+
+            if (_indicatorIcons.TryGetValue(type, out var icon))
+            {
+                notifyIcon1.Icon = _indicatorIcons[type];
+                _iconResetTimer?.Stop();
+
+                if (type != IndicatorType.Error)
+                {
+                    _iconResetTimer?.Start();
+                }
+            }
+        }
         private void SyncAudioModeRadioButtons(string modeText)
         {
             RadioButton? targetButton = null;
@@ -38,6 +114,7 @@ namespace AVRControl
                 case "DOLBY DIGITAL PLUS":
                 case "DOLBY D+ +DSUR":
                 case "DOLBY D+ +NEURAL:X":
+                case "DOLBY AUDIO-DD+":
                 case "DOLBY D+": targetButton = rbModeDolbyDigitalPlus; break;
 
                 case "DOLBY ATMOS":
@@ -55,7 +132,10 @@ namespace AVRControl
                 case "DTS:X MSTR": targetButton = rbModeDtsxNative; break;
 
                 case "AURO-3D":
-                case "AURO3D": targetButton = rbModeAuro3d; break;
+                case "AURO3D":
+                case "AURO2DSURR":
+                case "AURO-2D": targetButton = rbModeAuro3d; break;
+
                 case "GAME": targetButton = rbModeGame; break;
                 case "MULTI CH IN": targetButton = rbModeMultiChIn; break;
                 case "DIRECT": targetButton = rbModeDirect; break;
@@ -149,7 +229,7 @@ namespace AVRControl
             int keyIdx = data.IndexOf(patternJson);
             if (keyIdx != -1)
             {
-                int colonIdx = data.IndexOf(":", keyIdx + patternJson.Length);
+                int colonIdx = data.IndexOf(':', keyIdx + patternJson.Length);
                 if (colonIdx != -1)
                 {
                     start = colonIdx + 1;

@@ -14,10 +14,22 @@ GNU General Public License for more details.
 
 using Microsoft.Win32;
 
+using System.Runtime.InteropServices;
+using System.Drawing.Drawing2D;
+
 namespace AVRControl
 {
     public partial class AVRControl : Form
     {
+        public enum IndicatorType { Send, Receive, Status, Error }
+
+        private readonly Dictionary<IndicatorType, Icon> _indicatorIcons = [];
+        private System.Windows.Forms.Timer? _iconResetTimer;
+        private DateTime _blockReceiveUntil = DateTime.MinValue;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        extern static bool DestroyIcon(IntPtr handle);
+
         private readonly Icon _appIcon;
 
         private readonly string roamingPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AVRControl", "AVRControl.exe");
@@ -35,6 +47,9 @@ namespace AVRControl
         private int _localCurPos = 0;
         private int _maxDuration = 0;
         private bool _songChangePending = false;
+
+        private string _lastSiData = string.Empty;
+        private string _lastXmlSource = string.Empty;
 
         private string _lastHeosService = "";
 
@@ -64,6 +79,8 @@ namespace AVRControl
 
             this.notifyIcon1.Icon = _appIcon;
             this.notifyIcon1.Text = this.Text;
+
+            PrepareIcons();
 
             SystemEvents.PowerModeChanged += OnPowerModeChanged;
 
@@ -97,6 +114,8 @@ namespace AVRControl
 
                 this.Icon?.Dispose();
                 this.Icon = (Icon)_appIcon.Clone();
+
+                notifyIcon1.Icon = _appIcon;
 
                 this.ShowInTaskbar = true;
             }
@@ -203,6 +222,7 @@ namespace AVRControl
             {
                 string telnetCmd = clickedButton.Tag.ToString()!;
                 await _telnet.SendAsync($"MS{telnetCmd}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private void BtnSave_Click(object sender, EventArgs e)
@@ -231,9 +251,10 @@ namespace AVRControl
         {
             await _telnet.SendAsync("MV" + (CurVol + 1));
             _muted = false;
+            FlashIcon(IndicatorType.Send);
         }
         private void BtnVolUp_MouseDown(object sender, EventArgs e)
-        {
+        {            
             this.btnVolUp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.btnVolUp.BackColor = System.Drawing.Color.DarkGray;
         }
@@ -250,6 +271,7 @@ namespace AVRControl
         {
             await _telnet.SendAsync("MV" + (CurVol - 1));
             _muted = false;
+            FlashIcon(IndicatorType.Send);
         }
         private void BtnVolDown_MouseDown(object sender, EventArgs e)
         {
@@ -273,6 +295,7 @@ namespace AVRControl
                 int val = SliderVolume.Value;
                 this.ShowVolume.Text = "Vol: " + val.ToString();
                 await _telnet.SendAsync("MV" + val.ToString("D2"));
+                FlashIcon(IndicatorType.Send);
 
                 _lastVolumeSend = DateTime.Now;
             }
@@ -287,9 +310,13 @@ namespace AVRControl
             if (!IsAVROn)
             {
                 await _telnet.SendAsync("ZMON");
+                FlashIcon(IndicatorType.Send);
             }
             else
+            {
                 await _telnet.SendAsync("ZMOFF");
+                FlashIcon(IndicatorType.Send);
+            }
         }
         private async void BtnToggleMute_Click(object sender, EventArgs e)
         {
@@ -300,9 +327,13 @@ namespace AVRControl
             if (_muted)
             {
                 await _telnet.SendAsync("MUON");
+                FlashIcon(IndicatorType.Send);
             }
             else
+            {
                 await _telnet.SendAsync("MUOFF");
+                FlashIcon(IndicatorType.Send);
+            }
         }
         private void BtnToggleMute_MouseEnter(object sender, EventArgs e)
         {
@@ -343,6 +374,7 @@ namespace AVRControl
                     cmd = $"heos://player/set_play_state?pid={_activePid}&state=play";
                 }
                 await _heosTelnet.SendAsync(cmd);
+                FlashIcon(IndicatorType.Send);
             }
             else
             {
@@ -371,6 +403,7 @@ namespace AVRControl
                 await _heosTelnet.SendAsync(cmd);
 
                 ResetTimelineImmediate();
+                FlashIcon(IndicatorType.Send);
             }
             else
             {
@@ -399,6 +432,7 @@ namespace AVRControl
                 await _heosTelnet.SendAsync(cmd);
 
                 ResetTimelineImmediate();
+                FlashIcon(IndicatorType.Send);
             }
             else
             {
@@ -425,6 +459,7 @@ namespace AVRControl
             {
                 string newState = _isShuffleOn ? "off" : "on";
                 await _heosTelnet.SendAsync($"heos://player/set_play_mode?pid={_activePid}&shuffle={newState}");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private void btnHeosPlayShuffle_MouseDown(object sender, EventArgs e)
@@ -447,6 +482,7 @@ namespace AVRControl
             {
                 string cmd = $"heos://player/play_previous?pid={_activePid}&repeat=on_all";
                 await _heosTelnet.SendAsync(cmd);
+                FlashIcon(IndicatorType.Send);
             }
             else
             {
@@ -473,6 +509,7 @@ namespace AVRControl
             {
                 string cmd = $"heos://player/play_previous?pid={_activePid}&repeat=on_one";
                 await _heosTelnet.SendAsync(cmd);
+                FlashIcon(IndicatorType.Send);
             }
             else
             {
@@ -585,6 +622,14 @@ namespace AVRControl
                 this.Hide();
                 return;
             }
+
+            foreach (var icon in _indicatorIcons.Values)
+            {
+                DestroyIcon(icon.Handle);
+                icon.Dispose();
+            }
+            _indicatorIcons.Clear();
+            _iconResetTimer?.Dispose();
 
             _telnet.Stop();
             _heosTelnet.Stop();
@@ -730,6 +775,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
 
                 await _telnet.SendAsync($"CVFL {tbSpeakerFrontL.Value}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerFrontL_MouseUp(object sender, MouseEventArgs e)
@@ -751,6 +797,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
 
                 await _telnet.SendAsync($"CVC {tbSpeakerCenter.Value}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerCenter_MouseUp(object sender, MouseEventArgs e)
@@ -772,6 +819,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
 
                 await _telnet.SendAsync($"CVFR {tbSpeakerFrontR.Value}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerFrontR_MouseUp(object sender, MouseEventArgs e)
@@ -793,6 +841,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
 
                 await _telnet.SendAsync($"CVSL {tbSpeakerSurroundL.Value}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerSurroundL_MouseUp(object sender, MouseEventArgs e)
@@ -814,6 +863,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
 
                 await _telnet.SendAsync($"CVSR {tbSpeakerSurroundR.Value}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerSurroundR_MouseUp(object sender, MouseEventArgs e)
@@ -835,6 +885,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
 
                 await _telnet.SendAsync($"CVSW {tbSpeakerSubwoofer1.Value}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerSubwoofer1_MouseUp(object sender, MouseEventArgs e)
@@ -856,6 +907,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
 
                 await _telnet.SendAsync($"CVSW2 {tbSpeakerSubwoofer2.Value}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerSubwoofer2_MouseUp(object sender, MouseEventArgs e)
@@ -904,6 +956,7 @@ namespace AVRControl
                 _lastSpeakerSend = DateTime.Now;
                 await _telnet.SendAsync($"CVSW {targetSub1}\r");
                 await _telnet.SendAsync($"CVSW2 {targetSub2}\r");
+                FlashIcon(IndicatorType.Send);
             }
         }
         private async void tbSpeakerSubMaster_MouseUp(object sender, MouseEventArgs e)
@@ -952,6 +1005,7 @@ namespace AVRControl
                 foreach (string cmd in commands)
                 {
                     await _telnet.SendAsync($"{cmd} {neutralValue}\r");
+                    FlashIcon(IndicatorType.Send);
 
                     await Task.Delay(30);
                 }

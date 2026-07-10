@@ -34,8 +34,10 @@ namespace AVRControl
             // Showing on Status Label
             this.lbConnectStatus.Text = data;
 
-            if (data.ToLower().Contains("watchdog"))
+            if (data.Contains("watchdog", StringComparison.OrdinalIgnoreCase))
             {
+                FlashIcon(IndicatorType.Error);
+
                 StopHeosTimeline();
                 AVRControlsToggle(false);
                 HeosControlsToggle(false);
@@ -57,6 +59,11 @@ namespace AVRControl
             }
 
             //  Console.WriteLine($"NORMALDATA: {data}");
+
+            if (_iconResetTimer?.Enabled == false && notifyIcon1.Icon != _appIcon)
+            {
+                FlashIcon(IndicatorType.Status);
+            }
 
             if (data.StartsWith("MVMAX")) // We dont need it
             {
@@ -94,20 +101,25 @@ namespace AVRControl
             {
                 if (data.StartsWith("SI"))
                 {
-                    string xmlSource = "";
+                    if (data != _lastSiData || string.IsNullOrEmpty(_lastXmlSource))
+                    {
+                        if (data == "SINET" || data == "SIHEOS")
+                        {
+                            _lastXmlSource = "HEOS";
+                        }
+                        else if (data == "SITV")
+                        {
+                            _lastXmlSource = "TV Audio";
+                        }
+                        else
+                        {
+                            _lastXmlSource = await _telnet.ReadXMLDeviceInfoAsync();
+                            FlashIcon(IndicatorType.Receive);
+                        }
+                        _lastSiData = data;
+                    }
 
-                    if (data == "SINET" || data == "SIHEOS")
-                    {
-                        xmlSource = "HEOS";
-                    }
-                    else if (data == "SITV")
-                    {
-                        xmlSource = "TV Audio";
-                    }
-                    else
-                    {
-                        xmlSource = await _telnet.ReadXMLDeviceInfoAsync();
-                    }
+                    string xmlSource = _lastXmlSource;
 
                     if (xmlSource == "HEOS")
                     {
@@ -136,7 +148,6 @@ namespace AVRControl
                             else
                             {
                                 this.lbConnectStatus.Text = "HEOS Port closed...";
-                                return;
                             }
                         }
                     }
@@ -171,7 +182,7 @@ namespace AVRControl
                     this.AVRSoundMode.Text = modeText;
                     this.lblCurrentAudioMode.Text = modeText;
 
-                    SyncAudioModeRadioButtons(modeText);
+                    SyncAudioModeRadioButtons(modeText);                    
                 }
 
                 else if (data.Contains("MUON"))
@@ -180,6 +191,7 @@ namespace AVRControl
                     this.ShowVolume.Text = "Muted";
                     this.btnToggleMute.BackColor = System.Drawing.Color.DarkRed;
                     this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+                    FlashIcon(IndicatorType.Receive);
                 }
                 else if (data.StartsWith("MUOFF"))
                 {
@@ -187,6 +199,7 @@ namespace AVRControl
                     this.ShowVolume.Text = "Vol: " + CurVol.ToString();
                     this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
                     this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                    FlashIcon(IndicatorType.Receive);
                 }
                 else if (data.StartsWith("MV") && isScrolling == false)
                 {
@@ -197,6 +210,7 @@ namespace AVRControl
                     this.SliderVolume.Value = CurVol;
                     this.btnToggleMute.BackColor = System.Drawing.Color.DarkGray;
                     this.btnToggleMute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                    FlashIcon(IndicatorType.Receive);
                 }
 
                 else if (data.Contains("CV") && !isScrolling && !_masterMoving)
@@ -213,12 +227,12 @@ namespace AVRControl
                         {
                             int val = int.Parse(match.Value);
 
-                            if (val > 100) val = val / 10;
+                            if (val > 100) val /= 10;
 
                             this.Invoke((MethodInvoker)delegate
                             {
                                 UpdateSpeakerSlider(cleanLine, val);
-                            });
+                            });                            
                         }
                     }
                 }
@@ -288,6 +302,7 @@ namespace AVRControl
                     btnHeosPlayShuffle.BackColor = Color.Transparent; // Inaktive Farbe
                     btnHeosPlayShuffle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                 }
+                FlashIcon(IndicatorType.Receive);
             }
 
             if (data.Contains("event/player_state_changed") || data.Contains("player/get_play_state"))
@@ -304,6 +319,7 @@ namespace AVRControl
                     timerProgress.Stop();
                     this.btnHeosPlayPause.BackgroundImage = global::AVRControl.Properties.Resources.PlayIcon;
                 }
+                FlashIcon(IndicatorType.Status);
             }
 
             if (data.Contains("event/player_now_playing_progress"))
@@ -341,6 +357,8 @@ namespace AVRControl
                 _maxDuration = 0;
                 pnlProgressBar.Width = 0;
                 lblTime.Text = "00:00 / 00:00";
+
+                FlashIcon(IndicatorType.Status);
 
                 _ = UpdateHeosDetails();
                 return;
